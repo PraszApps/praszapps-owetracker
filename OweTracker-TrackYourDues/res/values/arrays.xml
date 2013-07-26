@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <string-array name="string_array_give_take">
+	    <item>@string/array_givetake_item_select</item>
+	    <item>@string/array_givetake_item_gave</item>
+	    <item>@string/array_givetake_item_took</item>
+	</string-array>
+	
+    <string-array name="string_array_currency">
+	    <item>@string/array_currency_item_select</item>
+	    <item>@string/array_currency_item_rupee</item>
+	    <item>@string/array_currency_item_dollar</item>
+	    <item>@string/array_currency_item_yen</item>
+	    <item>@string/array_currency_item_pound</item>
+	    <item>@string/array_currency_item_euro</item>
+	</string-array>
+	
+</resources>

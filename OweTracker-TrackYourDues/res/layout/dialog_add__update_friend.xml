@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent" >
+
+    <EditText
+        android:id="@+id/editTextFriendName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="15dp"
+        android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwzyz ."
+        android:hint="@string/label_enter_friend_name"
+        android:ems="10"
+        android:inputType="textPersonName" >
+    </EditText>
+
+    <Spinner
+        android:id="@+id/spinnerCurrency"
+        android:layout_width="match_parent"
+        android:spinnerMode="dialog"
+        android:prompt="@string/array_currency_item_select"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editTextFriendName"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:entries="@array/string_array_currency" />
+
+    <Button
+        android:id="@+id/buttonSave"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/spinnerCurrency"
+        android:layout_below="@+id/spinnerCurrency"
+        android:layout_marginTop="30dp"
+        android:text="Save"
+        android:textStyle="bold" />
+
+</RelativeLayout>

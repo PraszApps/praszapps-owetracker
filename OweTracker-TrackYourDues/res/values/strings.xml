@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">OweTracker</string>
+    <string name="add_friend_title">Add friend</string>
+    <string name="update_friend_title">Update friend details</string>
+    <string name="splash_icon_desc">App Icon</string>
+	<string name="oweboard_title">Owe-Board</string>
+	<string name="button_label_add_friend">Add another friend</string>
+	<string name="label_owesactions_listview">Friends with due money transactions</string>
+	<string name="button_label_add_due">Add another due</string>
+	<string name="label_you_owe">You owe</string>
+	<string name="label_owes_you">Owes you</string>
+	<string name="strNoRecordsFound">No friend added</string>
+	<string name="strNoFriendSelected">No friend selected</string>
+	<string name="strNoDueRecordsFound">No due added</string>
+	<string name="menu_item_close_due">Dues cleared</string>
+	<string name="menu_item_edit_friend">Edit Friend</string>
+	<string name="menu_item_add_due">Add Due</string>
+	<string name="menu_item_add_friend">Add friend</string>
+	<string name="toast_msg_add_friend_name">Please enter name</string>
+	<string name="toast_msg_add_friend_currency">Please select a currency</string>
+	<string name="label_add_date">Click to enter date</string>
+	<string name="toast_msg_add_friend_success">Friend added auccesfully</string>
+	<string name="toast_msg_add_friend_failure">Failed to add friend</string>
+	<string name="toast_msg_friend_data_get_failure">Failed to get data for the friend</string>
+	<string name="toast_msg_update_friend_success">Updated friend details successfully</string>
+	<string name="toast_msg_update_friend_failure">Failed to update friend details</string>
+	<string name="toast_msg_update_friend_negative">Friend with same name exists. Please check friend name.</string>
+	<string name="label_hint_enter_amount">Enter amount</string>
+	<string name="label_hint_enter_desc">Enter reason/description</string>
+	
+	<string name="alertdialog_friend_title">Friend exists</string>
+	<string name="alertdialog_addfriend_message">A friend with same name exists. Do you want to save a new record?</string>
+	<string name="alertdialog_updatefriend_message">A friend with same name exists. Do you want to change the name?</string>
+	<string name="label_yes">Yes</string>
+	<string name="label_no">No</string>
+	
+	<!--  String and array for selection of currency -->
+	<string name="array_currency_item_select">Select currency</string>
+	<string name="array_currency_item_dollar">$</string>
+	<string name="array_currency_item_rupee">Rs</string>
+	<string name="array_currency_item_pound">£</string>
+	<string name="array_currency_item_euro">€</string>
+	<string name="array_currency_item_yen">¥</string>
+	
+	
+	<!--  Strings and array for selection of give/take  -->
+	<string name="array_givetake_item_select">Select if friend took or gave</string>
+	<string name="array_givetake_item_gave">Friend Gave</string>
+	<string name="array_givetake_item_took">Friend Took</string>
+	
+	<string name="toast_msg_add_due_amount">Please enter amount</string>
+	<string name="toast_msg_add_due_date">Please enter date</string>
+	<string name="toast_msg_add_due_givetake">Please select gave/took</string>
+	<string name="toast_msg_add_due_reason">Please enter description</string>
+	<string name="toast_msg_add_due_success">Due added auccesfully</string>
+	<string name="toast_msg_add_due_failure">Failed to add due</string>
+	<string name="label_enter_friend_name">Enter name of friend</string>
+	<string name="toast_msg_due_add_success">Due added successfully</string>
+	<string name="toast_msg_due_add_failure">Unable to add due</string>
+	<string name = "ERROR_INVALID_DATE ">Date cannot be greater than today\'s date. </string>
+	<string name="label_click_add_date">Click to enter date</string>
+</resources>

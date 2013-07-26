@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <TextView
+        android:id="@+id/textViewDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:paddingRight="5dp"
+        android:text="28/11/2012"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/due_list_item_date_color"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textViewAmtDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textViewDate"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp"
+        android:paddingLeft="5dp"
+        android:text="Gave Rs 300/-"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/due_list_item_amt_color" />
+
+    <TextView
+        android:id="@+id/textViewReason"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/textViewDate"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp"
+        android:paddingBottom="5dp"
+        android:text="For Cinemax Movie"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/due_list_item_desc_color"
+        android:textStyle="italic" />
+
+</RelativeLayout>

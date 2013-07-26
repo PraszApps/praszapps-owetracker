@@ -1,4 +1,4 @@
-package com.praszapps.owertracker.ui.activity;
+package com.praszapps.owetracker.ui.activity;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;

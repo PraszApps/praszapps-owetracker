@@ -1,4 +1,4 @@
-package com.praszapps.owertracker.ui.activity;
+package com.praszapps.owetracker.ui.activity;
 
 
 public class SettingsActivity extends RootActivity {

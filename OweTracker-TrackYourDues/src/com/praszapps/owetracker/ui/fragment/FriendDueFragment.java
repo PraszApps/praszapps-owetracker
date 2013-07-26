@@ -30,13 +30,13 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.praszapps.owertracker.ui.activity.MainActivity;
-import com.praszapps.owertracker.ui.activity.RootActivity;
 import com.praszapps.owetracker.R;
 import com.praszapps.owetracker.adapter.DueAdapter;
 import com.praszapps.owetracker.bo.Due;
 import com.praszapps.owetracker.bo.Friend;
 import com.praszapps.owetracker.database.DatabaseHelper;
+import com.praszapps.owetracker.ui.activity.MainActivity;
+import com.praszapps.owetracker.ui.activity.RootActivity;
 import com.praszapps.owetracker.util.Utils;
 
 public class FriendDueFragment extends Fragment {

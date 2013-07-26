@@ -9,11 +9,14 @@ import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.Service;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,6 +24,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -59,6 +64,7 @@ public class FriendDueFragment extends Fragment {
 	private Boolean resetActionBar = false;
 	@SuppressLint("SimpleDateFormat")
 	private static SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+	private Vibrator myVib;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -67,6 +73,7 @@ public class FriendDueFragment extends Fragment {
 		
 		//Setting the View
 		v = inflater.inflate(R.layout.fragment_owe_details, container, false);
+		myVib = (Vibrator) getActivity().getSystemService(Service.VIBRATOR_SERVICE);
 		resetActionBar = false;
 		//Setting the action bar
 		if(MainActivity.isSinglePane) {
@@ -79,6 +86,17 @@ public class FriendDueFragment extends Fragment {
 		emptyTextView = (TextView) v.findViewById(R.id.empty_duelist);
 		textViewOweSummary = (TextView) v.findViewById(R.id.textViewOweSummary);
 		listViewTransactions = (ListView) v.findViewById(R.id.listViewDues);
+		listViewTransactions.setOnItemLongClickListener(new OnItemLongClickListener() {
+
+			@Override
+			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+					int arg2, long arg3) {
+				// TODO Auto-generated method stub
+				Log.e("pani", "on long click");
+				myVib.vibrate(20);
+				return false;
+			}
+		});
 		listViewTransactions.setEmptyView(v.findViewById(R.id.empty_duelist));
 		rAct = (RootActivity) getActivity();
 		db = rAct.database;
@@ -219,6 +237,9 @@ public class FriendDueFragment extends Fragment {
 		d.setTitle("Add Due");
 		textViewDate = (TextView) d.findViewById(R.id.textViewDate);
 		spinnerGaveTook = (Spinner) d.findViewById(R.id.spinnerGiveTake);
+		ArrayAdapter<String> currencyAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.string_array_give_take));
+		currencyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		spinnerGaveTook.setAdapter(currencyAdapter);
 		editTextAmount = (EditText) d.findViewById(R.id.editTextAmount);
 		editTextAmount.setHint(R.string.label_hint_enter_amount);
 		editTextReason = (EditText) d.findViewById(R.id.editTextReason);
@@ -286,16 +307,6 @@ public class FriendDueFragment extends Fragment {
 		d.show();
 	
 	}
-	
-	
-	// TODO Enabling adapters
-	/*adverseEffectsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.array_child_adverse_effects));
-	adverseEffectsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-	spinnerChildSideeffect = (Spinner) findViewById(R.id.spinnerChildSideeffect);
-				spinnerChildSideeffect.setAdapter(adverseEffectsAdapter);
-				if(sSideEffects != null) {
-					spinnerChildSideeffect.setSelection(((ArrayAdapter) spinnerChildSideeffect.getAdapter()).getPosition(sSideEffects));
-				}*/
 	
 	@SuppressWarnings("unchecked")
 	private void showEditFriendDialog() {

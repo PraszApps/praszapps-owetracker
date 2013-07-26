@@ -3,25 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <!--
-         <ImageView
-        android:id="@+id/imageViewFriend"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="22dp"
-        android:adjustViewBounds="true"
-        android:contentDescription="@string/splash_icon_desc"
-        android:scaleType="fitXY"
-        android:src="@drawable/default_friend_pic" />
-    -->
-
     <ListView
         android:id="@+id/listViewDues"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
+        android:hapticFeedbackEnabled="true"
+        android:listSelector="@android:color/holo_blue_light"
         android:layout_below="@+id/textViewOweSummary"
         android:layout_marginTop="20dp" >
     </ListView>

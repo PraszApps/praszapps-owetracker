@@ -16,4 +16,9 @@
 	    <item>@string/array_currency_item_euro</item>
 	</string-array>
 	
+    <string-array name="array_due_item_options">
+	    <item>@string/label_edit</item>
+	    <item>@string/label_delete</item>
+	</string-array>
+	
 </resources>

@@ -62,6 +62,8 @@
 	<string name="label_enter_friend_name">Enter name of friend</string>
 	<string name="toast_msg_due_add_success">Due added successfully</string>
 	<string name="toast_msg_due_add_failure">Unable to add due</string>
+	<string name="toast_msg_due_update_success">Due updated successfully</string>
+	<string name="toast_msg_due_update_failure">Unable to update due</string>
 	<string name = "ERROR_INVALID_DATE ">Date cannot be greater than today\'s date. </string>
 	<string name="label_click_add_date">Click to enter date</string>
 </resources>

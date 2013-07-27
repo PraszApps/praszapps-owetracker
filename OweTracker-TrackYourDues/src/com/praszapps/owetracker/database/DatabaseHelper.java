@@ -284,7 +284,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	}
 	
 	public static Boolean updateDue(Due dueToUpdate, SQLiteDatabase db) {
-		String sql = String.format("SELECT friend_id FROM"+ TABLE_DUE +"WHERE "+DUE_COLUMN_ID+" = '%s' ;", dueToUpdate.getDueId());
+		String sql = String.format("SELECT friend_id FROM "+ TABLE_DUE +" WHERE "+DUE_COLUMN_ID+" = '%s' ;", dueToUpdate.getDueId());
 		Cursor c = db.rawQuery(sql, null);
 		if(c.getCount() == 1) {
 			c.moveToFirst();

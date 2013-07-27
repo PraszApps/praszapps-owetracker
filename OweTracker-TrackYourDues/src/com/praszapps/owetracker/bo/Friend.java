@@ -81,7 +81,7 @@ public class Friend {
 		this.summary = formatCurrency(currency)+Math.abs(oweAmount);
 	}
 	
-	private String formatCurrency(String currency) {
+	public String formatCurrency(String currency) {
 		if(currency.equals("Rs")) {
 			return currency += ". ";
 		} else {

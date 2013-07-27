@@ -9,14 +9,13 @@ import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.app.Service;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.os.Vibrator;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.util.Log;
+import android.support.v4.app.ListFragment;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -24,8 +23,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -44,7 +41,7 @@ import com.praszapps.owetracker.ui.activity.MainActivity;
 import com.praszapps.owetracker.ui.activity.RootActivity;
 import com.praszapps.owetracker.util.Utils;
 
-public class FriendDueFragment extends Fragment {
+public class FriendDueFragment extends ListFragment {
 
 	private View v;
 	private Friend friend, updateFriend;
@@ -61,10 +58,8 @@ public class FriendDueFragment extends Fragment {
 	private Button buttonSave;
 	private static int calendarYear, calendarMonth, calendarDay;
 	private static Calendar cld;
-	private Boolean resetActionBar = false;
 	@SuppressLint("SimpleDateFormat")
 	private static SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-	private Vibrator myVib;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -73,30 +68,15 @@ public class FriendDueFragment extends Fragment {
 		
 		//Setting the View
 		v = inflater.inflate(R.layout.fragment_owe_details, container, false);
-		myVib = (Vibrator) getActivity().getSystemService(Service.VIBRATOR_SERVICE);
-		resetActionBar = false;
 		//Setting the action bar
 		if(MainActivity.isSinglePane) {
 			ActionBar action = getActivity().getActionBar();
 			action.setDisplayHomeAsUpEnabled(true);
 		}
-		
-		
 		//Initializing views and other variables
 		emptyTextView = (TextView) v.findViewById(R.id.empty_duelist);
 		textViewOweSummary = (TextView) v.findViewById(R.id.textViewOweSummary);
-		listViewTransactions = (ListView) v.findViewById(R.id.listViewDues);
-		listViewTransactions.setOnItemLongClickListener(new OnItemLongClickListener() {
-
-			@Override
-			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
-					int arg2, long arg3) {
-				// TODO Auto-generated method stub
-				Log.e("pani", "on long click");
-				myVib.vibrate(20);
-				return false;
-			}
-		});
+		listViewTransactions = (ListView) v.findViewById(android.R.id.list);
 		listViewTransactions.setEmptyView(v.findViewById(R.id.empty_duelist));
 		rAct = (RootActivity) getActivity();
 		db = rAct.database;
@@ -119,22 +99,33 @@ public class FriendDueFragment extends Fragment {
 		
 	}
 	
+
 	@Override
-	public void onPrepareOptionsMenu(Menu menu) {
-        if(menu != null) {
-        	if (resetActionBar) {
-                menu.findItem(R.id.item_add_due).setVisible(false);
-                menu.findItem(R.id.item_edit_friend).setVisible(false);
-                menu.findItem(R.id.item_close_due).setVisible(false);
-            }
-            else {
-            	 menu.findItem(R.id.item_add_due).setVisible(true);
-                 menu.findItem(R.id.item_edit_friend).setVisible(true);
-                 menu.findItem(R.id.item_close_due).setVisible(true);
-            }
-        }
-        
-		super.onPrepareOptionsMenu(menu);
+	public void onCreateContextMenu(ContextMenu menu, View v,
+			ContextMenuInfo menuInfo) {
+		if (v.getId()== android.R.id.list) {
+		    String[] menuItems = getResources().getStringArray(R.array.array_due_item_options);
+		    for (int i = 0; i<menuItems.length; i++) {
+		      menu.add(Menu.NONE, i, i, menuItems[i]);
+		    }
+		  }
+	}
+	
+	
+
+	@Override
+	public boolean onContextItemSelected(MenuItem item) {
+		super.onContextItemSelected(item);
+		switch(item.getItemId()) {
+		case 0:
+			//TODO implement logic to edit due
+			break;
+		case 1:
+			//TODO implement logic to delete due
+			break;
+		}
+		return true;
+		
 	}
 
 	@Override
@@ -168,7 +159,7 @@ public class FriendDueFragment extends Fragment {
 						updateDueList();
 						OweboardFragment.updateListView();
 						//startActivity(new Intent(getActivity(), MainActivity.class));
-						resetActionBar = true;
+						setHasOptionsMenu(false); //TODO Test in tab
 						//getActivity().finish(); //TODO improve logic
 					}
 				}
@@ -204,6 +195,7 @@ public class FriendDueFragment extends Fragment {
 	@Override
 	public void onResume() {
 		super.onResume();
+		registerForContextMenu(getListView());
 	}
 
 	public void showDetails(String friendId, String currency) {
@@ -213,13 +205,12 @@ public class FriendDueFragment extends Fragment {
 		friend = DatabaseHelper.getFriendData(friendId, db);
 		if(friend != null) {
 			textViewOweSummary.setText(friend.toString());
-			
 			duesList.clear();
 			duesList = DatabaseHelper.getFriendDueList(friendId, db);
 			if(duesList != null) {
 				// Setting the adapter
-				adapter = new DueAdapter(getActivity(), R.layout.owe_details_list_item, duesList, friend.getCurrency());
-				listViewTransactions.setAdapter(adapter);
+				adapter = new DueAdapter(getActivity(), R.layout.owe_details_list_item, duesList, friend.formatCurrency(friend.getCurrency()));
+				setListAdapter(adapter);
 			}
 			
 		} else {

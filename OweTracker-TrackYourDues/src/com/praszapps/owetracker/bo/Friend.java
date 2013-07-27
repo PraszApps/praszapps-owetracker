@@ -1,5 +1,7 @@
 package com.praszapps.owetracker.bo;
 
+import com.praszapps.owetracker.util.Constants;
+
 
 public class Friend {
 
@@ -82,7 +84,7 @@ public class Friend {
 	}
 	
 	public String formatCurrency(String currency) {
-		if(currency.equals("Rs")) {
+		if(currency.equals(Constants.CURRENCY_RS)) {
 			return currency += ". ";
 		} else {
 			return currency;
@@ -94,9 +96,9 @@ public class Friend {
 		
 		String friendObjToString = null;
 		if(oweAmount <= 0) {
-			friendObjToString = name+" owes you "+formatCurrency(currency)+Math.abs(oweAmount);
+			friendObjToString = name+" "+Constants.OWES_YOU+" "+formatCurrency(currency)+Math.abs(oweAmount);
 		} else {
-			friendObjToString = "You owe "+name+" "+formatCurrency(currency)+Math.abs(oweAmount);
+			friendObjToString = Constants.YOU_OWE+" "+name+" "+formatCurrency(currency)+Math.abs(oweAmount);
 		}
 		
 		return friendObjToString;

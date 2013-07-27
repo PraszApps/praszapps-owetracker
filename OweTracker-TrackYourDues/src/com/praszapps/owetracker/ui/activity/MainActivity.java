@@ -12,6 +12,7 @@ import com.praszapps.owetracker.R;
 import com.praszapps.owetracker.ui.fragment.FriendDueFragment;
 import com.praszapps.owetracker.ui.fragment.OweboardFragment;
 import com.praszapps.owetracker.ui.fragment.OweboardFragment.OnFriendNameClickListener;
+import com.praszapps.owetracker.util.Constants;
 import com.praszapps.owetracker.util.Utils;
 
 public class MainActivity extends RootActivity implements OnFriendNameClickListener{
@@ -67,8 +68,8 @@ public class MainActivity extends RootActivity implements OnFriendNameClickListe
 			FragmentTransaction ft = fm.beginTransaction();
 			FriendDueFragment fragTwo = new FriendDueFragment();
 			Bundle args = new Bundle();
-			args.putString("friendId", friendId);
-			args.putString("currency", currency);
+			args.putString(Constants.BUNDLE_EXTRA_FRIENDID, friendId);
+			args.putString(Constants.BUNDLE_EXTRA_CURRENCY, currency);
 			fragTwo.setArguments(args);
 			ft.addToBackStack(null);
 			ft.replace(R.id.fragment_container, fragTwo);

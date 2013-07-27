@@ -40,6 +40,7 @@ import com.praszapps.owetracker.bo.Friend;
 import com.praszapps.owetracker.database.DatabaseHelper;
 import com.praszapps.owetracker.ui.activity.MainActivity;
 import com.praszapps.owetracker.ui.activity.RootActivity;
+import com.praszapps.owetracker.util.Constants;
 import com.praszapps.owetracker.util.Utils;
 
 public class FriendDueFragment extends ListFragment {
@@ -86,7 +87,7 @@ public class FriendDueFragment extends ListFragment {
 		//Getting the data and populating the listview
 		Bundle b = getArguments();
 		if(b != null) {
-			showDetails(b.getString("friendId"), b.getString("currency"));
+			showDetails(b.getString(Constants.BUNDLE_EXTRA_FRIENDID), b.getString(Constants.BUNDLE_EXTRA_CURRENCY));
 			
 		}
 		
@@ -124,10 +125,31 @@ public class FriendDueFragment extends ListFragment {
 		switch(item.getItemId()) {
 		case 0:
 			showEditDueDialog();
-			
 			break;
 		case 1:
-			//TODO implement logic to delete due
+			Utils.showAlertDialog(getActivity(), getResources().getString(R.string.delete_due_alert_title),
+					getResources().getString(R.string.delete_due_alert_msg), null, false, 
+					getResources().getString(R.string.label_yes), 
+					getResources().getString(R.string.label_no), null, new Utils.DialogResponse() {
+				
+				@Override
+				public void onPositive() {
+					DatabaseHelper.deleteDueData(due.getDueId(), db);
+					updateDueList();
+					updateFriendSummary();
+				}
+				
+				@Override
+				public void onNeutral() {
+					// Do nothing
+				}
+				
+				@Override
+				public void onNegative() {
+					// Do nothing
+					
+				}
+			});
 			break;
 		}
 		return true;
@@ -151,7 +173,10 @@ public class FriendDueFragment extends ListFragment {
 			return true;
 			
 		case R.id.item_close_due:
-			Utils.showAlertDialog(getActivity(), "Delete/Reset friend?", "Do you want to delete the friend name or reset the due value to zero?", null, false, "Delete", "Reset to zero", null, new Utils.DialogResponse() {
+			Utils.showAlertDialog(getActivity(), getResources().getString(R.string.delete_reset_friend_alert_title), 
+					getResources().getString(R.string.delete_reset_friend_alert_msg), 
+					null, false, getResources().getString(R.string.label_delete), getResources().getString(R.string.label_reset),
+					null, new Utils.DialogResponse() {
 				
 				@Override
 				public void onPositive() {
@@ -231,7 +256,7 @@ public class FriendDueFragment extends ListFragment {
 	private void showAddDueDialog() {
 		d = new Dialog(getActivity());
 		d.setContentView(R.layout.dialog_add_due);
-		d.setTitle("Add Due");
+		d.setTitle(getResources().getString(R.string.add_due_dialog_title));
 		textViewDate = (TextView) d.findViewById(R.id.textViewDate);
 		spinnerGaveTook = (Spinner) d.findViewById(R.id.spinnerGiveTake);
 		ArrayAdapter<String> currencyAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.string_array_give_take));
@@ -309,7 +334,7 @@ public class FriendDueFragment extends ListFragment {
 	private void showEditFriendDialog() {
 		d = new Dialog(getActivity());
 		d.setContentView(R.layout.dialog_add__update_friend);
-		d.setTitle("Add friend");
+		d.setTitle(getResources().getString(R.string.edit_friend_dialog_title));
 		final Spinner spinnerCurrency = (Spinner) d.findViewById(R.id.spinnerCurrency);
 		ArrayAdapter<String> currencyAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.string_array_currency));
 		currencyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -368,6 +393,12 @@ public class FriendDueFragment extends ListFragment {
 				calendarYear = c.get(Calendar.YEAR);
 				calendarMonth = c.get(Calendar.MONTH);
 				calendarDay = c.get(Calendar.DAY_OF_MONTH);
+			} else {
+				//TODO write logic to show entered date in the textview
+				final Calendar c = Calendar.getInstance();
+				calendarYear = c.get(Calendar.YEAR);
+				calendarMonth = c.get(Calendar.MONTH);
+				calendarDay = c.get(Calendar.DAY_OF_MONTH);
 			}
 			// Create a new instance of DatePickerDialog and return it
 			return new DatePickerDialog(getActivity(), this, calendarYear, calendarMonth, calendarDay);
@@ -403,9 +434,9 @@ public class FriendDueFragment extends ListFragment {
 	private  void showEditDueDialog() {
 		d = new Dialog(getActivity());
 		d.setContentView(R.layout.dialog_add_due);
-		d.setTitle("Edit Due");
+		d.setTitle(getResources().getString(R.string.edit_due_dialog_title));
 		textViewDate = (TextView) d.findViewById(R.id.textViewDate);
-		textViewDate.setText("Date: "+due.getFormattedDate());
+		textViewDate.setText(getResources().getString(R.string.label_date)+" "+due.getFormattedDate());
 		spinnerGaveTook = (Spinner) d.findViewById(R.id.spinnerGiveTake);
 		ArrayAdapter<String> currencyAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.string_array_give_take));
 		currencyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -462,13 +493,16 @@ public class FriendDueFragment extends ListFragment {
 					} else if(spinnerGaveTook.getSelectedItem().toString().equals(getResources().getString(R.string.array_givetake_item_took))) {
 						amt = -(Integer.parseInt(editTextAmount.getText().toString().trim()));
 					}
-					
+
+					if(cld != null) {
+						due.setDate(cld.getTimeInMillis());
+					}
 					due.setAmount(amt);
 					due.setReason(editTextReason.getText().toString().trim());
 					
 					if(DatabaseHelper.updateDue(due, db)) {
 						Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_due_update_success), Toast.LENGTH_SHORT);
-						DatabaseHelper.updateFriendDue(friend.getId(), db);
+						//DatabaseHelper.updateFriendDue(friend.getId(), db);
 						updateDueList();
 						updateFriendSummary();
 						d.dismiss();

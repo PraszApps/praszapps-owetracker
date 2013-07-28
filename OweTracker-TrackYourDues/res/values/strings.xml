@@ -3,6 +3,7 @@
 
     <string name="app_name">OweTracker</string>
     <string name="add_friend_title">Add friend</string>
+    <string name="about_title">About Owetracker</string>
     <string name="update_friend_title">Update friend details</string>
     <string name="splash_icon_desc">App Icon</string>
 	<string name="oweboard_title">Owe-Board</string>
@@ -64,7 +65,7 @@
 	<string name="toast_msg_due_add_failure">Unable to add due</string>
 	<string name="toast_msg_due_update_success">Due updated successfully</string>
 	<string name="toast_msg_due_update_failure">Unable to update due</string>
-	<string name="ERROR_INVALID_DATE ">Date cannot be greater than today\'s date. </string>
+	<string name="toast_msg_due_invalid_date ">Date cannot be greater than today\'s date. </string>
 	<string name="label_click_add_date">Click to enter date</string>
 	<string name="delete_due_alert_title">Deleting Due</string>
 	<string name="delete_due_alert_msg">Are you sure you want to delete this due?</string>
@@ -75,4 +76,5 @@
 	<string name="edit_due_dialog_title">Edit due</string>
 	<string name="edit_friend_dialog_title">Edit friend</string>
 	<string name="label_date">Date:</string>
+	<string name="menu_item_about">About</string>
 </resources>

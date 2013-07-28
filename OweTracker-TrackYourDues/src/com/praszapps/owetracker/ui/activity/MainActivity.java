@@ -1,11 +1,15 @@
 package com.praszapps.owetracker.ui.activity;
 
 import android.app.ActionBar;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.praszapps.owetracker.R;
@@ -54,6 +58,29 @@ public class MainActivity extends RootActivity implements OnFriendNameClickListe
 	}
 	
 	
+	
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		super.onCreateOptionsMenu(menu);
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.activity_menu, menu);
+		return true;
+	}
+
+
+
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if(item.getItemId() == R.id.item_about) {
+			startActivity(new Intent(this, AboutActivity.class));
+		}
+		return super.onOptionsItemSelected(item);
+	}
+
+
+
 
 	@Override
 	public void OnFriendNameClick(String friendId, String currency) {

@@ -119,7 +119,6 @@ public class FriendDueFragment extends ListFragment {
 
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
-		super.onContextItemSelected(item);
 		AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
 		due = adapter.getItem(info.position);
 		switch(item.getItemId()) {
@@ -152,12 +151,13 @@ public class FriendDueFragment extends ListFragment {
 			});
 			break;
 		}
-		return true;
+		return super.onContextItemSelected(item);
 		
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+		super.onOptionsItemSelected(item);
 		switch (item.getItemId()) {
 		case android.R.id.home:
 			//Go back to due list
@@ -416,7 +416,7 @@ public class FriendDueFragment extends ListFragment {
 			cld.set(Calendar.SECOND, 0);
 			cld.set(Calendar.MILLISECOND, 0);
 			if (cld.getTime().after(new Date())){
-				Utils.showToast(getActivity(), getResources().getString(R.string.ERROR_INVALID_DATE), Toast.LENGTH_SHORT);
+				Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_due_invalid_date), Toast.LENGTH_SHORT);
 				textViewDate.setText(getResources().getString(R.string.label_click_add_date));
 			}else{
 				calendarDay = day;

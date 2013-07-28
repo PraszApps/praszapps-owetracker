@@ -34,7 +34,7 @@
         android:layout_alignLeft="@+id/spinnerCurrency"
         android:layout_below="@+id/spinnerCurrency"
         android:layout_marginTop="30dp"
-        android:text="Save"
+        android:text="@string/label_save"
         android:textStyle="bold" />
 
 </RelativeLayout>

@@ -4,14 +4,9 @@
     <string name="app_name">OweTracker</string>
     <string name="add_friend_title">Add friend</string>
     <string name="about_title">About Owetracker</string>
-    <string name="update_friend_title">Update friend details</string>
     <string name="splash_icon_desc">App Icon</string>
 	<string name="oweboard_title">Owe-Board</string>
-	<string name="button_label_add_friend">Add another friend</string>
 	<string name="label_owesactions_listview">Friends with due money transactions</string>
-	<string name="button_label_add_due">Add another due</string>
-	<string name="label_you_owe">You owe</string>
-	<string name="label_owes_you">Owes you</string>
 	<string name="strNoRecordsFound">No friend added</string>
 	<string name="strNoFriendSelected">No friend selected</string>
 	<string name="strNoDueRecordsFound">No due added</string>
@@ -33,7 +28,6 @@
 	
 	<string name="alertdialog_friend_title">Friend exists</string>
 	<string name="alertdialog_addfriend_message">A friend with same name exists. Do you want to save a new record?</string>
-	<string name="alertdialog_updatefriend_message">A friend with same name exists. Do you want to change the name?</string>
 	<string name="label_yes">Yes</string>
 	<string name="label_no">No</string>
 	
@@ -58,8 +52,6 @@
 	<string name="toast_msg_add_due_date">Please enter date</string>
 	<string name="toast_msg_add_due_givetake">Please select gave/took</string>
 	<string name="toast_msg_add_due_reason">Please enter description</string>
-	<string name="toast_msg_add_due_success">Due added auccesfully</string>
-	<string name="toast_msg_add_due_failure">Failed to add due</string>
 	<string name="label_enter_friend_name">Enter name of friend</string>
 	<string name="toast_msg_due_add_success">Due added successfully</string>
 	<string name="toast_msg_due_add_failure">Unable to add due</string>
@@ -77,4 +69,5 @@
 	<string name="edit_friend_dialog_title">Edit friend</string>
 	<string name="label_date">Date:</string>
 	<string name="menu_item_about">About</string>
+	<string name="label_save">Save</string>
 </resources>

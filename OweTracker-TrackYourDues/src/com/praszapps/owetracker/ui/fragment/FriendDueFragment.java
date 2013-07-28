@@ -63,7 +63,7 @@ public class FriendDueFragment extends ListFragment {
 	private static Calendar cld;
 	@SuppressLint("SimpleDateFormat")
 	private static SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -90,7 +90,6 @@ public class FriendDueFragment extends ListFragment {
 			showDetails(b.getString(Constants.BUNDLE_EXTRA_FRIENDID), b.getString(Constants.BUNDLE_EXTRA_CURRENCY));
 			
 		}
-		
 		//Utils.showLog(getClass().getSimpleName(), "onCreateView() ends", Log.VERBOSE);
 		return v;
 	}
@@ -102,7 +101,6 @@ public class FriendDueFragment extends ListFragment {
 		
 	}
 	
-
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v,
 			ContextMenuInfo menuInfo) {
@@ -115,8 +113,6 @@ public class FriendDueFragment extends ListFragment {
 		}
 	}
 	
-	
-
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
 		AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();

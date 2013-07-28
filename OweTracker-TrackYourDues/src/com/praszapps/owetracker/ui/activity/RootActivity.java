@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
+import com.google.analytics.tracking.android.EasyTracker;
 import com.praszapps.owetracker.database.DatabaseHelper;
 
 public class RootActivity extends FragmentActivity {
@@ -42,6 +43,18 @@ public class RootActivity extends FragmentActivity {
 		if(database.isOpen()) {
 			database.close();
 		}
+	}
+
+	@Override
+	protected void onStart() {
+		super.onStart();
+		EasyTracker.getInstance().activityStart(this);
+	}
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+		EasyTracker.getInstance().activityStop(this);
 	}
 	
 	

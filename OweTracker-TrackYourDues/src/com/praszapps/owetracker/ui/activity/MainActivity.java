@@ -22,9 +22,11 @@ import com.praszapps.owetracker.util.Utils;
 public class MainActivity extends RootActivity implements OnFriendNameClickListener{
 
 	public static boolean isSinglePane;
+		
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
 		setContentView(R.layout.activity_main);
 		
 		View v = findViewById(R.id.fragment_container);
@@ -56,9 +58,6 @@ public class MainActivity extends RootActivity implements OnFriendNameClickListe
 		aBar.setBackgroundDrawable(getResources().getDrawable(R.color.actionbar_bg));
 
 	}
-	
-	
-	
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -68,9 +67,6 @@ public class MainActivity extends RootActivity implements OnFriendNameClickListe
 		return true;
 	}
 
-
-
-
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if(item.getItemId() == R.id.item_about) {
@@ -78,9 +74,6 @@ public class MainActivity extends RootActivity implements OnFriendNameClickListe
 		}
 		return super.onOptionsItemSelected(item);
 	}
-
-
-
 
 	@Override
 	public void OnFriendNameClick(String friendId, String currency) {
@@ -110,9 +103,9 @@ public class MainActivity extends RootActivity implements OnFriendNameClickListe
 			//get reference to FriendDueFragment
 			FriendDueFragment dueFrag = (FriendDueFragment)getSupportFragmentManager().findFragmentById(R.id.due_frag);
 			dueFrag.showDetails(friendId, currency);
-			
 		}
 	
 	}
 
+		
 }

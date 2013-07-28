@@ -43,14 +43,16 @@ public class OweboardFragment extends ListFragment {
 	private RootActivity rAct;
 	private static ArrayList<Friend> friendList = null;
 	private static SQLiteDatabase db;
-	
 	private OnFriendNameClickListener mFriendName;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		//Utils.showLog(getClass().getSimpleName(), "onCreateView() starts", Log.VERBOSE);
-		
+		// Get the GoogleAnalytics singleton. Note that the SDK uses
+	   // the application context to avoid leaking the current context.
+
+		// Use the GoogleAnalytics singleton to get a Tracker.
 		v = inflater.inflate(R.layout.fragment_oweboard, container, false);
 		
 		rAct = (RootActivity) getActivity();
@@ -62,11 +64,10 @@ public class OweboardFragment extends ListFragment {
 		setHasOptionsMenu(true);
 		ActionBar action = getActivity().getActionBar();
 		action.setDisplayHomeAsUpEnabled(false);
-		
+	
 		//Utils.showLog(getClass().getSimpleName(), "onCreateView() ends", Log.VERBOSE);
 		return v;
 	}
-	
 	
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -81,7 +82,6 @@ public class OweboardFragment extends ListFragment {
 			updateFriendCount(0);
 		}
 	}
-	
 	
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
@@ -118,6 +118,7 @@ public class OweboardFragment extends ListFragment {
 		updateFriendCount(adapter.getCount());
 	}
 	
+
 	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
@@ -130,8 +131,7 @@ public class OweboardFragment extends ListFragment {
 					+ " must implement OnFriendNameClickListener");
 		}
 	}
-	
-	
+		
 	private void showAddFriendDialog() {
 		d = new Dialog(getActivity());
 		d.setContentView(R.layout.dialog_add__update_friend);
@@ -226,7 +226,6 @@ public class OweboardFragment extends ListFragment {
 		}
 	}
 
-	
 	public static void updateListView() {
 		friendList = DatabaseHelper.getAllFriends(db);
 		adapter.clear();

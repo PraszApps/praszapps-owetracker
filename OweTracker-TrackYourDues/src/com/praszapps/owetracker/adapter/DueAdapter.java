@@ -21,8 +21,9 @@ public class DueAdapter extends ArrayAdapter<Due> {
 	int layoutResourceId;
 	ArrayList<Due> dueData = null;
 	String currency;
+	String friendName;
 
-	public DueAdapter(Context mContext, int layoutResourceId, ArrayList<Due> data, String currency) {
+	public DueAdapter(Context mContext, int layoutResourceId, ArrayList<Due> data, String currency, String friendName) {
 
 		//Initializing views
 		super(mContext, layoutResourceId, data);
@@ -30,6 +31,7 @@ public class DueAdapter extends ArrayAdapter<Due> {
 		this.layoutResourceId = layoutResourceId;
 		this.dueData = data;
 		this.currency = currency;
+		this.friendName = friendName;
 
 	}
 	
@@ -58,9 +60,10 @@ public class DueAdapter extends ArrayAdapter<Due> {
 		String summary = null;
 		
 		if(dueData.get(position).getAmount() >=0 ) {
-			summary = "Gave "+dueData.get(position).getCurrency()+Math.abs(dueData.get(position).getAmount());
+			summary = "I owe "+dueData.get(position).getCurrency()+Math.abs(dueData.get(position).getAmount());
 		} else {
-			summary = "Took "+dueData.get(position).getCurrency()+Math.abs(dueData.get(position).getAmount());
+			
+			summary = friendName+" owes "+dueData.get(position).getCurrency()+Math.abs(dueData.get(position).getAmount());
 		}
 		
 		textViewAmtDetails.setText(summary);

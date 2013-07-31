@@ -33,9 +33,9 @@ import com.praszapps.owetracker.util.Utils;
 public class OweboardFragment extends ListFragment {
 
 	private View v;
-	private TextView totalFriends;
+	static TextView totalFriends;
 	private ListView listViewOwelist;
-	private static FriendAdapter adapter;
+	static FriendAdapter friendListAdapter;
 	private EditText editTextfriendName;
 	private Spinner spinnerCurrency;
 	private Button buttonSave;
@@ -74,12 +74,12 @@ public class OweboardFragment extends ListFragment {
 		super.onActivityCreated(savedInstanceState);
 		friendList = DatabaseHelper.getAllFriends(db);
 		if(friendList != null) {
-			adapter = new FriendAdapter(getActivity(), R.layout.oweboard_list_item,
+			friendListAdapter = new FriendAdapter(getActivity(), R.layout.oweboard_list_item,
 					friendList);
-			setListAdapter(adapter);
-			updateFriendCount(adapter.getCount());
+			setListAdapter(friendListAdapter);
+			updateFriendCount();
 		} else {
-			updateFriendCount(0);
+			updateFriendCount();
 		}
 	}
 	
@@ -103,10 +103,16 @@ public class OweboardFragment extends ListFragment {
 		return super.onOptionsItemSelected(item);
 	}
 	
-	public void updateFriendCount(int count) {
-		totalFriends.setText(getResources().getString(
-				R.string.label_owesactions_listview)
-				+ " - " + count);
+	public void updateFriendCount() {
+		int dueCount = DatabaseHelper.getFriendsWithDuesCount(db);
+		if(dueCount == 0 && friendListAdapter.getCount() == 0) {
+			totalFriends.setVisibility(TextView.GONE);
+		} else {
+			totalFriends.setVisibility(TextView.VISIBLE);
+			totalFriends.setText(dueCount+"/"+friendListAdapter.getCount()+" "+getResources().getString(
+					R.string.label_owesactions_listview));
+		}
+		 
 	}
 
 	@Override
@@ -115,7 +121,7 @@ public class OweboardFragment extends ListFragment {
 		if(MainActivity.isSinglePane) {
 			updateListView();
 		}
-		updateFriendCount(adapter.getCount());
+		updateFriendCount();
 	}
 	
 
@@ -174,7 +180,7 @@ public class OweboardFragment extends ListFragment {
 									Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_add_friend_success), Toast.LENGTH_SHORT);
 									d.dismiss();
 									updateListView();
-									updateFriendCount(adapter.getCount());
+									updateFriendCount();
 								} else {
 									Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_add_friend_failure), Toast.LENGTH_SHORT);
 								}
@@ -197,7 +203,7 @@ public class OweboardFragment extends ListFragment {
 							Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_add_friend_success), Toast.LENGTH_SHORT);
 							d.dismiss();
 							updateListView();
-							updateFriendCount(adapter.getCount());
+							updateFriendCount();
 						} else {
 							Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_add_friend_failure), Toast.LENGTH_SHORT);
 						}
@@ -228,9 +234,9 @@ public class OweboardFragment extends ListFragment {
 
 	public static void updateListView() {
 		friendList = DatabaseHelper.getAllFriends(db);
-		adapter.clear();
-		adapter.addAll(friendList);
-		adapter.notifyDataSetChanged();
+		friendListAdapter.clear();
+		friendListAdapter.addAll(friendList);
+		friendListAdapter.notifyDataSetChanged();
 		
 	}
 	

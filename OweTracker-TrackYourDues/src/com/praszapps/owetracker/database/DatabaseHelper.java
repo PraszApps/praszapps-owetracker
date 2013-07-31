@@ -175,10 +175,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			return false;
 		}
 	}
-	
-	public static int getTotalFriendCount(SQLiteDatabase db) {
-		String sql = "SELECT * FROM "+TABLE_FRIEND+";";
 		
+	public static int getFriendsWithDuesCount(SQLiteDatabase db) {
+		String sql = "SELECT * FROM "+TABLE_FRIEND+" WHERE "+FRIEND_COLUMN_DUE+" != 0;";
 		Cursor c = db.rawQuery(sql, null);
 		int count = c.getCount();
 		if(!c.isClosed()) {

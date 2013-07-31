@@ -13,7 +13,6 @@ public class Due {
 	private int amount;
 	private String reason;
 	private String currency;
-	private String friendName;
 
 	public Due(String dueId, String friendId, long date, int amount,
 			String reason) {
@@ -84,15 +83,6 @@ public class Due {
 	public void setCurrency(String currency) {
 		this.currency = currency;
 	}
-
-	public String getFriendName() {
-		return friendName;
-	}
-
-	public void setFriendName(String friendName) {
-		this.friendName = friendName;
-	}
-	
 
 	@Override
 	public String toString() {

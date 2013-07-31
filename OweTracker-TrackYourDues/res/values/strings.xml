@@ -6,7 +6,7 @@
     <string name="about_title">About Owetracker</string>
     <string name="splash_icon_desc">App Icon</string>
 	<string name="oweboard_title">Owe-Board</string>
-	<string name="label_owesactions_listview">Friends with due money transactions</string>
+	<string name="label_owesactions_listview">friends with dues</string>
 	<string name="strNoRecordsFound">No friend added</string>
 	<string name="strNoFriendSelected">No friend selected</string>
 	<string name="strNoDueRecordsFound">No due added</string>
@@ -41,9 +41,9 @@
 	
 	
 	<!--  Strings and array for selection of give/take  -->
-	<string name="array_givetake_item_select">Select if friend took or gave</string>
-	<string name="array_givetake_item_gave">Friend Gave</string>
-	<string name="array_givetake_item_took">Friend Took</string>
+	<string name="array_givetake_item_select">Select who owes</string>
+	<string name="array_givetake_item_gave">I owe</string>
+	<string name="array_givetake_item_took">Friend owes</string>
 	
 	<string name="label_edit">Edit</string>
 	<string name="label_delete">Delete</string>
@@ -63,11 +63,14 @@
 	<string name="delete_due_alert_msg">Are you sure you want to delete this due?</string>
 	<string name="delete_reset_friend_alert_title">Delete/Reset friend?</string>
 	<string name="delete_reset_friend_alert_msg">Do you want to delete the friend name or reset the due value to zero?</string>
-	<string name="label_reset">Reset to zero</string>
+	<string name="label_reset">Reset</string>
 	<string name="add_due_dialog_title">Add due</string>
 	<string name="edit_due_dialog_title">Edit due</string>
 	<string name="edit_friend_dialog_title">Edit friend</string>
 	<string name="label_date">Date:</string>
 	<string name="menu_item_about">About</string>
 	<string name="label_save">Save</string>
+	<string name="label_cancel">Cancel</string>
+	<string name="toast_msg_reset">Dues reset</string>
+	<string name="toast_msg_delete">Friend deleted</string>
 </resources>

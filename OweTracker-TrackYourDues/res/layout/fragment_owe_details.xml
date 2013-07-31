@@ -19,8 +19,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:padding="10dp"
+        android:layout_marginTop="5dp"
+        android:padding="5dp"
         android:text="@null"
         android:visibility="invisible"
         android:textAppearance="?android:attr/textAppearanceMedium" />

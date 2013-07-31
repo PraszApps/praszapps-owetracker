@@ -3,21 +3,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <!-- <ImageView
+    <!--
+         <ImageView
         android:id="@+id/imageViewFriendImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:src="@drawable/default_friend_pic" /> -->
+        android:src="@drawable/default_friend_pic" />
+    -->
 
     <TextView
         android:id="@+id/textViewFriendName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:padding="10dp"
+        android:layout_marginLeft="5dp"
         android:text="Rinku Pani"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@android:color/black" />
@@ -25,14 +26,21 @@
     <TextView
         android:id="@+id/textViewOweSummary"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:layout_alignBaseline="@+id/textViewFriendName"
-        android:layout_alignBottom="@+id/textViewFriendName"
-        android:layout_alignParentRight="true"
-        android:text="Owes you Rs. 250/-"
-        android:textStyle="bold"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/textViewFriendName"
+        android:paddingBottom="5dp"
+        android:layout_marginLeft="25dp"
+        android:text="Rs. 250"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="@android:color/white" />
+
+    <ImageView
+        android:id="@+id/imageViewArrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="5dp"
+        android:src="@drawable/list_item_next" />
 
 </RelativeLayout>

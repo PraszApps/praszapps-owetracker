@@ -55,7 +55,7 @@ public class FriendAdapter extends ArrayAdapter<Friend> {
 			listItem.setBackgroundResource(R.color.list_item_red_bg);
 		}
 		textViewFriendName.setText(friend.getName());
-		textViewOweSummary.setText(friend.getSummary());
+		textViewOweSummary.setText(friend.toString());
 		//Utils.showLog(getClass().getSimpleName(), "getView() ends", Log.VERBOSE);
 		return listItem;
 	}

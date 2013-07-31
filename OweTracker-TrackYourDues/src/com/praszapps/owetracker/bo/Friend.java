@@ -95,10 +95,12 @@ public class Friend {
 	public String toString() {
 		
 		String friendObjToString = null;
-		if(oweAmount <= 0) {
-			friendObjToString = name+" "+Constants.OWES_YOU+" "+formatCurrency(currency)+Math.abs(oweAmount);
-		} else {
-			friendObjToString = Constants.YOU_OWE+" "+name+" "+formatCurrency(currency)+Math.abs(oweAmount);
+		if(oweAmount < 0) {
+			friendObjToString = Constants.OWES_YOU+" "+formatCurrency(currency)+Math.abs(oweAmount);
+		} else if(oweAmount > 0) {
+			friendObjToString = Constants.YOU_OWE+" "+formatCurrency(currency)+Math.abs(oweAmount);
+		} else if(oweAmount == 0) {
+			friendObjToString = Constants.NO_DUES;
 		}
 		
 		return friendObjToString;

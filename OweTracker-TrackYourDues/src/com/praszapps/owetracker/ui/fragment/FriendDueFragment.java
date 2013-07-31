@@ -521,7 +521,7 @@ public class FriendDueFragment extends ListFragment {
 		OweboardFragment.updateListView();
 		duesList = DatabaseHelper.getFriendDueList(friend.getId(), db);
 		adapter.clear();
-		adapter.setCurrency(friend.getCurrency());
+		adapter.setCurrency(friend.formatCurrency(friend.getCurrency()));
 		adapter.addAll(duesList);
 		adapter.notifyDataSetChanged();
 	}

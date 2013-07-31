@@ -71,9 +71,9 @@ public class DueAdapter extends ArrayAdapter<Due> {
 		dueData.get(position).setCurrency(currency);
 		
 		if (dueData.get(position).getAmount() <= 0) {
-			listItem.setBackgroundResource(R.color.list_item_green_bg);
+			listItem.setBackgroundResource(R.drawable.list_item_green_bg);
 		} else {
-			listItem.setBackgroundResource(R.color.list_item_red_bg);
+			listItem.setBackgroundResource(R.drawable.list_item_red_bg);
 		}
 		return listItem;
 	}

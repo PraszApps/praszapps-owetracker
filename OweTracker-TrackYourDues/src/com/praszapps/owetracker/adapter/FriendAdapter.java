@@ -50,9 +50,9 @@ public class FriendAdapter extends ArrayAdapter<Friend> {
 		Friend friend = friendData.get(position);
 		friend.setSummary(friend.getOweAmount());
 		if (friend.getOweAmount() <= 0) {
-			listItem.setBackgroundResource(R.color.list_item_green_bg);
+			listItem.setBackgroundResource(R.drawable.list_item_green_bg);
 		} else {
-			listItem.setBackgroundResource(R.color.list_item_red_bg);
+			listItem.setBackgroundResource(R.drawable.list_item_red_bg);
 		}
 		textViewFriendName.setText(friend.getName());
 		textViewOweSummary.setText(friend.toString());

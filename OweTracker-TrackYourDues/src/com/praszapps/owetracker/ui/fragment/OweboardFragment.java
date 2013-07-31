@@ -64,7 +64,7 @@ public class OweboardFragment extends ListFragment {
 		setHasOptionsMenu(true);
 		ActionBar action = getActivity().getActionBar();
 		action.setDisplayHomeAsUpEnabled(false);
-	
+		getActivity().setTitle(R.string.oweboard_title);
 		//Utils.showLog(getClass().getSimpleName(), "onCreateView() ends", Log.VERBOSE);
 		return v;
 	}

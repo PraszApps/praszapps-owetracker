@@ -1,44 +1,45 @@
 package com.praszapps.owetracker.ui.activity;
 
-import android.app.ActionBar;
-import android.app.ActionBar.Tab;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RatingBar;
+import android.widget.Toast;
 
-import com.praszapps.owetracker.ui.fragment.FragmentsTabAbout;
-import com.praszapps.owetracker.ui.fragment.FragmentsTabContact;
+import com.praszapps.owetracker.R;
+import com.praszapps.owetracker.util.Utils;
 
 public class AboutActivity extends RootActivity {
-	private Tab tab;
+	EditText feedbackText;
+	RatingBar ratingBar;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		// Create the actionbar
-		ActionBar actionBar = getActionBar();
-
-		// Hide Actionbar Icon
-		actionBar.setDisplayShowHomeEnabled(true);
-		actionBar.setDisplayHomeAsUpEnabled(true);
-
-		// Hide Actionbar Title
-		actionBar.setDisplayShowTitleEnabled(true);
-
-		// Create Actionbar Tabs
-		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-
-		// Create first Tab
-		tab = actionBar.newTab().setTabListener(new FragmentsTabAbout());
-		// Create your own custom icon
-		//tab.setIcon(R.drawable.tab1);
-		tab.setText("About");
-		actionBar.addTab(tab);
-
-		// Create Second Tab
-		tab = actionBar.newTab().setTabListener(new FragmentsTabContact());
-		// Set Tab Title
-		tab.setText("Tab2");
-		tab.setText("Contact");
-		actionBar.addTab(tab);
+		setContentView(R.layout.activity_about);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+		feedbackText = (EditText) findViewById(R.id.editTextFeedback);
+		ratingBar = (RatingBar) findViewById(R.id.ratingBarApprate);
+		Button sendFeedback = (Button) findViewById(R.id.buttonSend);
+		sendFeedback.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent i = new Intent(Intent.ACTION_SEND);
+				i.setType("message/rfc822");
+				i.putExtra(Intent.EXTRA_EMAIL  , new String[]{"prasannajeet89@gmail.com"});
+				i.putExtra(Intent.EXTRA_SUBJECT, "Owetracker - Feedback");
+				i.putExtra(Intent.EXTRA_TEXT   , feedbackText.getText().toString()+"\n\nRating -- "+ratingBar.getRating());
+				try {
+				    startActivity(Intent.createChooser(i, "Send Mail"));
+				} catch (android.content.ActivityNotFoundException ex) {
+				    Utils.showToast(AboutActivity.this, "There are no email clients installed", Toast.LENGTH_SHORT);
+				}
+			}
+		});
 	}
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {

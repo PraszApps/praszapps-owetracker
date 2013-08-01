@@ -25,29 +25,21 @@
 	<string name="toast_msg_update_friend_negative">Friend with same name exists. Please check friend name.</string>
 	<string name="label_hint_enter_amount">Enter amount</string>
 	<string name="label_hint_enter_desc">Enter reason/description</string>
-	
 	<string name="alertdialog_friend_title">Friend exists</string>
 	<string name="alertdialog_addfriend_message">A friend with same name exists. Do you want to save a new record?</string>
 	<string name="label_yes">Yes</string>
 	<string name="label_no">No</string>
-	
-	<!--  String and array for selection of currency -->
 	<string name="array_currency_item_select">Select currency</string>
 	<string name="array_currency_item_dollar">$</string>
 	<string name="array_currency_item_rupee">Rs</string>
 	<string name="array_currency_item_pound">£</string>
 	<string name="array_currency_item_euro">€</string>
 	<string name="array_currency_item_yen">¥</string>
-	
-	
-	<!--  Strings and array for selection of give/take  -->
 	<string name="array_givetake_item_select">Select who owes</string>
 	<string name="array_givetake_item_gave">I owe</string>
 	<string name="array_givetake_item_took">Friend owes</string>
-	
 	<string name="label_edit">Edit</string>
 	<string name="label_delete">Delete</string>
-	
 	<string name="toast_msg_add_due_amount">Please enter amount</string>
 	<string name="toast_msg_add_due_date">Please enter date</string>
 	<string name="toast_msg_add_due_givetake">Please select gave/took</string>
@@ -73,4 +65,11 @@
 	<string name="label_cancel">Cancel</string>
 	<string name="toast_msg_reset">Dues reset</string>
 	<string name="toast_msg_delete">Friend deleted</string>
+	<string name="label_feedback">Feedback</string>
+	<string name="label_rate">Rate the app</string>
+	<string name="label_send_feedback">Send feedback via e-mail</string>
+	<string name="feedback_hint">How do you find the Owetracker app?</string>
+	
+	<string name="lorem_ipsium">Lorem Ipsum Dolor Sit Amet, Consectetuer Adipiscing Elit. Nam Cursus. Morbi Ut Mi. Nullam Enim Leo, Egestas Id, Condimentum At, Laoreet Mattis, Massa. Sed Eleifend Nonummy Diam. Praesent Mauris Ante, Elementum Et, Bibendum At, Posuere Sit Amet, Nibh. Duis Tincidunt Lectus Quis Dui Viverra Vestibulum. Suspendisse Vulputate Aliquam Dui. Nulla Elementum Dui Ut Augue. Aliquam Vehicula Mi At Mauris. Maecenas Placerat, Nisl At Consequat Rhoncus, Sem Nunc Gravida Justo, Quis Eleifend Arcu Velit Quis Lacus. Morbi Magna Magna, Tincidunt A, Mattis Non, Imperdiet Vitae, Tellus. Sed Odio Est, Auctor Ac, Sollicitudin In, Consequat Vitae, Orci. Fusce Id Felis. Vivamus Sollicitudin Metus Eget Eros.
+Pellentesque Habitant Morbi Tristique Senectus Et Netus Et Malesuada Fames Ac Turpis Egestas. In Posuere Felis Nec Tortor. Pellentesque Faucibus. Ut Accumsan Ultricies Elit. Maecenas At Justo Id Velit Placerat Molestie. Donec Dictum Lectus Non Odio. Cras A Ante Vitae Enim Iaculis Aliquam. Mauris Nunc Quam, Venenatis Nec, Euismod Sit Amet, Egestas Placerat, Est. Pellentesque Habitant Morbi Tristique Senectus Et Netus Et Malesuada Fames Ac Turpis Egestas. Cras Id Elit. Integer Quis Urna. Ut Ante Enim, Dapibus Malesuada, Fringilla Eu, Condimentum Quis, Tellus. Aenean Porttitor Eros Vel Dolor. Donec Convallis Pede Venenatis Nibh. Duis Quam. Nam Eget Lacus. Aliquam Erat Volutpat. Quisque Dignissim Congue Leo.</string>
 </resources>

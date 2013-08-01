@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
 
 import com.praszapps.owetracker.R;
 import com.praszapps.owetracker.util.Constants;
@@ -18,7 +17,6 @@ public class SplashActivity extends RootActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// Setting up the UI
 		super.onCreate(savedInstanceState);
-		getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
 		getActionBar().hide();
 		setContentView(R.layout.activity_splash);
 		

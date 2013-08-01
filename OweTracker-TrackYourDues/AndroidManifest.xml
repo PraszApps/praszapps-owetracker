@@ -39,8 +39,7 @@
         <activity
             android:name="com.praszapps.owetracker.ui.activity.AboutActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/about_title"
-            android:theme="@style/DialogTheme" />
+            android:label="@string/about_title" />
     </application>
 
 </manifest>

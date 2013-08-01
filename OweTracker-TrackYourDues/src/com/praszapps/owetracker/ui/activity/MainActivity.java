@@ -1,6 +1,5 @@
 package com.praszapps.owetracker.ui.activity;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -53,10 +52,6 @@ public class MainActivity extends RootActivity implements OnFriendNameClickListe
 				//Utils.showLog(getClass().getSimpleName(), "Activity recreated", Log.DEBUG);
 			}
 		}
-
-		ActionBar aBar = getActionBar();
-		aBar.setBackgroundDrawable(getResources().getDrawable(R.color.actionbar_bg));
-
 	}
 
 	@Override

@@ -28,16 +28,21 @@ public class AboutActivity extends RootActivity {
 			
 			@Override
 			public void onClick(View v) {
-				Intent i = new Intent(Intent.ACTION_SEND);
-				i.setType("message/rfc822");
-				i.putExtra(Intent.EXTRA_EMAIL  , new String[]{"prasannajeet89@gmail.com"});
-				i.putExtra(Intent.EXTRA_SUBJECT, "Owetracker - Feedback");
-				i.putExtra(Intent.EXTRA_TEXT   , feedbackText.getText().toString()+"\n\nRating -- "+ratingBar.getRating());
-				try {
-				    startActivity(Intent.createChooser(i, "Send Mail"));
-				} catch (android.content.ActivityNotFoundException ex) {
-				    Utils.showToast(AboutActivity.this, "There are no email clients installed", Toast.LENGTH_SHORT);
+				if(feedbackText.getText().toString().trim().equals("")) {
+					Utils.showToast(AboutActivity.this, "Please enter feedback", Toast.LENGTH_SHORT);
+				} else {
+					Intent i = new Intent(Intent.ACTION_SEND);
+					i.setType("message/rfc822");
+					i.putExtra(Intent.EXTRA_EMAIL  , new String[]{"prasannajeet89@gmail.com"});
+					i.putExtra(Intent.EXTRA_SUBJECT, "Owetracker - Feedback");
+					i.putExtra(Intent.EXTRA_TEXT   , feedbackText.getText().toString()+"\n\nRating -- "+ratingBar.getRating());
+					try {
+					    startActivity(Intent.createChooser(i, "Send Mail"));
+					} catch (android.content.ActivityNotFoundException ex) {
+					    Utils.showToast(AboutActivity.this, "There are no email clients installed", Toast.LENGTH_SHORT);
+					}
 				}
+				
 			}
 		});
 	}

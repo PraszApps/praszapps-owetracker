@@ -415,7 +415,7 @@ public class FriendDueFragment extends ListFragment {
 						} else {
 							Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_update_friend_failure), Toast.LENGTH_SHORT);
 						}
-						
+						getActivity().setTitle(friend.getName());
 					}
 				}
 		});

@@ -15,8 +15,6 @@ public class RootActivity extends FragmentActivity {
 	protected SharedPreferences settings = null;	
 	public  DatabaseHelper dbHelper;
 	public SQLiteDatabase database;
-	public static int DEVICE_WIDTH_IN_PIXELS;
-	public static int DEVICE_HEIGHT_IN_PIXELS;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

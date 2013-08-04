@@ -433,11 +433,9 @@ public class FriendDueFragment extends ListFragment {
 				calendarMonth = c.get(Calendar.MONTH);
 				calendarDay = c.get(Calendar.DAY_OF_MONTH);
 			} else {
-				//TODO write logic to show entered date in the textview
-				final Calendar c = Calendar.getInstance();
-				calendarYear = c.get(Calendar.YEAR);
-				calendarMonth = c.get(Calendar.MONTH);
-				calendarDay = c.get(Calendar.DAY_OF_MONTH);
+				calendarYear = cld.get(Calendar.YEAR);
+				calendarMonth = cld.get(Calendar.MONTH);
+				calendarDay = cld.get(Calendar.DAY_OF_MONTH);
 			}
 			// Create a new instance of DatePickerDialog and return it
 			return new DatePickerDialog(getActivity(), this, calendarYear, calendarMonth, calendarDay);

@@ -1,8 +1,6 @@
 <resources>
 
     <color name="black_overlay">#66000000</color>
-	<color name="list_item_green_bg">#6bd170</color>
-    <color name="list_item_red_bg">#f37a77</color>
     <color name="actionbar_bg">#0d8c7f</color>
     <color name="list_view_divider">#4f4f4f</color>
     <color name="holo_blue_light">#ff33b5e5</color>

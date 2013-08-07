@@ -1,7 +1,6 @@
 package com.praszapps.owetracker.ui.activity;
 
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -33,7 +32,7 @@ public class MainActivity extends RootActivity implements OnFriendNameClickListe
 		if(v == null) {
 			//Running on tablet
 			Utils.showLog(getClass().getSimpleName(), "Its running on tablet", Log.INFO);
-			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+			//setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 			isSinglePane = false;
 		} else {
 			//Its running on phone

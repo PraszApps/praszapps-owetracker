@@ -10,7 +10,7 @@
         android:id="@+id/oweboard_frag"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1"
+        android:layout_weight="2"
         android:name="com.praszapps.owetracker.ui.fragment.OweboardFragment"
         class="com.praszapps.owetracker.ui.fragment.OweboardFragment"
         tools:layout="@layout/fragment_oweboard" />
@@ -23,7 +23,7 @@
         android:id="@+id/due_frag"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="2"
+        android:layout_weight="3"
         android:name="com.praszapps.owetracker.ui.fragment.FriendDueFragment"
         class="com.praszapps.owetracker.ui.fragment.FriendDueFragment"
         tools:layout="@layout/fragment_owe_details" />

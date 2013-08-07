@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +33,7 @@ public class DueAdapter extends ArrayAdapter<Due> {
 		this.layoutResourceId = layoutResourceId;
 		this.dueData = data;
 		this.currency = currency;
+		Log.e("Pani", currency);
 		this.friendName = friendName;
 
 	}
@@ -59,12 +61,12 @@ public class DueAdapter extends ArrayAdapter<Due> {
 		ImageView imageViewDueStatus = (ImageView) listItem.findViewById(R.id.imageViewDueStatus);
 		textViewDate.setText(dueData.get(position).getFormattedDate());
 		String summary = null;
-		
+		//Log.e("Pani", dueData.get(position).getCurrency());
 		if(dueData.get(position).getAmount() >=0 ) {
-			summary = "I owe "+dueData.get(position).getCurrency()+Math.abs(dueData.get(position).getAmount());
+			summary = "I owe "+currency+Math.abs(dueData.get(position).getAmount());
 		} else {
 			
-			summary = friendName+" owes "+dueData.get(position).getCurrency()+Math.abs(dueData.get(position).getAmount());
+			summary = friendName+" owes "+currency+Math.abs(dueData.get(position).getAmount());
 		}
 		
 		textViewAmtDetails.setText(summary);

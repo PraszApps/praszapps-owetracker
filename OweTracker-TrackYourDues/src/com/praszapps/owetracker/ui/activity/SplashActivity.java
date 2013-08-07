@@ -1,15 +1,11 @@
 package com.praszapps.owetracker.ui.activity;
 
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
-import android.view.View;
 
 import com.praszapps.owetracker.R;
 import com.praszapps.owetracker.util.Constants;
-import com.praszapps.owetracker.util.Utils;
 
 public class SplashActivity extends RootActivity {
 
@@ -18,18 +14,7 @@ public class SplashActivity extends RootActivity {
 		// Setting up the UI
 		super.onCreate(savedInstanceState);
 		getActionBar().hide();
-		setContentView(R.layout.activity_splash);
-		
-		View v = findViewById(R.id.appiconsplash_tablet);	
-		
-		if(v != null) {
-			//We are in tablet
-			Utils.showLog(getClass().getSimpleName(), "Its running on tablet", Log.INFO);
-			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-		} else {
-			Utils.showLog(getClass().getSimpleName(), "Its running on phone", Log.INFO);
-		}
-		
+		setContentView(R.layout.activity_splash);		
 		new Handler().postDelayed(new Runnable() {
 			
 			@Override

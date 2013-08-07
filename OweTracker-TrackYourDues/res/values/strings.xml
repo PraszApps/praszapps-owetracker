@@ -10,7 +10,7 @@
 	<string name="strNoRecordsFound">No friend added</string>
 	<string name="strNoFriendSelected">No friend selected</string>
 	<string name="strNoDueRecordsFound">No due added</string>
-	<string name="menu_item_close_due">Dues cleared</string>
+	<string name="menu_item_close_due">Clear dues/Delete friend</string>
 	<string name="menu_item_edit_friend">Edit Friend</string>
 	<string name="menu_item_add_due">Add Due</string>
 	<string name="menu_item_add_friend">Add friend</string>

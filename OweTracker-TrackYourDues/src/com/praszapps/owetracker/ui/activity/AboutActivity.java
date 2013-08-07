@@ -1,9 +1,7 @@
 package com.praszapps.owetracker.ui.activity;
 
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -27,16 +25,6 @@ public class AboutActivity extends RootActivity {
 		feedbackText = (EditText) findViewById(R.id.editTextFeedback);
 		ratingBar = (RatingBar) findViewById(R.id.ratingBarApprate);
 		Button sendFeedback = (Button) findViewById(R.id.buttonSend);
-		View v = findViewById(R.id.container);
-
-		if (v != null) {
-			Utils.showLog(getClass().getSimpleName(), "Its running on tablet",
-					Log.INFO);
-			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-		} else {
-			Utils.showLog(getClass().getSimpleName(), "Its running on phone",
-					Log.INFO);
-		}
 		sendFeedback.setOnClickListener(new OnClickListener() {
 
 			@Override

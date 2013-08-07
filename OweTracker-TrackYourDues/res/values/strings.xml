@@ -12,11 +12,10 @@
 	<string name="strNoDueRecordsFound">No due added</string>
 	<string name="menu_item_close_due">Clear dues/Delete friend</string>
 	<string name="menu_item_edit_friend">Edit Friend</string>
-	<string name="menu_item_add_due">Add Due</string>
 	<string name="menu_item_add_friend">Add friend</string>
 	<string name="toast_msg_add_friend_name">Please enter name</string>
 	<string name="toast_msg_add_friend_currency">Please select a currency</string>
-	<string name="label_add_date">Click to enter date</string>
+	<string name="label_add_date">Tap to enter date</string>
 	<string name="toast_msg_add_friend_success">Friend added auccesfully</string>
 	<string name="toast_msg_add_friend_failure">Failed to add friend</string>
 	<string name="toast_msg_friend_data_get_failure">Failed to get data for the friend</string>
@@ -35,14 +34,14 @@
 	<string name="array_currency_item_pound">£</string>
 	<string name="array_currency_item_euro">€</string>
 	<string name="array_currency_item_yen">¥</string>
-	<string name="array_givetake_item_select">Select who owes</string>
-	<string name="array_givetake_item_gave">I owe</string>
-	<string name="array_givetake_item_took">Friend owes</string>
+	<string name="array_givetake_item_select">Select who owes whom</string>
+	<string name="array_givetake_item_gave">I owe/Friend gave</string>
+	<string name="array_givetake_item_took">Friend owes/I gave</string>
 	<string name="label_edit">Edit</string>
 	<string name="label_delete">Delete</string>
 	<string name="toast_msg_add_due_amount">Please enter amount</string>
 	<string name="toast_msg_add_due_date">Please enter date</string>
-	<string name="toast_msg_add_due_givetake">Please select gave/took</string>
+	<string name="toast_msg_add_due_givetake">Please select who owes whom</string>
 	<string name="toast_msg_add_due_reason">Please enter description</string>
 	<string name="label_enter_friend_name">Enter name of friend</string>
 	<string name="toast_msg_due_add_success">Due added successfully</string>
@@ -69,7 +68,7 @@
 	<string name="label_rate">Rate the app</string>
 	<string name="label_send_feedback">Send feedback via e-mail</string>
 	<string name="feedback_hint">How do you find the Owetracker app?</string>
-	
+	<string name="menu_item_add_new_due">Add new due</string>
 	<string name="lorem_ipsium">OweTracker app is made for android users who live among friends with whom they usually have dues with each other. This application will help them to keep a track of their dues with different friends.
 	    \n\nThe application helps you add friends and then add dues as you give/take and have easy access to the final amount you owe to each other.
 	    \n\nFeel free to leave feedback below.</string>

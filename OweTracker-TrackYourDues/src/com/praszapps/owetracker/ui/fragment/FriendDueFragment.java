@@ -312,17 +312,17 @@ public class FriendDueFragment extends ListFragment {
 			private Due addDue;
 			@Override
 			public void onClick(View v) {
-				if(editTextAmount.getText().toString().equals("") || editTextAmount.getText().toString() == null) {
-					Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_add_due_amount), Toast.LENGTH_SHORT);
-					return;
-				} else if(editTextReason.getText().toString().equals("") || editTextReason.getText().toString() == null) {
-					Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_add_due_reason), Toast.LENGTH_SHORT);
+				if(textViewDate.getText().toString().equals(getResources().getString(R.string.label_add_date))) {
+					Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_add_due_date), Toast.LENGTH_SHORT);
 					return;
 				} else if(spinnerGaveTook.getSelectedItem().toString().equals(getResources().getString(R.string.array_givetake_item_select))) {
 					Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_add_due_givetake), Toast.LENGTH_SHORT);
 					return;
-				} else if(textViewDate.getText().toString().equals(getResources().getString(R.string.label_add_date))) {
-					Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_add_due_date), Toast.LENGTH_SHORT);
+				} else if(editTextAmount.getText().toString().equals("") || editTextAmount.getText().toString() == null) {
+					Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_add_due_amount), Toast.LENGTH_SHORT);
+					return;
+				} else if(editTextReason.getText().toString().equals("") || editTextReason.getText().toString() == null) {
+					Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_add_due_reason), Toast.LENGTH_SHORT);
 					return;
 				} else {
 					addDue = new Due();
@@ -510,17 +510,17 @@ public class FriendDueFragment extends ListFragment {
 		buttonSave.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if(editTextAmount.getText().toString().equals("") || editTextAmount.getText().toString() == null) {
-					Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_add_due_amount), Toast.LENGTH_SHORT);
-					return;
-				} else if(editTextReason.getText().toString().equals("") || editTextReason.getText().toString() == null) {
-					Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_add_due_reason), Toast.LENGTH_SHORT);
+				if(textViewDate.getText().toString().equals(getResources().getString(R.string.label_add_date))) {
+					Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_add_due_date), Toast.LENGTH_SHORT);
 					return;
 				} else if(spinnerGaveTook.getSelectedItem().toString().equals(getResources().getString(R.string.array_givetake_item_select))) {
 					Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_add_due_givetake), Toast.LENGTH_SHORT);
 					return;
-				} else if(textViewDate.getText().toString().equals(getResources().getString(R.string.label_add_date))) {
-					Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_add_due_date), Toast.LENGTH_SHORT);
+				} else if(editTextAmount.getText().toString().equals("") || editTextAmount.getText().toString() == null) {
+					Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_add_due_amount), Toast.LENGTH_SHORT);
+					return;
+				} else if(editTextReason.getText().toString().equals("") || editTextReason.getText().toString() == null) {
+					Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_add_due_reason), Toast.LENGTH_SHORT);
 					return;
 				} else {										
 					// Convert amount according to selection

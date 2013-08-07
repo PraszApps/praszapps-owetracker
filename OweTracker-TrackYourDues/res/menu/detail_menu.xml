@@ -20,6 +20,6 @@
         android:icon="@drawable/adddue"
         android:orderInCategory="2"
         android:showAsAction="always|withText"
-        android:title="@string/menu_item_add_due"/>
+        android:title="@string/menu_item_add_new_due"/>
 
 </menu>

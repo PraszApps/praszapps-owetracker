@@ -52,6 +52,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/editTextReason"
         android:layout_marginTop="20dp"
-        android:text="@string/menu_item_add_due" />
+        android:text="@string/label_save" />
 
 </RelativeLayout>

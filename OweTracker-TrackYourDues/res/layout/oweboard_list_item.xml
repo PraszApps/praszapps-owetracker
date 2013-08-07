@@ -34,7 +34,7 @@
         android:paddingRight="10dp"
         android:text="Rs. 250"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="#787878" />
+        android:textColor="@color/due_list_item_amt_color" />
 
     <ImageView
         android:id="@+id/imageViewArrow"

@@ -42,6 +42,10 @@ public class DueAdapter extends ArrayAdapter<Due> {
 		this.currency = currency;
 	}
 	
+	public void setFriendName(String friendName) {
+		this.friendName = friendName;
+	}
+	
 	public void updateAdapter(ArrayList<Due> dueList) {
 		// Updating adapter
 	    this.dueData = dueList;

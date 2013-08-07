@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.ListFragment;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
@@ -573,6 +574,7 @@ public class FriendDueFragment extends ListFragment {
 		duesList = DatabaseHelper.getFriendDueList(friend.getId(), db);
 		dueListAdapter.clear();
 		dueListAdapter.setCurrency(friend.formatCurrency(friend.getCurrency()));
+		dueListAdapter.setFriendName(friend.getName());
 		dueListAdapter.addAll(duesList);
 		dueListAdapter.notifyDataSetChanged();
 	}

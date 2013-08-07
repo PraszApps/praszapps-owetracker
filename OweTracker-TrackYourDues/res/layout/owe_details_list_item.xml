@@ -23,7 +23,7 @@
         android:layout_alignParentRight="true"
         android:layout_marginRight="10dp"
         android:layout_marginTop="5dp"
-        android:paddingLeft="5dp"
+        android:paddingLeft="150dp"
         android:text="Gave Rs 300/-"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="@color/due_list_item_amt_color" />
@@ -33,7 +33,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/textViewDate"
+        android:layout_below="@+id/textViewAmtDetails"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="10dp"
         android:layout_marginLeft="55dp"

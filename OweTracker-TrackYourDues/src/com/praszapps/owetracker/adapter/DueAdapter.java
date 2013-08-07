@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.praszapps.owetracker.R;
@@ -55,7 +56,7 @@ public class DueAdapter extends ArrayAdapter<Due> {
 		TextView textViewDate = (TextView) listItem.findViewById(R.id.textViewDate);
 		TextView textViewAmtDetails = (TextView) listItem.findViewById(R.id.textViewAmtDetails);
 		TextView textViewReason = (TextView) listItem.findViewById(R.id.textViewReason);
-		
+		ImageView imageViewDueStatus = (ImageView) listItem.findViewById(R.id.imageViewDueStatus);
 		textViewDate.setText(dueData.get(position).getFormattedDate());
 		String summary = null;
 		
@@ -71,9 +72,9 @@ public class DueAdapter extends ArrayAdapter<Due> {
 		dueData.get(position).setCurrency(currency);
 		
 		if (dueData.get(position).getAmount() <= 0) {
-			listItem.setBackgroundResource(R.drawable.list_item_green_bg);
+			imageViewDueStatus.setImageResource(R.drawable.greensquare);
 		} else {
-			listItem.setBackgroundResource(R.drawable.list_item_red_bg);
+			imageViewDueStatus.setImageResource(R.drawable.redsquare);
 		}
 		return listItem;
 	}

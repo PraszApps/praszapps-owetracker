@@ -7,7 +7,7 @@
         android:id="@+id/textViewDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
+        android:layout_marginLeft="65dp"
         android:layout_marginTop="5dp"
         android:paddingRight="5dp"
         android:text="28/11/2012"
@@ -35,14 +35,23 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/textViewDate"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="25dp"
-        android:layout_marginRight="5dp"
         android:layout_marginBottom="10dp"
+        android:layout_marginLeft="85dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="10dp"
         android:paddingBottom="5dp"
         android:text="For Cinemax Movie"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="@color/due_list_item_desc_color"
         android:textStyle="italic" />
+
+    <ImageView
+        android:id="@+id/imageViewDueStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:src="@drawable/greensquare" />
 
 </RelativeLayout>

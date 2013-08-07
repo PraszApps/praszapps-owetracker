@@ -51,10 +51,12 @@ public class FriendAdapter extends ArrayAdapter<Friend> {
 		// Set data for each row
 		Friend friend = friendData.get(position);
 		friend.setSummary(friend.getOweAmount());
-		if (friend.getOweAmount() <= 0) {
-			status.setImageResource(R.drawable.greensquare);
-		} else {
+		if (friend.getOweAmount() < 0) {
+			status.setImageResource(R.drawable.bluesquare);
+		} else if(friend.getOweAmount() > 0) {
 			status.setImageResource(R.drawable.redsquare);
+		} else if(friend.getOweAmount() == 0) {
+			status.setImageResource(R.drawable.greensquare);
 		}
 		textViewFriendName.setText(friend.getName());
 		textViewOweSummary.setText(friend.toString());

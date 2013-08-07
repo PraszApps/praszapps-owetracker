@@ -72,7 +72,7 @@ public class DueAdapter extends ArrayAdapter<Due> {
 		dueData.get(position).setCurrency(currency);
 		
 		if (dueData.get(position).getAmount() <= 0) {
-			imageViewDueStatus.setImageResource(R.drawable.greensquare);
+			imageViewDueStatus.setImageResource(R.drawable.bluesquare);
 		} else {
 			imageViewDueStatus.setImageResource(R.drawable.redsquare);
 		}

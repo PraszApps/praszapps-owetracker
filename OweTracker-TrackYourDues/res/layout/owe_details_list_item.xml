@@ -38,7 +38,7 @@
         android:layout_marginBottom="10dp"
         android:layout_marginLeft="55dp"
         android:layout_marginRight="5dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:paddingBottom="5dp"
         android:text="For Cinemax Movie"
         android:textAppearance="?android:attr/textAppearanceMedium"

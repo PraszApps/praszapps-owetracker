@@ -454,7 +454,7 @@ public class FriendDueFragment extends ListFragment {
 			cld.set(Calendar.MILLISECOND, 0);
 			if (cld.getTime().after(new Date())){
 				Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_due_invalid_date), Toast.LENGTH_SHORT);
-				textViewDate.setText(getResources().getString(R.string.label_click_add_date));
+				textViewDate.setText(getResources().getString(R.string.label_add_date));
 			}else{
 				calendarDay = day;
 				calendarMonth = month;

@@ -22,6 +22,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnFocusChangeListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -49,7 +50,7 @@ public class FriendDueFragment extends ListFragment {
 	private Friend friend, updateFriend;
 	private RootActivity rAct;
 	private TextView textViewOweSummary, emptyTextView;
-	private static TextView textViewDate;
+	private static EditText editTextDate;
 	private ListView listViewTransactions;
 	private ArrayList<Due> duesList = new ArrayList<Due>();
 	private SQLiteDatabase db;
@@ -61,6 +62,7 @@ public class FriendDueFragment extends ListFragment {
 	private Due due;
 	private static int calendarYear, calendarMonth, calendarDay;
 	private static Calendar cld;
+	DialogFragment datepicker;
 	@SuppressLint("SimpleDateFormat")
 	private static SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 	
@@ -90,6 +92,7 @@ public class FriendDueFragment extends ListFragment {
 			showDetails(b.getString(Constants.BUNDLE_EXTRA_FRIENDID), b.getString(Constants.BUNDLE_EXTRA_CURRENCY));
 			
 		}
+		datepicker = new DatePickerFragment();
 		//Utils.showLog(getClass().getSimpleName(), "onCreateView() ends", Log.VERBOSE);
 		return v;
 	}
@@ -286,7 +289,7 @@ public class FriendDueFragment extends ListFragment {
 		d = new Dialog(getActivity());
 		d.setContentView(R.layout.dialog_add_due);
 		d.setTitle(getResources().getString(R.string.add_due_dialog_title));
-		textViewDate = (TextView) d.findViewById(R.id.textViewDate);
+		editTextDate = (EditText) d.findViewById(R.id.editTextDate);
 		spinnerGaveTook = (Spinner) d.findViewById(R.id.spinnerGiveTake);
 		ArrayAdapter<String> currencyAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.string_array_give_take));
 		currencyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -296,15 +299,12 @@ public class FriendDueFragment extends ListFragment {
 		editTextReason = (EditText) d.findViewById(R.id.editTextReason);
 		editTextReason.setHint(R.string.label_hint_enter_desc);
 		buttonSave = (Button) d.findViewById(R.id.buttonSave);
-		
-		textViewDate.setOnClickListener(new OnClickListener() {
+		editTextDate.setKeyListener(null);
+		editTextDate.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				
-				DialogFragment datepicker = new DatePickerFragment();
 				datepicker.show(getFragmentManager(), "datePicker");
-				
 			}
 		});
 		
@@ -312,7 +312,7 @@ public class FriendDueFragment extends ListFragment {
 			private Due addDue;
 			@Override
 			public void onClick(View v) {
-				if(textViewDate.getText().toString().equals(getResources().getString(R.string.label_add_date))) {
+				if(editTextDate.getText().toString().equals(getResources().getString(R.string.label_add_date))) {
 					Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_add_due_date), Toast.LENGTH_SHORT);
 					return;
 				} else if(spinnerGaveTook.getSelectedItem().toString().equals(getResources().getString(R.string.array_givetake_item_select))) {
@@ -427,7 +427,7 @@ public class FriendDueFragment extends ListFragment {
 		@Override
 		public Dialog onCreateDialog(Bundle savedInstanceState) {
 			// Use the current date as the default date in the picker
-			if(!textViewDate.getText().toString().contains("/")) {
+			if(!editTextDate.getText().toString().contains("/")) {
 				final Calendar c = Calendar.getInstance();
 				calendarYear = c.get(Calendar.YEAR);
 				calendarMonth = c.get(Calendar.MONTH);
@@ -454,12 +454,12 @@ public class FriendDueFragment extends ListFragment {
 			cld.set(Calendar.MILLISECOND, 0);
 			if (cld.getTime().after(new Date())){
 				Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_due_invalid_date), Toast.LENGTH_SHORT);
-				textViewDate.setText(getResources().getString(R.string.label_add_date));
+				editTextDate.setText(getResources().getString(R.string.label_add_date));
 			}else{
 				calendarDay = day;
 				calendarMonth = month;
 				calendarYear = year;
-				textViewDate.setText("Date: "+dateFormat.format(cld.getTimeInMillis()));
+				editTextDate.setText("Date: "+dateFormat.format(cld.getTimeInMillis()));
 			}
 			
 			
@@ -472,8 +472,8 @@ public class FriendDueFragment extends ListFragment {
 		d = new Dialog(getActivity());
 		d.setContentView(R.layout.dialog_add_due);
 		d.setTitle(getResources().getString(R.string.edit_due_dialog_title));
-		textViewDate = (TextView) d.findViewById(R.id.textViewDate);
-		textViewDate.setText(getResources().getString(R.string.label_date)+" "+due.getFormattedDate());
+		editTextDate = (EditText) d.findViewById(R.id.editTextDate);
+		editTextDate.setText(getResources().getString(R.string.label_date)+" "+due.getFormattedDate());
 		spinnerGaveTook = (Spinner) d.findViewById(R.id.spinnerGiveTake);
 		ArrayAdapter<String> currencyAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.string_array_give_take));
 		currencyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -495,22 +495,18 @@ public class FriendDueFragment extends ListFragment {
 		editTextReason.setHint(R.string.label_hint_enter_desc);
 		editTextReason.setText(due.getReason());
 		buttonSave = (Button) d.findViewById(R.id.buttonSave);
-		
-		textViewDate.setOnClickListener(new OnClickListener() {
+		editTextDate.setKeyListener(null);
+		editTextDate.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				
-				DialogFragment datepicker = new DatePickerFragment();
 				datepicker.show(getFragmentManager(), "datePicker");
-				
 			}
 		});
-		
 		buttonSave.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if(textViewDate.getText().toString().equals(getResources().getString(R.string.label_add_date))) {
+				if(editTextDate.getText().toString().equals(getResources().getString(R.string.label_add_date))) {
 					Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_add_due_date), Toast.LENGTH_SHORT);
 					return;
 				} else if(spinnerGaveTook.getSelectedItem().toString().equals(getResources().getString(R.string.array_givetake_item_select))) {

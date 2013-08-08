@@ -19,7 +19,7 @@
     <Spinner
         android:id="@+id/spinnerCurrency"
         android:layout_width="match_parent"
-        android:spinnerMode="dialog"
+        android:spinnerMode="dropdown"
         android:prompt="@string/array_currency_item_select"
         android:layout_height="wrap_content"
         android:layout_below="@+id/editTextFriendName"
@@ -29,10 +29,13 @@
 
     <Button
         android:id="@+id/buttonSave"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/spinnerCurrency"
         android:layout_below="@+id/spinnerCurrency"
+        android:layout_centerHorizontal="true"
+        android:paddingLeft="50dp"
+        android:paddingRight="50dp"
         android:layout_marginTop="30dp"
         android:text="@string/label_save"
         android:textStyle="bold" />

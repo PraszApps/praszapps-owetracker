@@ -360,7 +360,13 @@ public class FriendDueFragment extends ListFragment {
 						addDue.setDueId(Utils.generateUniqueID());
 						success = DatabaseHelper.addDue(addDue, db);
 					} else if(mode.equals(Constants.MODE_EDIT)) {
-						addDue.setDueId(dueId);
+						if(dueId!=null) {
+							addDue.setDueId(dueId);
+						} else {
+							Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_due_add_failure), Toast.LENGTH_SHORT);
+							d.dismiss();
+							return;
+						}
 						success = DatabaseHelper.updateDue(addDue, db);
 					}
 					

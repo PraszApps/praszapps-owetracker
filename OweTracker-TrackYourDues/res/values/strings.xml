@@ -15,7 +15,7 @@
 	<string name="menu_item_add_friend">Add friend</string>
 	<string name="toast_msg_add_friend_name">Please enter name</string>
 	<string name="toast_msg_add_friend_currency">Please select a currency</string>
-	<string name="label_add_date">Tap to enter date</string>
+	<string name="label_add_date">Date: Tap to select date</string>
 	<string name="toast_msg_add_friend_success">Friend added auccesfully</string>
 	<string name="toast_msg_add_friend_failure">Failed to add friend</string>
 	<string name="toast_msg_friend_data_get_failure">Failed to get data for the friend</string>

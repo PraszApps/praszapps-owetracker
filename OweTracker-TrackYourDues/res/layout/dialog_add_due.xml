@@ -14,7 +14,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_marginTop="20dp"
-            android:hint="@string/label_add_date"
+            android:text="@string/label_add_date"
             android:inputType="date|none"
             android:textAppearance="?android:attr/textAppearanceMedium" >
 

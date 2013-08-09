@@ -9,5 +9,7 @@ public class Constants {
 	public static final String BUNDLE_EXTRA_FRIENDID = "friendId";
 	public static final String CURRENCY_RS = "Rs";
 	public static final long SPLASH_SCREEN_TIMEOUT = 2000;
+	public static final String MODE_ADD = "add";
+	public static final String MODE_EDIT = "edit";
 	public static final String GOOGLE_ANALYTICS_TRACKING_ID = "UA-42776545-1";
 }

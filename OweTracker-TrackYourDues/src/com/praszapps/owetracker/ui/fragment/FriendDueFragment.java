@@ -122,7 +122,7 @@ public class FriendDueFragment extends ListFragment {
 		due = dueListAdapter.getItem(info.position);
 		switch(item.getItemId()) {
 		case 0:
-			showEditDueDialog();
+			showDueDialog(Constants.MODE_EDIT);
 			break;
 		case 1:
 			Utils.showAlertDialog(getActivity(), getResources().getString(R.string.delete_due_alert_title),
@@ -174,7 +174,7 @@ public class FriendDueFragment extends ListFragment {
             return true;
             
 		case R.id.item_add_due:
-			showAddDueDialog();
+			showDueDialog(Constants.MODE_ADD);
 			return true;
 			
 		case R.id.item_edit_friend:
@@ -285,7 +285,8 @@ public class FriendDueFragment extends ListFragment {
 	
 	}
 	
-	private void showAddDueDialog() {
+	@SuppressWarnings("unchecked")
+	private void showDueDialog(String mode) {
 		d = new Dialog(getActivity());
 		d.setContentView(R.layout.dialog_add_due);
 		d.setTitle(getResources().getString(R.string.add_due_dialog_title));
@@ -299,6 +300,22 @@ public class FriendDueFragment extends ListFragment {
 		editTextReason = (EditText) d.findViewById(R.id.editTextReason);
 		editTextReason.setHint(R.string.label_hint_enter_desc);
 		buttonSave = (Button) d.findViewById(R.id.buttonSave);
+		
+		if(mode.equals(Constants.MODE_EDIT)) {
+			editTextDate.setText(getResources().getString(R.string.label_date)+" "+due.getFormattedDate());
+			editTextAmount.setText(Math.abs(due.getAmount())+"");		
+			if(due.getAmount() > 0 ) {	
+				spinnerGaveTook.setSelection(((ArrayAdapter<String>) spinnerGaveTook.getAdapter())
+						.getPosition(getResources().getString(R.string.array_givetake_item_gave)));
+				
+			} else {
+				spinnerGaveTook.setSelection(((ArrayAdapter<String>) spinnerGaveTook.getAdapter())
+						.getPosition(getResources().getString(R.string.array_givetake_item_took)));
+			}
+			editTextAmount.setText(Math.abs(due.getAmount())+"");
+			editTextReason.setText(due.getReason());
+		}
+		
 		editTextDate.setKeyListener(null);
 		editTextDate.setOnClickListener(new OnClickListener() {
 			
@@ -368,7 +385,7 @@ public class FriendDueFragment extends ListFragment {
 		d.show();
 	
 	}
-	
+		
 	@SuppressWarnings("unchecked")
 	private void showEditFriendDialog() {
 		d = new Dialog(getActivity());
@@ -467,102 +484,6 @@ public class FriendDueFragment extends ListFragment {
 		}
 	}
 	
-	@SuppressWarnings({ "unchecked" })
-	private  void showEditDueDialog() {
-		d = new Dialog(getActivity());
-		d.setContentView(R.layout.dialog_add_due);
-		d.setTitle(getResources().getString(R.string.edit_due_dialog_title));
-		editTextDate = (EditText) d.findViewById(R.id.editTextDate);
-		editTextDate.setText(getResources().getString(R.string.label_date)+" "+due.getFormattedDate());
-		spinnerGaveTook = (Spinner) d.findViewById(R.id.spinnerGiveTake);
-		ArrayAdapter<String> currencyAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.string_array_give_take));
-		currencyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		spinnerGaveTook.setAdapter(currencyAdapter);
-		
-		
-		editTextAmount = (EditText) d.findViewById(R.id.editTextAmount);
-		editTextAmount.setHint(R.string.label_hint_enter_amount);
-		if(due.getAmount() > 0 ) {	
-			spinnerGaveTook.setSelection(((ArrayAdapter<String>) spinnerGaveTook.getAdapter())
-					.getPosition(getResources().getString(R.string.array_givetake_item_gave)));
-			
-		} else {
-			spinnerGaveTook.setSelection(((ArrayAdapter<String>) spinnerGaveTook.getAdapter())
-					.getPosition(getResources().getString(R.string.array_givetake_item_took)));
-		}
-		editTextAmount.setText(Math.abs(due.getAmount())+"");
-		editTextReason = (EditText) d.findViewById(R.id.editTextReason);
-		editTextReason.setHint(R.string.label_hint_enter_desc);
-		editTextReason.setText(due.getReason());
-		buttonSave = (Button) d.findViewById(R.id.buttonSave);
-		editTextDate.setKeyListener(null);
-		editTextDate.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				datepicker.show(getFragmentManager(), "datePicker");
-			}
-		});
-		buttonSave.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if(editTextDate.getText().toString().equals(getResources().getString(R.string.label_add_date))) {
-					Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_add_due_date), Toast.LENGTH_SHORT);
-					return;
-				} else if(spinnerGaveTook.getSelectedItem().toString().equals(getResources().getString(R.string.array_givetake_item_select))) {
-					Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_add_due_givetake), Toast.LENGTH_SHORT);
-					return;
-				} else if(editTextAmount.getText().toString().equals("") || editTextAmount.getText().toString() == null) {
-					Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_add_due_amount), Toast.LENGTH_SHORT);
-					return;
-				} else if(editTextReason.getText().toString().equals("") || editTextReason.getText().toString() == null) {
-					Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_add_due_reason), Toast.LENGTH_SHORT);
-					return;
-				} else {										
-					// Convert amount according to selection
-					int amt = 0;
-					if(spinnerGaveTook.getSelectedItem().toString().equals(getResources().getString(R.string.array_givetake_item_gave))) {
-						amt = Integer.parseInt(editTextAmount.getText().toString().trim());
-					} else if(spinnerGaveTook.getSelectedItem().toString().equals(getResources().getString(R.string.array_givetake_item_took))) {
-						amt = -(Integer.parseInt(editTextAmount.getText().toString().trim()));
-					}
-
-					if(cld != null) {
-						due.setDate(cld.getTimeInMillis());
-					}
-					due.setAmount(amt);
-					due.setReason(editTextReason.getText().toString().trim());
-					
-					if(DatabaseHelper.updateDue(due, db)) {
-						Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_due_update_success), Toast.LENGTH_SHORT);
-						//DatabaseHelper.updateFriendDue(friend.getId(), db);
-						updateDueList();
-						updateFriendSummary();
-						if(!MainActivity.isSinglePane) {
-							int dueCount = DatabaseHelper.getFriendsWithDuesCount(db);
-							if(dueCount == 0 && OweboardFragment.friendListAdapter.getCount() == 0) {
-								OweboardFragment.totalFriends.setVisibility(TextView.GONE);
-							} else {
-								OweboardFragment.totalFriends.setVisibility(TextView.VISIBLE);
-								OweboardFragment.totalFriends.setText(dueCount+"/"+OweboardFragment.friendListAdapter.getCount()+" "+getResources().getString(
-										R.string.label_owesactions_listview));
-							}
-						}
-						d.dismiss();
-					} else {
-						Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_due_add_failure), Toast.LENGTH_SHORT);
-						d.dismiss();
-					}
-					due = null;
-					return;
-				}
-			}
-		});
-		d.show();
-	
-	
-		
-	}
 	
 	private void updateDueList() {
 		OweboardFragment.updateListView();

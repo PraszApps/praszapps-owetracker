@@ -9,7 +9,7 @@
 	<string name="label_owesactions_listview">friends with dues</string>
 	<string name="strNoRecordsFound">No friend added\n\nAdd some friends\' names to get started</string>
 	<string name="strNoFriendSelected">No friend selected\n\nTap on a friend\'s name to see dues</string>
-	<string name="strNoDueRecordsFound">No due added</string>
+	<string name="strNoDueRecordsFound">No due added\n\nTap on the \"+\" icon on the top bar to add dues</string>
 	<string name="menu_item_close_due">Clear dues/Delete friend</string>
 	<string name="menu_item_edit_friend">Edit Friend</string>
 	<string name="menu_item_add_friend">Add friend</string>

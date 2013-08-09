@@ -61,7 +61,7 @@ public class FriendDueFragment extends ListFragment {
 	private Button buttonSave;
 	private Due due;
 	private static int calendarYear, calendarMonth, calendarDay;
-	private static Calendar cld;
+	private static Calendar cld = Calendar.getInstance();
 	DialogFragment datepicker;
 	@SuppressLint("SimpleDateFormat")
 	private static SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
@@ -105,10 +105,8 @@ public class FriendDueFragment extends ListFragment {
 	}
 	
 	@Override
-	public void onCreateContextMenu(ContextMenu menu, View v,
-			ContextMenuInfo menuInfo) {
+	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
 		if (v.getId()== android.R.id.list) {
-			
 		    String[] menuItems = getResources().getStringArray(R.array.array_due_item_options);
 		    for (int i = 0; i<menuItems.length; i++) {
 		      menu.add(Menu.NONE, i, i, menuItems[i]);
@@ -122,7 +120,7 @@ public class FriendDueFragment extends ListFragment {
 		due = dueListAdapter.getItem(info.position);
 		switch(item.getItemId()) {
 		case 0:
-			showDueDialog(Constants.MODE_EDIT);
+			showDueDialog(Constants.MODE_EDIT, due.getDueId());
 			break;
 		case 1:
 			Utils.showAlertDialog(getActivity(), getResources().getString(R.string.delete_due_alert_title),
@@ -174,7 +172,7 @@ public class FriendDueFragment extends ListFragment {
             return true;
             
 		case R.id.item_add_due:
-			showDueDialog(Constants.MODE_ADD);
+			showDueDialog(Constants.MODE_ADD, null);
 			return true;
 			
 		case R.id.item_edit_friend:
@@ -286,7 +284,8 @@ public class FriendDueFragment extends ListFragment {
 	}
 	
 	@SuppressWarnings("unchecked")
-	private void showDueDialog(String mode) {
+	private void showDueDialog(String opMode, final String dueId) {
+		final String mode = opMode;
 		d = new Dialog(getActivity());
 		d.setContentView(R.layout.dialog_add_due);
 		d.setTitle(getResources().getString(R.string.add_due_dialog_title));
@@ -303,6 +302,7 @@ public class FriendDueFragment extends ListFragment {
 		
 		if(mode.equals(Constants.MODE_EDIT)) {
 			editTextDate.setText(getResources().getString(R.string.label_date)+" "+due.getFormattedDate());
+			cld.setTimeInMillis(due.getDate());
 			editTextAmount.setText(Math.abs(due.getAmount())+"");		
 			if(due.getAmount() > 0 ) {	
 				spinnerGaveTook.setSelection(((ArrayAdapter<String>) spinnerGaveTook.getAdapter())
@@ -329,7 +329,7 @@ public class FriendDueFragment extends ListFragment {
 			private Due addDue;
 			@Override
 			public void onClick(View v) {
-				if(editTextDate.getText().toString().equals(getResources().getString(R.string.label_add_date))) {
+				if(editTextDate.getText().toString().equals("")) {
 					Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_add_due_date), Toast.LENGTH_SHORT);
 					return;
 				} else if(spinnerGaveTook.getSelectedItem().toString().equals(getResources().getString(R.string.array_givetake_item_select))) {
@@ -343,10 +343,8 @@ public class FriendDueFragment extends ListFragment {
 					return;
 				} else {
 					addDue = new Due();
-					addDue.setDueId(Utils.generateUniqueID());
-					addDue.setFriendId(friend.getId());
 					addDue.setDate(cld.getTimeInMillis());
-										
+					addDue.setFriendId(friend.getId());
 					// Convert amount according to selection
 					int amt = 0;
 					if(spinnerGaveTook.getSelectedItem().toString().equals(getResources().getString(R.string.array_givetake_item_gave))) {
@@ -357,9 +355,17 @@ public class FriendDueFragment extends ListFragment {
 					
 					addDue.setAmount(amt);
 					addDue.setReason(editTextReason.getText().toString().trim());
+					Boolean success = false;
+					if(mode.equals(Constants.MODE_ADD)) {
+						addDue.setDueId(Utils.generateUniqueID());
+						success = DatabaseHelper.addDue(addDue, db);
+					} else if(mode.equals(Constants.MODE_EDIT)) {
+						addDue.setDueId(dueId);
+						success = DatabaseHelper.updateDue(addDue, db);
+					}
 					
-					if(DatabaseHelper.addDue(addDue, db)) {
-						Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_due_add_success), Toast.LENGTH_SHORT);
+					
+					if(success) {
 						DatabaseHelper.updateFriendDue(friend.getId(), db);
 						updateDueList();
 						updateFriendSummary();
@@ -372,6 +378,11 @@ public class FriendDueFragment extends ListFragment {
 								OweboardFragment.totalFriends.setText(dueCount+"/"+OweboardFragment.friendListAdapter.getCount()+" "+getResources().getString(
 										R.string.label_owesactions_listview));
 							}
+						}
+						if(mode.equals(Constants.MODE_ADD)) {
+							Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_due_add_success), Toast.LENGTH_SHORT);
+						} else if(mode.equals(Constants.MODE_EDIT)) {
+							Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_due_update_success), Toast.LENGTH_SHORT);
 						}
 						d.dismiss();
 					} else {
@@ -443,24 +454,17 @@ public class FriendDueFragment extends ListFragment {
 
 		@Override
 		public Dialog onCreateDialog(Bundle savedInstanceState) {
-			// Use the current date as the default date in the picker
-			if(!editTextDate.getText().toString().contains("/")) {
-				final Calendar c = Calendar.getInstance();
-				calendarYear = c.get(Calendar.YEAR);
-				calendarMonth = c.get(Calendar.MONTH);
-				calendarDay = c.get(Calendar.DAY_OF_MONTH);
-			} else {
-				calendarYear = cld.get(Calendar.YEAR);
-				calendarMonth = cld.get(Calendar.MONTH);
-				calendarDay = cld.get(Calendar.DAY_OF_MONTH);
-			}
+			// Set the calendar
+			calendarYear = cld.get(Calendar.YEAR);
+			calendarMonth = cld.get(Calendar.MONTH);
+			calendarDay = cld.get(Calendar.DAY_OF_MONTH);
 			// Create a new instance of DatePickerDialog and return it
-			return new DatePickerDialog(getActivity(), this, calendarYear, calendarMonth, calendarDay);
+			return new DatePickerDialog(getActivity(), this, calendarYear,
+					calendarMonth, calendarDay);
 		}
 
 		public void onDateSet(DatePicker view, int year, int month, int day) {
 			// Do something with the date chosen by the user
-			
 			cld = Calendar.getInstance();
 			cld.set(Calendar.YEAR, year);
 			cld.set(Calendar.MONTH, month);
@@ -476,7 +480,7 @@ public class FriendDueFragment extends ListFragment {
 				calendarDay = day;
 				calendarMonth = month;
 				calendarYear = year;
-				editTextDate.setText("Date: "+dateFormat.format(cld.getTimeInMillis()));
+				editTextDate.setText(getResources().getString(R.string.label_date)+" "+dateFormat.format(cld.getTimeInMillis()));
 			}
 			
 			

@@ -3,6 +3,7 @@ package com.praszapps.owetracker.bo;
 import android.annotation.SuppressLint;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 
 public class Due {
@@ -48,7 +49,7 @@ public class Due {
 	public String getFormattedDate() {
 		Calendar c = Calendar.getInstance();
 		c.setTimeInMillis(date);
-		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
 		return dateFormat.format(c.getTimeInMillis());
 	}
 	

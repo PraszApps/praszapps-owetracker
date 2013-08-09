@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
@@ -63,7 +64,7 @@ public class FriendDueFragment extends ListFragment {
 	private static Calendar cld;
 	DialogFragment datepicker;
 	@SuppressLint("SimpleDateFormat")
-	private static SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+	private static SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,

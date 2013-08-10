@@ -3,16 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <!--
-         <ImageView
-        android:id="@+id/imageViewFriendImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:src="@drawable/default_friend_pic" />
-    -->
-
     <TextView
         android:id="@+id/textViewFriendName"
         android:layout_width="wrap_content"
@@ -20,7 +10,6 @@
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="35dp"
         android:paddingRight="40dp"
-        android:text="Rinku Pani"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@android:color/black" />
 
@@ -32,7 +21,6 @@
         android:layout_marginLeft="45dp"
         android:paddingBottom="5dp"
         android:paddingRight="10dp"
-        android:text="Rs. 250"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="@color/due_list_item_amt_color" />
 
@@ -43,16 +31,18 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginRight="5dp"
+        android:contentDescription="@string/app_name"
         android:src="@drawable/list_item_next" />
-    
+
     <ImageView
         android:id="@+id/imageViewStatus"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="10dp" />
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:contentDescription="@string/app_name" />
 
 </RelativeLayout>

@@ -34,7 +34,6 @@
         android:fadingEdge="vertical|horizontal"
         android:fadingEdgeLength="10dp"
         android:fastScrollEnabled="true"
-        android:listSelector="@color/blue_header"
         android:overScrollMode="always"
         android:saveEnabled="true"
         android:scrollingCache="true"

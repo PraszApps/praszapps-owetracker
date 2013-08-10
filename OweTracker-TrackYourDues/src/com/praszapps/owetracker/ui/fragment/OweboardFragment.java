@@ -58,6 +58,10 @@ public class OweboardFragment extends ListFragment {
 		db = rAct.database;
 		listViewOwelist = (ListView) v.findViewById(android.R.id.list);
 		listViewOwelist.setEmptyView(v.findViewById(R.id.empty_friendlist));
+		if (!MainActivity.isSinglePane) {
+			// Set selector if in tab
+			listViewOwelist.setSelector(R.color.blue_header);
+		}
 		totalFriends = (TextView) v.findViewById(R.id.listFriends);
 		
 		setHasOptionsMenu(true);

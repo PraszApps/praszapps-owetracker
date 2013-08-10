@@ -9,4 +9,8 @@
     <color name="due_list_item_desc_color">#242424</color>
     <color name="blue_header">#ade1ff</color>
     
+    <color name="indicator_green">#1c9540</color>
+    <color name="indicator_red">#b01f1a</color>
+    <color name="indicator_blue">#256c9c</color>
+    
 </resources>

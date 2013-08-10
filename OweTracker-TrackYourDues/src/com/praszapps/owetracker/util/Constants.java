@@ -2,7 +2,7 @@ package com.praszapps.owetracker.util;
 
 public class Constants {
 
-	public static final String OWES_YOU = "Owes you";
+	public static final String OWES_YOU = "Owes me";
 	public static final String YOU_OWE = "I owe";
 	public static final String NO_DUES = "No dues";
 	public static final String BUNDLE_EXTRA_CURRENCY = "currency";

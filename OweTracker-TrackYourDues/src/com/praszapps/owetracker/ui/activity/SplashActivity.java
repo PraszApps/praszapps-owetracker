@@ -13,7 +13,7 @@ public class SplashActivity extends RootActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// Setting up the UI
 		super.onCreate(savedInstanceState);
-		getActionBar().hide();
+		getSupportActionBar().hide();
 		setContentView(R.layout.activity_splash);		
 		new Handler().postDelayed(new Runnable() {
 			

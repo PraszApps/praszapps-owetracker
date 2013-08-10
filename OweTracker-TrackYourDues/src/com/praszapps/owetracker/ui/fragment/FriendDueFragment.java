@@ -7,7 +7,6 @@ import java.util.Date;
 import java.util.Locale;
 
 import android.annotation.SuppressLint;
-import android.app.ActionBar;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.database.sqlite.SQLiteDatabase;
@@ -75,8 +74,7 @@ public class FriendDueFragment extends ListFragment {
 		v = inflater.inflate(R.layout.fragment_owe_details, container, false);
 		//Setting the action bar
 		if(MainActivity.isSinglePane) {
-			ActionBar action = getActivity().getActionBar();
-			action.setDisplayHomeAsUpEnabled(true);
+			((MainActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		}
 		//Initializing views and other variables
 		emptyTextView = (TextView) v.findViewById(R.id.empty_duelist);
@@ -271,7 +269,7 @@ public class FriendDueFragment extends ListFragment {
 				// Setting the adapter
 				dueListAdapter = new DueAdapter(getActivity(), R.layout.owe_details_list_item, duesList, friend.formatCurrency(friend.getCurrency()), friend.getName());
 				setListAdapter(dueListAdapter);
-				getActivity().setTitle(friend.getName());
+				((MainActivity)getActivity()).getSupportActionBar().setTitle(friend.getName());
 			}
 			
 		} else {
@@ -501,7 +499,9 @@ public class FriendDueFragment extends ListFragment {
 		dueListAdapter.clear();
 		dueListAdapter.setCurrency(friend.formatCurrency(friend.getCurrency()));
 		dueListAdapter.setFriendName(friend.getName());
-		dueListAdapter.addAll(duesList);
+		for(int i = 0; i<duesList.size(); i++) {
+			dueListAdapter.add(duesList.get(i));
+		}
 		dueListAdapter.notifyDataSetChanged();
 	}
 	

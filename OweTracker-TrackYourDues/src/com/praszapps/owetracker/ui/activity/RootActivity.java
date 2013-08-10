@@ -1,16 +1,16 @@
 package com.praszapps.owetracker.ui.activity;
 
-import android.app.ActionBar;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 
 import com.google.analytics.tracking.android.EasyTracker;
 import com.praszapps.owetracker.R;
 import com.praszapps.owetracker.database.DatabaseHelper;
 
-public class RootActivity extends FragmentActivity {
+public class RootActivity extends ActionBarActivity {
 
 	protected SharedPreferences settings = null;	
 	public  DatabaseHelper dbHelper;
@@ -21,7 +21,7 @@ public class RootActivity extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 		dbHelper = new DatabaseHelper(this);
 		database = dbHelper.getWritableDatabase();
-		ActionBar aBar = getActionBar();
+		ActionBar aBar = getSupportActionBar();
 		aBar.setBackgroundDrawable(getResources().getDrawable(R.color.actionbar_bg));
 	}
 

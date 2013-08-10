@@ -2,7 +2,6 @@ package com.praszapps.owetracker.ui.fragment;
 
 import java.util.ArrayList;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Dialog;
 import android.database.sqlite.SQLiteDatabase;
@@ -62,9 +61,8 @@ public class OweboardFragment extends ListFragment {
 		totalFriends = (TextView) v.findViewById(R.id.listFriends);
 		
 		setHasOptionsMenu(true);
-		ActionBar action = getActivity().getActionBar();
-		action.setDisplayHomeAsUpEnabled(false);
-		getActivity().setTitle(R.string.oweboard_title);
+		((MainActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+		((MainActivity)getActivity()).getSupportActionBar().setTitle(R.string.oweboard_title);
 		//Utils.showLog(getClass().getSimpleName(), "onCreateView() ends", Log.VERBOSE);
 		return v;
 	}
@@ -235,7 +233,9 @@ public class OweboardFragment extends ListFragment {
 	public static void updateListView() {
 		friendList = DatabaseHelper.getAllFriends(db);
 		friendListAdapter.clear();
-		friendListAdapter.addAll(friendList);
+		for(int i = 0; i<friendList.size(); i++) {
+			friendListAdapter.add(friendList.get(i));
+		}
 		friendListAdapter.notifyDataSetChanged();
 		
 	}

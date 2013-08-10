@@ -21,7 +21,7 @@ public class AboutActivity extends RootActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_about);
-		getActionBar().setDisplayHomeAsUpEnabled(true);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		feedbackText = (EditText) findViewById(R.id.editTextFeedback);
 		ratingBar = (RatingBar) findViewById(R.id.ratingBarApprate);
 		Button sendFeedback = (Button) findViewById(R.id.buttonSend);

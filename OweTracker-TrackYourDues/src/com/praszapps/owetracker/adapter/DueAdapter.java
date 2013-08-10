@@ -64,10 +64,10 @@ public class DueAdapter extends ArrayAdapter<Due> {
 		textViewDate.setText(dueData.get(position).getFormattedDate());
 		String summary = null;
 		if(dueData.get(position).getAmount() >=0 ) {
-			summary = "I owe "+currency+Math.abs(dueData.get(position).getAmount());
+			summary = "I owe "+friendName+" "+currency+Math.abs(dueData.get(position).getAmount());
 		} else {
 			
-			summary = friendName+" owes "+currency+Math.abs(dueData.get(position).getAmount());
+			summary = friendName+" owes me "+currency+Math.abs(dueData.get(position).getAmount());
 		}
 		
 		textViewAmtDetails.setText(summary);

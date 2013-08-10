@@ -5,9 +5,12 @@
     <color name="list_view_divider">#4f4f4f</color>
     <color name="holo_blue_light">#ff33b5e5</color>
     <color name="due_list_item_date_color">#242424</color>
-    <color name="due_list_item_amt_color">#470f0f</color>
+    <color name="due_list_item_amt_color">#7d1010</color>
     <color name="due_list_item_desc_color">#242424</color>
     <color name="blue_header">#ade1ff</color>
+    
+    <color name="listview_bg">#DCDCDC</color>
+    <color name="due_details_bg">#f3fbff</color>
     
     <color name="indicator_green">#1c9540</color>
     <color name="indicator_red">#b01f1a</color>

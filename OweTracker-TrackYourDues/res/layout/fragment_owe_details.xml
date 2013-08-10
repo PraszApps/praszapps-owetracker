@@ -1,30 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:background="@color/listview_bg" >
 
     <ListView
         android:id="@android:id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/textViewOweSummary"
+        android:layout_below="@+id/duedivider"
+        android:background="@color/listview_bg"
         android:divider="@color/list_view_divider"
         android:dividerHeight="1dp"
         android:hapticFeedbackEnabled="true" >
     </ListView>
-    <TextView
+    
+    <TextView
         android:id="@+id/textViewOweSummary"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
+        android:background="@drawable/green_rounded_bg"
         android:gravity="center_horizontal"
         android:padding="10dp"
-        android:background="@drawable/friendcountbg"
         android:text="@null"
         android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
         android:visibility="invisible" />
+    
+    <View 
+        android:id="@+id/duedivider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="2dp"
+        android:layout_below="@+id/textViewOweSummary"
+        android:background="@android:color/black"/>
 
     <TextView
         android:id="@+id/empty_duelist"
@@ -32,6 +45,7 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:gravity="center"
+        android:textColor="@color/black_overlay"
         android:text="@string/strNoFriendSelected" >
     </TextView>
 

@@ -75,9 +75,7 @@
             android:hint="@string/feedback_hint"
             android:inputType="textMultiLine|textCapSentences"
             android:minLines="5"
-            android:textColor="@android:color/black" >
-            <requestFocus />
-        </EditText>
+            android:textColor="@android:color/black" />
 
     </RelativeLayout>
 

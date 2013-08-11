@@ -1,57 +1,55 @@
 package com.praszapps.owetracker.ui.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBar.Tab;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
-import android.widget.Toast;
 
 import com.praszapps.owetracker.R;
-import com.praszapps.owetracker.util.Utils;
+import com.praszapps.owetracker.adapter.AboutSectionsPagerAdapter;
 
-public class AboutActivity extends RootActivity {
+public class AboutActivity extends RootActivity implements
+		android.support.v7.app.ActionBar.TabListener {
 	EditText feedbackText;
 	RatingBar ratingBar;
+	AboutSectionsPagerAdapter aboutAdapter;
+	ViewPager mViewPager;
 
+	
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_about);
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-		feedbackText = (EditText) findViewById(R.id.editTextFeedback);
-		ratingBar = (RatingBar) findViewById(R.id.ratingBarApprate);
-		Button sendFeedback = (Button) findViewById(R.id.buttonSend);
-		sendFeedback.setOnClickListener(new OnClickListener() {
+		final ActionBar actionBar = getSupportActionBar();
+		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+		actionBar.setDisplayHomeAsUpEnabled(true);
+		aboutAdapter = new AboutSectionsPagerAdapter(getSupportFragmentManager());
+		mViewPager = (ViewPager) findViewById(R.id.pager);
+		mViewPager.setAdapter(aboutAdapter);
+		mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
 
-			@Override
-			public void onClick(View v) {
-				if (feedbackText.getText().toString().trim().equals("")) {
-					Utils.showToast(AboutActivity.this,
-							"Please enter feedback", Toast.LENGTH_SHORT);
-				} else {
-					Intent i = new Intent(Intent.ACTION_SEND);
-					i.setType("message/rfc822");
-					i.putExtra(Intent.EXTRA_EMAIL,
-							new String[] { "prasannajeet89@gmail.com" });
-					i.putExtra(Intent.EXTRA_SUBJECT, "Owetracker - Feedback");
-					i.putExtra(Intent.EXTRA_TEXT,
-							feedbackText.getText().toString()
-									+ "\n\nRating -- " + ratingBar.getRating());
-					try {
-						startActivity(Intent.createChooser(i, "Send Mail"));
-					} catch (android.content.ActivityNotFoundException ex) {
-						Utils.showToast(AboutActivity.this,
-								"There are no email clients installed",
-								Toast.LENGTH_SHORT);
+					@Override
+					public void onPageSelected(int position) {
+							actionBar.setSelectedNavigationItem(position);
+						
 					}
-				}
 
-			}
-		});
+				});
+
+		for (int i = 0; i < aboutAdapter.getCount(); i++) {
+			// Create a tab with text corresponding to the page title defined by
+			// the adapter.
+			// Also specify this Activity object, which implements the
+			// TabListener interface, as the
+			// listener for when this tab is selected.
+			actionBar.addTab(actionBar.newTab().setText(aboutAdapter.getPageTitle(i)).setTabListener(this));
+		}
+
 	}
 
 	@Override
@@ -60,6 +58,23 @@ public class AboutActivity extends RootActivity {
 			onBackPressed();
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	@Override
+	public void onTabReselected(Tab arg0, FragmentTransaction arg1) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onTabSelected(Tab tab, FragmentTransaction ft) {
+		mViewPager.setCurrentItem(tab.getPosition());
+	}
+
+	@Override
+	public void onTabUnselected(Tab arg0, FragmentTransaction arg1) {
+		// TODO Auto-generated method stub
+
 	}
 
 }

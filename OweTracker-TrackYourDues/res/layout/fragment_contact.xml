@@ -76,7 +76,9 @@
             android:inputType="textMultiLine|textCapSentences"
             android:minLines="5"
             android:textColor="@android:color/black" >
+            <requestFocus />
         </EditText>
+
     </RelativeLayout>
 
 </ScrollView>

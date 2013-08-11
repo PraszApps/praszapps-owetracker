@@ -6,16 +6,12 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBar.Tab;
 import android.view.MenuItem;
-import android.widget.EditText;
-import android.widget.RatingBar;
 
 import com.praszapps.owetracker.R;
 import com.praszapps.owetracker.adapter.AboutSectionsPagerAdapter;
 
 public class AboutActivity extends RootActivity implements
 		android.support.v7.app.ActionBar.TabListener {
-	EditText feedbackText;
-	RatingBar ratingBar;
 	AboutSectionsPagerAdapter aboutAdapter;
 	ViewPager mViewPager;
 

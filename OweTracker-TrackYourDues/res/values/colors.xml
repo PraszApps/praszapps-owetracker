@@ -12,8 +12,4 @@
     <color name="listview_bg">#DCDCDC</color>
     <color name="due_details_bg">#f3fbff</color>
     
-    <color name="indicator_green">#1c9540</color>
-    <color name="indicator_red">#b01f1a</color>
-    <color name="indicator_blue">#256c9c</color>
-    
 </resources>

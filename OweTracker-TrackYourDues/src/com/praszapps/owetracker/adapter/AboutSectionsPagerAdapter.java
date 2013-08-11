@@ -1,11 +1,11 @@
 package com.praszapps.owetracker.adapter;
 
-import com.praszapps.owetracker.ui.fragment.AboutFragment;
-import com.praszapps.owetracker.ui.fragment.ContactFragment;
-
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+
+import com.praszapps.owetracker.ui.fragment.AboutFragment;
+import com.praszapps.owetracker.ui.fragment.ContactFragment;
 
 
 
@@ -23,7 +23,7 @@ public class AboutSectionsPagerAdapter extends FragmentPagerAdapter {
         	case 1:
         		return new ContactFragment();
         	default:
-        		return new AboutFragment();
+        		return null;
         	}
         }
 

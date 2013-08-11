@@ -10,6 +10,6 @@
         android:layout_height="wrap_content"
         android:padding="10dp"
         android:text="@string/lorem_ipsium"
-        android:textColor="@color/black_overlay" />
+        android:textColor="@android:color/black" />
 
 </ScrollView>

@@ -314,7 +314,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public static ArrayList<Due> getFriendDueList(String friendId, SQLiteDatabase db) {
 		ArrayList<Due> dueList = new ArrayList<Due>();
 		// Select All Query
-		String selectQuery = "SELECT * FROM "+TABLE_DUE+" WHERE "+FRIEND_COLUMN_ID+" = '"+friendId+"' ORDER BY "+DUE_COLUMN_DATE;
+		String selectQuery = "SELECT * FROM "+TABLE_DUE+" WHERE "+FRIEND_COLUMN_ID+" = '"+friendId+"' ORDER BY "+DUE_COLUMN_DATE+" DESC;";
 
 		Cursor cursor = db.rawQuery(selectQuery, null);
 		// looping through all rows and adding to list

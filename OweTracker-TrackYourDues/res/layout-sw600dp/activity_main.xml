@@ -24,8 +24,8 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="3"
-        android:name="com.praszapps.owetracker.ui.fragment.FriendDueFragment"
-        class="com.praszapps.owetracker.ui.fragment.FriendDueFragment"
-        tools:layout="@layout/fragment_owe_details" />
+        android:name="com.praszapps.owetracker.ui.fragment.DueFragment"
+        class="com.praszapps.owetracker.ui.fragment.DueFragment"
+        tools:layout="@layout/fragment_due" />
 
 </LinearLayout>

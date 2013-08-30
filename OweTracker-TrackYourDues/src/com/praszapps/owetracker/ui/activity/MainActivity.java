@@ -11,7 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.praszapps.owetracker.R;
-import com.praszapps.owetracker.ui.fragment.FriendDueFragment;
+import com.praszapps.owetracker.ui.fragment.DueFragment;
 import com.praszapps.owetracker.ui.fragment.OweboardFragment;
 import com.praszapps.owetracker.ui.fragment.OweboardFragment.OnFriendNameClickListener;
 import com.praszapps.owetracker.util.Constants;
@@ -80,7 +80,7 @@ public class MainActivity extends RootActivity implements OnFriendNameClickListe
 			 */
 			FragmentManager fm = getSupportFragmentManager();
 			FragmentTransaction ft = fm.beginTransaction();
-			FriendDueFragment fragTwo = new FriendDueFragment();
+			DueFragment fragTwo = new DueFragment();
 			Bundle args = new Bundle();
 			args.putString(Constants.BUNDLE_EXTRA_FRIENDID, friendId);
 			args.putString(Constants.BUNDLE_EXTRA_CURRENCY, currency);
@@ -95,7 +95,7 @@ public class MainActivity extends RootActivity implements OnFriendNameClickListe
 			 * via reference to fragment
 			 */
 			//get reference to FriendDueFragment
-			FriendDueFragment dueFrag = (FriendDueFragment)getSupportFragmentManager().findFragmentById(R.id.due_frag);
+			DueFragment dueFrag = (DueFragment)getSupportFragmentManager().findFragmentById(R.id.due_frag);
 			dueFrag.showDetails(friendId, currency);
 		}
 	

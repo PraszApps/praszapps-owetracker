@@ -43,7 +43,7 @@ import com.praszapps.owetracker.ui.activity.RootActivity;
 import com.praszapps.owetracker.util.Constants;
 import com.praszapps.owetracker.util.Utils;
 
-public class FriendDueFragment extends ListFragment {
+public class DueFragment extends ListFragment {
 
 	private View v;
 	private Friend friend, updateFriend;
@@ -71,7 +71,7 @@ public class FriendDueFragment extends ListFragment {
 		//Utils.showLog(getClass().getSimpleName(), "onCreateView() starts", Log.VERBOSE);
 		
 		//Setting the View
-		v = inflater.inflate(R.layout.fragment_owe_details, container, false);
+		v = inflater.inflate(R.layout.fragment_due, container, false);
 		//Setting the action bar
 		if(MainActivity.isSinglePane) {
 			((MainActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);

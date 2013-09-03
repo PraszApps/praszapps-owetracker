@@ -29,7 +29,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="@android:color/white"
         android:textStyle="bold"
-        android:visibility="invisible" />
+        android:visibility="gone" />
     
     <View 
         android:id="@+id/duedivider"

@@ -196,7 +196,7 @@ public class DueFragment extends ListFragment {
 						updateDueList();
 						OweboardFragment.updateListView();
 						setHasOptionsMenu(false);
-						getActivity().setTitle(getResources().getString(R.string.oweboard_title));
+						((MainActivity)getActivity()).getSupportActionBar().setTitle(getResources().getString(R.string.oweboard_title));
 						int dueCount = DatabaseHelper.getFriendsWithDuesCount(db);
 						if(dueCount == 0 && OweboardFragment.friendListAdapter.getCount() == 0) {
 							OweboardFragment.totalFriends.setVisibility(TextView.GONE);
@@ -220,6 +220,7 @@ public class DueFragment extends ListFragment {
 				public void onNegative() {
 					
 					if(duesList.size() == 0) {
+						// Show error if there are no dues to reset
 						Utils.showToast(getActivity(), getResources().getString(R.string.no_dues_to_reset), Toast.LENGTH_SHORT);
 					} else {
 						// Delete dues and reset due value to zero

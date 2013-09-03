@@ -389,6 +389,12 @@ public class DueFragment extends ListFragment {
 						}
 						if(mode.equals(Constants.MODE_ADD)) {
 							Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_due_add_success), Toast.LENGTH_SHORT);
+							
+							if(RootActivity.owetrackerPrefs.getBoolean(Constants.IS_FIRST_INSTALL, true)) {
+								Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_long_press), Toast.LENGTH_LONG);
+								RootActivity.owetrackerPrefs.edit().putBoolean(Constants.IS_FIRST_INSTALL, false).commit();
+							}
+							
 						} else if(mode.equals(Constants.MODE_EDIT)) {
 							Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_due_update_success), Toast.LENGTH_SHORT);
 						}

@@ -9,18 +9,21 @@ import android.support.v7.app.ActionBarActivity;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.praszapps.owetracker.R;
 import com.praszapps.owetracker.database.DatabaseHelper;
+import com.praszapps.owetracker.util.Constants;
 
 public class RootActivity extends ActionBarActivity {
 
 	protected SharedPreferences settings = null;	
 	public  DatabaseHelper dbHelper;
 	public SQLiteDatabase database;
+	public static SharedPreferences owetrackerPrefs;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		dbHelper = new DatabaseHelper(this);
 		database = dbHelper.getWritableDatabase();
+		owetrackerPrefs = getSharedPreferences(Constants.SHARED_PREFERENCES_NAME, 0);
 		ActionBar aBar = getSupportActionBar();
 		aBar.setBackgroundDrawable(getResources().getDrawable(R.color.actionbar_bg));
 	}

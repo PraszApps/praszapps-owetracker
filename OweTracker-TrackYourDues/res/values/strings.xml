@@ -67,6 +67,9 @@
 	<string name="label_send_feedback">Send feedback via e-mail</string>
 	<string name="feedback_hint">How do you find the Owetracker app?</string>
 	<string name="menu_item_add_new_due">Add new due</string>
+	<string name="toast_msg_long_press">You can long press due items to edit/update</string>
+	
+	
 	<string name="lorem_ipsium">OweTracker app is made for android users who live among friends with whom they usually have dues with each other. This application will help them to keep a track of their dues with different friends.
 	    \n\nThe application helps you add friends and then add dues as you give/take and have easy access to the final amount you owe to each other.
 	    </string>

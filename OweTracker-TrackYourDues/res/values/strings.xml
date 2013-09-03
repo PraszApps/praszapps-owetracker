@@ -67,7 +67,7 @@
 	<string name="label_send_feedback">Send feedback via e-mail</string>
 	<string name="feedback_hint">How do you find the Owetracker app?</string>
 	<string name="menu_item_add_new_due">Add new due</string>
-	<string name="toast_msg_long_press">You can long press due items to edit/update</string>
+	<string name="toast_msg_long_press">You can long press dues to edit or delete</string>
 	<string name="toast_msg_swipe">Swipe to switch between tabs</string>
 	
 	<string name="owes_me">Owes me</string>

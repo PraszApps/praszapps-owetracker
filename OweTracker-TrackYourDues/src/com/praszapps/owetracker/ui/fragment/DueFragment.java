@@ -420,7 +420,7 @@ public class DueFragment extends ListFragment {
 	@SuppressWarnings("unchecked")
 	private void showEditFriendDialog() {
 		d = new Dialog(getActivity());
-		d.setContentView(R.layout.dialog_add__update_friend);
+		d.setContentView(R.layout.dialog_add_update_friend);
 		d.setTitle(getResources().getString(R.string.edit_friend_dialog_title));
 		final Spinner spinnerCurrency = (Spinner) d.findViewById(R.id.spinnerCurrency);
 		ArrayAdapter<String> currencyAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.string_array_currency));

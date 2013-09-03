@@ -17,6 +17,7 @@ public class Constants {
 	public static final String MODE_EDIT = "edit";
 	public static final String GOOGLE_ANALYTICS_TRACKING_ID = "UA-42776545-1";
 	public static final String SHARED_PREFERENCES_NAME = "owetracker_prefs";
-	public static final String IS_FIRST_INSTALL = "first_install";
+	public static final String IS_ADDING_FIRST_DUE = "adding_first_due";
+	public static final String IS_OPENING_ABOUT_FIRST_TIME = "opening_about_first_time";
 	public static final String DATE_FORMAT = "dd-MMM-yyyy";
 }

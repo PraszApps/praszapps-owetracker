@@ -6,9 +6,12 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBar.Tab;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.praszapps.owetracker.R;
 import com.praszapps.owetracker.adapter.AboutSectionsPagerAdapter;
+import com.praszapps.owetracker.util.Constants;
+import com.praszapps.owetracker.util.Utils;
 
 /**
  * 
@@ -53,6 +56,11 @@ public class AboutActivity extends RootActivity implements android.support.v7.ap
 			// TabListener interface, as the
 			// listener for when this tab is selected.
 			actionBar.addTab(actionBar.newTab().setText(aboutAdapter.getPageTitle(i)).setTabListener(this));
+		}
+		
+		if(RootActivity.owetrackerPrefs.getBoolean(Constants.IS_OPENING_ABOUT_FIRST_TIME, true)) {
+			Utils.showToast(this, getResources().getString(R.string.toast_msg_swipe), Toast.LENGTH_LONG);
+			RootActivity.owetrackerPrefs.edit().putBoolean(Constants.IS_OPENING_ABOUT_FIRST_TIME, false).commit();
 		}
 
 	}

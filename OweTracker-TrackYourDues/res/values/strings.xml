@@ -68,6 +68,7 @@
 	<string name="feedback_hint">How do you find the Owetracker app?</string>
 	<string name="menu_item_add_new_due">Add new due</string>
 	<string name="toast_msg_long_press">You can long press due items to edit/update</string>
+	<string name="toast_msg_swipe">Swipe to switch between tabs</string>
 	
 	<string name="owes_me">Owes me</string>
 	<string name="i_owe">I owe</string>

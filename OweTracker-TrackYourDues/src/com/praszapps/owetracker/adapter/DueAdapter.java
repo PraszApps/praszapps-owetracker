@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.praszapps.owetracker.R;
 import com.praszapps.owetracker.bo.Due;
+import com.praszapps.owetracker.util.Constants;
 
 public class DueAdapter extends ArrayAdapter<Due> {
 
@@ -64,10 +65,10 @@ public class DueAdapter extends ArrayAdapter<Due> {
 		textViewDate.setText(dueData.get(position).getFormattedDate());
 		String summary = null;
 		if(dueData.get(position).getAmount() >=0 ) {
-			summary = "I owe "+currency+Math.abs(dueData.get(position).getAmount());
+			summary = Constants.YOU_OWE+" "+currency+Math.abs(dueData.get(position).getAmount());
 		} else {
 			
-			summary = "Owes me "+currency+Math.abs(dueData.get(position).getAmount());
+			summary = Constants.OWES_YOU+" "+currency+Math.abs(dueData.get(position).getAmount());
 		}
 		
 		textViewAmtDetails.setText(summary);

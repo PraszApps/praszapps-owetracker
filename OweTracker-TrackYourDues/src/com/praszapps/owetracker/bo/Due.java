@@ -5,6 +5,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
+import com.praszapps.owetracker.util.Constants;
+
 
 public class Due {
 
@@ -49,7 +51,7 @@ public class Due {
 	public String getFormattedDate() {
 		Calendar c = Calendar.getInstance();
 		c.setTimeInMillis(date);
-		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
+		SimpleDateFormat dateFormat = new SimpleDateFormat(Constants.DATE_FORMAT, Locale.ENGLISH);
 		return dateFormat.format(c.getTimeInMillis());
 	}
 	
@@ -83,14 +85,6 @@ public class Due {
 
 	public void setCurrency(String currency) {
 		this.currency = currency;
-	}
-
-	@Override
-	public String toString() {
-		return "Due [dueId=" + dueId + ", friendId=" + friendId + ", date="
-				+ date + ", amount=" + amount + ", reason=" + reason
-				+ ", currency =" + currency + "]";
-		
 	}
 
 }

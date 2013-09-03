@@ -4,6 +4,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.praszapps.owetracker.R;
+import com.praszapps.owetracker.application.OweTrackerApplication;
 import com.praszapps.owetracker.ui.fragment.AboutFragment;
 import com.praszapps.owetracker.ui.fragment.ContactFragment;
 
@@ -37,11 +39,11 @@ public class AboutSectionsPagerAdapter extends FragmentPagerAdapter {
         	
         	switch(position) {
         	case 0:
-        		return "About";
+        		return OweTrackerApplication.getContext().getResources().getString(R.string.menu_item_about);
         	case 1:
-        		return "Contact";
+        		return OweTrackerApplication.getContext().getResources().getString(R.string.label_contact);
         	default:
-        		return "Error";
+        		return null;
         	}
         }
     }

@@ -10,7 +10,6 @@ public class Friend {
 	int oweAmount;
 	String summary;
 	String currency;
-	//Bitmap image;
 
 	// For Sample Data
 	public Friend(String name, int oweAmount) {
@@ -20,13 +19,12 @@ public class Friend {
 	}
 
 	public Friend(String id, String name, int oweAmount, 
-			String currency/*, Bitmap image*/) {
+			String currency) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.oweAmount = oweAmount;
 		this.currency = currency;
-		//this.image = image;
 	}
 	
 	public Friend() {
@@ -67,14 +65,6 @@ public class Friend {
 		this.currency = currency;
 	}
 
-	/*public Bitmap getImage() {
-		return image;
-	}
-
-	public void setImage(Bitmap image) {
-		this.image = image;
-	}*/
-	
 	public String getSummary() {
 		return summary;
 	}

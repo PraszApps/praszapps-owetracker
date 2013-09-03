@@ -23,7 +23,7 @@ public class RootActivity extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		dbHelper = new DatabaseHelper(this);
 		database = dbHelper.getWritableDatabase();
-		owetrackerPrefs = getSharedPreferences(Constants.SHARED_PREFERENCES_NAME, 0);
+		owetrackerPrefs = getSharedPreferences(Constants.SHARED_PREFERENCES_NAME, MODE_PRIVATE);
 		ActionBar aBar = getSupportActionBar();
 		aBar.setBackgroundDrawable(getResources().getDrawable(R.color.actionbar_bg));
 	}

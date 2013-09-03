@@ -60,7 +60,7 @@ public class DueFragment extends ListFragment {
 	private Button buttonSave;
 	private Due due;
 	private static int calendarYear, calendarMonth, calendarDay;
-	private static Calendar cld = Calendar.getInstance();
+	private static Calendar cld = Calendar.getInstance();;
 	DialogFragment datepicker;
 	@SuppressLint("SimpleDateFormat")
 	private static SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
@@ -307,6 +307,7 @@ public class DueFragment extends ListFragment {
 						.getPosition(getResources().getString(R.string.array_givetake_item_gave)));
 				
 			} else {
+				cld = Calendar.getInstance();
 				spinnerGaveTook.setSelection(((ArrayAdapter<String>) spinnerGaveTook.getAdapter())
 						.getPosition(getResources().getString(R.string.array_givetake_item_took)));
 			}
@@ -319,6 +320,9 @@ public class DueFragment extends ListFragment {
 			
 			@Override
 			public void onClick(View v) {
+				if(mode.equals(Constants.MODE_ADD)) {
+					cld = Calendar.getInstance();
+				} 
 				datepicker.show(getFragmentManager(), "datePicker");
 			}
 		});

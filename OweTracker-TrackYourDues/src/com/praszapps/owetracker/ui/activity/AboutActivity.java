@@ -10,20 +10,29 @@ import android.view.MenuItem;
 import com.praszapps.owetracker.R;
 import com.praszapps.owetracker.adapter.AboutSectionsPagerAdapter;
 
-public class AboutActivity extends RootActivity implements
-		android.support.v7.app.ActionBar.TabListener {
+/**
+ * 
+ * This activity displays the About Screen of the application, it uses view pager between About and Contact tabs
+ * @author Prasannajeet Pani
+ * @version 1.0
+ *
+ */
+public class AboutActivity extends RootActivity implements android.support.v7.app.ActionBar.TabListener {
+	
 	AboutSectionsPagerAdapter aboutAdapter;
 	ViewPager mViewPager;
 
-	
-	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		// Setting the layout
 		setContentView(R.layout.activity_about);
 		final ActionBar actionBar = getSupportActionBar();
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		actionBar.setDisplayHomeAsUpEnabled(true);
+		
+		// Adapter for the view pager that will be used for tabs
 		aboutAdapter = new AboutSectionsPagerAdapter(getSupportFragmentManager());
 		mViewPager = (ViewPager) findViewById(R.id.pager);
 		mViewPager.setAdapter(aboutAdapter);
@@ -57,10 +66,7 @@ public class AboutActivity extends RootActivity implements
 	}
 
 	@Override
-	public void onTabReselected(Tab arg0, FragmentTransaction arg1) {
-		// TODO Auto-generated method stub
-
-	}
+	public void onTabReselected(Tab arg0, FragmentTransaction arg1) {}
 
 	@Override
 	public void onTabSelected(Tab tab, FragmentTransaction ft) {
@@ -68,9 +74,6 @@ public class AboutActivity extends RootActivity implements
 	}
 
 	@Override
-	public void onTabUnselected(Tab arg0, FragmentTransaction arg1) {
-		// TODO Auto-generated method stub
-
-	}
+	public void onTabUnselected(Tab arg0, FragmentTransaction arg1) {}
 
 }

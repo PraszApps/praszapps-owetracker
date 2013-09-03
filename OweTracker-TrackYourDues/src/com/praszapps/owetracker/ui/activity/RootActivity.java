@@ -11,9 +11,17 @@ import com.praszapps.owetracker.R;
 import com.praszapps.owetracker.database.DatabaseHelper;
 import com.praszapps.owetracker.util.Constants;
 
+
+/**
+ * 
+ * This is the root-most activity in the application which has instances
+ * of databases and preferences for use across the applications
+ * @author Prasannajeet Pani
+ * @version 1.0
+ *
+ */
 public class RootActivity extends ActionBarActivity {
 
-	protected SharedPreferences settings = null;	
 	public  DatabaseHelper dbHelper;
 	public SQLiteDatabase database;
 	public static SharedPreferences owetrackerPrefs;

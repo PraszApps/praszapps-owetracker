@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -15,8 +14,16 @@ import com.praszapps.owetracker.ui.fragment.DueFragment;
 import com.praszapps.owetracker.ui.fragment.OweboardFragment;
 import com.praszapps.owetracker.ui.fragment.OweboardFragment.OnFriendNameClickListener;
 import com.praszapps.owetracker.util.Constants;
-import com.praszapps.owetracker.util.Utils;
 
+
+/**
+ * 
+ * This activity is the container of the fragments that will display
+ * the friends and dues that the app shows
+ * @author Prasannajeet Pani
+ * @version 1.0
+ *
+ */
 public class MainActivity extends RootActivity implements OnFriendNameClickListener{
 
 	public static boolean isSinglePane;
@@ -25,30 +32,22 @@ public class MainActivity extends RootActivity implements OnFriendNameClickListe
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		// Set the activity container
 		setContentView(R.layout.activity_main);
-		
 		View v = findViewById(R.id.fragment_container);
 		
 		if(v == null) {
 			//Running on tablet
-			Utils.showLog(getClass().getSimpleName(), "Its running on tablet", Log.INFO);
-			//setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 			isSinglePane = false;
 		} else {
 			//Its running on phone
-			Utils.showLog(getClass().getSimpleName(), "Its running on phone", Log.INFO);
 			isSinglePane = true;
 			if (savedInstanceState == null) {
-				//Utils.showLog(getClass().getSimpleName(), "You can safely instantiate your fragment", Log.DEBUG);
 				FragmentManager fm = getSupportFragmentManager();
 				FragmentTransaction ft = fm.beginTransaction();
 				OweboardFragment f1 = new OweboardFragment();
 				ft.add(R.id.fragment_container, f1);
 				ft.commit();
-				//Utils.showLog(getClass().getSimpleName(), "Fragment instantiated safely", Log.DEBUG);
-
-			} else {
-				//Utils.showLog(getClass().getSimpleName(), "Activity recreated", Log.DEBUG);
 			}
 		}
 	}
@@ -64,6 +63,7 @@ public class MainActivity extends RootActivity implements OnFriendNameClickListe
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if(item.getItemId() == R.id.item_about) {
+			// Go to About app screen
 			startActivity(new Intent(this, AboutActivity.class));
 		}
 		return super.onOptionsItemSelected(item);

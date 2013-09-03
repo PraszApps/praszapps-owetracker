@@ -7,6 +7,14 @@ import android.os.Handler;
 import com.praszapps.owetracker.R;
 import com.praszapps.owetracker.util.Constants;
 
+
+/**
+ * 
+ * This activity displays the Splash Screen of the app
+ * @author Prasannajeet Pani
+ * @version 1.0
+ *
+ */
 public class SplashActivity extends RootActivity {
 
 	@Override
@@ -14,7 +22,9 @@ public class SplashActivity extends RootActivity {
 		// Setting up the UI
 		super.onCreate(savedInstanceState);
 		getSupportActionBar().hide();
-		setContentView(R.layout.activity_splash);		
+		setContentView(R.layout.activity_splash);	
+		
+		// Running a thread
 		new Handler().postDelayed(new Runnable() {
 			
 			@Override

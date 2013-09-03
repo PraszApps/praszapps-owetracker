@@ -7,6 +7,9 @@ package com.praszapps.owetracker.util;
 
 import java.util.UUID;
 
+import com.praszapps.owetracker.R;
+import com.praszapps.owetracker.application.OweTrackerApplication;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -108,6 +111,40 @@ public class Utils {
 	{
 		String uid = UUID.randomUUID().toString().toUpperCase();
 		return uid;
+	}
+	
+	public static String getCurrencyFromArrayItem(String arrayItem) {
+		
+		if(arrayItem.equals(OweTrackerApplication.getContext().getResources().getString(R.string.array_currency_item_rupee))) {
+			return OweTrackerApplication.getContext().getResources().getString(R.string.currency_rupee);
+		} else if(arrayItem.equals(OweTrackerApplication.getContext().getResources().getString(R.string.array_currency_item_dollar))) {
+			return OweTrackerApplication.getContext().getResources().getString(R.string.currency_dollar);
+		} else if(arrayItem.equals(OweTrackerApplication.getContext().getResources().getString(R.string.array_currency_item_yen))) {
+			return OweTrackerApplication.getContext().getResources().getString(R.string.currency_yen);
+		} else if(arrayItem.equals(OweTrackerApplication.getContext().getResources().getString(R.string.array_currency_item_pound))) {
+			return OweTrackerApplication.getContext().getResources().getString(R.string.currency_pound);
+		} else if(arrayItem.equals(OweTrackerApplication.getContext().getResources().getString(R.string.array_currency_item_euro))) {
+			return OweTrackerApplication.getContext().getResources().getString(R.string.currency_euro);
+		} else {
+			return null;
+		}
+	}
+	
+	public static String getArrayItemFromCurrency(String currency) {
+		
+		if(currency.equals(OweTrackerApplication.getContext().getResources().getString(R.string.currency_rupee))) {
+			return OweTrackerApplication.getContext().getResources().getString(R.string.array_currency_item_rupee);
+		} else if(currency.equals(OweTrackerApplication.getContext().getResources().getString(R.string.currency_dollar))) {
+			return OweTrackerApplication.getContext().getResources().getString(R.string.array_currency_item_dollar);
+		} else if(currency.equals(OweTrackerApplication.getContext().getResources().getString(R.string.currency_yen))) {
+			return OweTrackerApplication.getContext().getResources().getString(R.string.array_currency_item_yen);
+		} else if(currency.equals(OweTrackerApplication.getContext().getResources().getString(R.string.currency_pound))) {
+			return OweTrackerApplication.getContext().getResources().getString(R.string.array_currency_item_pound);
+		} else if(currency.equals(OweTrackerApplication.getContext().getResources().getString(R.string.currency_euro))) {
+			return OweTrackerApplication.getContext().getResources().getString(R.string.array_currency_item_euro);
+		} else {
+			return null;
+		}
 	}
 	
 }

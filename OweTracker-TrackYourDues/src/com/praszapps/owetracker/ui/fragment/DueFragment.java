@@ -273,7 +273,7 @@ public class DueFragment extends ListFragment {
 			duesList = DatabaseHelper.getFriendDueList(friendId, db);
 			if(duesList != null) {
 				// Setting the adapter
-				dueListAdapter = new DueAdapter(getActivity(), R.layout.owe_details_list_item, duesList, friend.formatCurrency(friend.getCurrency()), friend.getName());
+				dueListAdapter = new DueAdapter(getActivity(), R.layout.owe_details_list_item, duesList, friend.getCurrency(), friend.getName());
 				setListAdapter(dueListAdapter);
 				((MainActivity)getActivity()).getSupportActionBar().setTitle(friend.getName());
 			}
@@ -426,7 +426,7 @@ public class DueFragment extends ListFragment {
 		ArrayAdapter<String> currencyAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.string_array_currency));
 		currencyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spinnerCurrency.setAdapter(currencyAdapter);
-		spinnerCurrency.setSelection(((ArrayAdapter<String>) spinnerCurrency.getAdapter()).getPosition(friend.getCurrency()));
+		spinnerCurrency.setSelection(((ArrayAdapter<String>) spinnerCurrency.getAdapter()).getPosition(Utils.getArrayItemFromCurrency(friend.getCurrency())));
 		final EditText editTextfriendName = (EditText) d.findViewById(R.id.editTextFriendName);
 		editTextfriendName.setText(friend.getName());
 		Button buttonSave = (Button) d.findViewById(R.id.buttonSave);
@@ -446,7 +446,7 @@ public class DueFragment extends ListFragment {
 					updateFriend = new Friend();
 					updateFriend.setId(friend.getId());
 					updateFriend.setName(editTextfriendName.getText().toString().trim());
-					updateFriend.setCurrency(spinnerCurrency.getSelectedItem().toString());
+					updateFriend.setCurrency(Utils.getCurrencyFromArrayItem(spinnerCurrency.getSelectedItem().toString()));
 					
 						if(DatabaseHelper.updateFriend(updateFriend, db)) {
 							Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_update_friend_success), Toast.LENGTH_SHORT);
@@ -513,7 +513,7 @@ public class DueFragment extends ListFragment {
 		OweboardFragment.updateListView();
 		duesList = DatabaseHelper.getFriendDueList(friend.getId(), db);
 		dueListAdapter.clear();
-		dueListAdapter.setCurrency(friend.formatCurrency(friend.getCurrency()));
+		dueListAdapter.setCurrency(friend.getCurrency());
 		dueListAdapter.setFriendName(friend.getName());
 		for(int i = 0; i<duesList.size(); i++) {
 			dueListAdapter.add(duesList.get(i));

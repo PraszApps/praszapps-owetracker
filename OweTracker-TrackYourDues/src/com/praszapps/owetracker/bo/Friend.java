@@ -70,15 +70,7 @@ public class Friend {
 	}
 
 	public void setSummary(int oweAmount) {
-		this.summary = formatCurrency(currency)+Math.abs(oweAmount);
-	}
-	
-	public String formatCurrency(String currency) {
-		if(currency.equals(Constants.CURRENCY_RS)) {
-			return currency += ". ";
-		} else {
-			return currency;
-		}
+		this.summary = currency+Math.abs(oweAmount);
 	}
 
 	@Override
@@ -86,9 +78,9 @@ public class Friend {
 		
 		String friendObjToString = null;
 		if(oweAmount < 0) {
-			friendObjToString = Constants.OWES_YOU+" "+formatCurrency(currency)+Math.abs(oweAmount);
+			friendObjToString = Constants.OWES_YOU+" "+currency+Math.abs(oweAmount);
 		} else if(oweAmount > 0) {
-			friendObjToString = Constants.YOU_OWE+" "+formatCurrency(currency)+Math.abs(oweAmount);
+			friendObjToString = Constants.YOU_OWE+" "+currency+Math.abs(oweAmount);
 		} else if(oweAmount == 0) {
 			friendObjToString = Constants.NO_DUES;
 		}

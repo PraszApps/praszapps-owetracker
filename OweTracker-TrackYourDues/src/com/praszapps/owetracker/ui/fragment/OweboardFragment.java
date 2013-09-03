@@ -169,7 +169,7 @@ public class OweboardFragment extends ListFragment {
 					addFriend = new Friend();
 					addFriend.setId(Utils.generateUniqueID());
 					addFriend.setName(editTextfriendName.getText().toString().trim());
-					addFriend.setCurrency(spinnerCurrency.getSelectedItem().toString());
+					addFriend.setCurrency(Utils.getCurrencyFromArrayItem(spinnerCurrency.getSelectedItem().toString()));
 					
 					//Check if name is same as one's already in the list and prompt to add another one
 							

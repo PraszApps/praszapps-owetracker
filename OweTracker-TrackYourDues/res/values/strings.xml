@@ -28,12 +28,12 @@
 	<string name="alertdialog_addfriend_message">A friend with same name exists. Do you want to save a new record?</string>
 	<string name="label_yes">Yes</string>
 	<string name="label_no">No</string>
-	<string name="array_currency_item_select">Select currency</string>
-	<string name="array_currency_item_dollar">$</string>
-	<string name="array_currency_item_rupee">Rs</string>
-	<string name="array_currency_item_pound">£</string>
-	<string name="array_currency_item_euro">€</string>
-	<string name="array_currency_item_yen">¥</string>
+	<string name="array_currency_item_select">Select display currency</string>
+	<string name="array_currency_item_dollar">$ (Dollar)</string>
+	<string name="array_currency_item_rupee">\u20B9 (Indian Rupee)</string>
+	<string name="array_currency_item_pound">£ (British Pound)</string>
+	<string name="array_currency_item_euro">€ (Euro)</string>
+	<string name="array_currency_item_yen">¥ (Yen)</string>
 	<string name="array_givetake_item_select">Select who owes whom</string>
 	<string name="array_givetake_item_gave">I owe/Friend gave</string>
 	<string name="array_givetake_item_took">Friend owes/I gave</string>
@@ -75,6 +75,17 @@
 	<string name="no_dues">No Dues</string>
 	<string name="label_contact">Contact</string>
 	<string name="no_dues_to_reset">No dues to reset</string>
+	
+	<string name="currency_dollar">$</string>
+	<string name="currency_rupee">\u20B9</string>
+	<string name="currency_pound">£</string>
+	<string name="currency_euro">€</string>
+	<string name="currency_yen">¥</string>
+	
+	<string name="array_givetake_item_select">Select who owes whom</string>
+	<string name="array_givetake_item_gave">I owe/Friend gave</string>
+	<string name="array_givetake_item_took">Friend owes/I gave</string>
+	
 	
 	<string name="lorem_ipsium">OweTracker app is made for android users who live among friends with whom they usually have dues with each other. This application will help them to keep a track of their dues with different friends.
 	    \n\nThe application helps you add friends and then add dues as you give/take and have easy access to the final amount you owe to each other.

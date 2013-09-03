@@ -218,21 +218,26 @@ public class DueFragment extends ListFragment {
 				
 				@Override
 				public void onNegative() {
-					// Delete dues and reset due value to zero
-					DatabaseHelper.deleteAllFriendDues(friend.getId(), db);
-					updateDueList();
-					updateFriendSummary();
-					if(!MainActivity.isSinglePane) {
-						int dueCount = DatabaseHelper.getFriendsWithDuesCount(db);
-						if(dueCount == 0 && OweboardFragment.friendListAdapter.getCount() == 0) {
-							OweboardFragment.totalFriends.setVisibility(TextView.GONE);
-						} else {
-							OweboardFragment.totalFriends.setVisibility(TextView.VISIBLE);
-							OweboardFragment.totalFriends.setText(dueCount+"/"+OweboardFragment.friendListAdapter.getCount()+" "+getResources().getString(
-									R.string.label_owesactions_listview));
+					
+					if(duesList.size() == 0) {
+						Utils.showToast(getActivity(), getResources().getString(R.string.no_dues_to_reset), Toast.LENGTH_SHORT);
+					} else {
+						// Delete dues and reset due value to zero
+						DatabaseHelper.deleteAllFriendDues(friend.getId(), db);
+						updateDueList();
+						updateFriendSummary();
+						if(!MainActivity.isSinglePane) {
+							int dueCount = DatabaseHelper.getFriendsWithDuesCount(db);
+							if(dueCount == 0 && OweboardFragment.friendListAdapter.getCount() == 0) {
+								OweboardFragment.totalFriends.setVisibility(TextView.GONE);
+							} else {
+								OweboardFragment.totalFriends.setVisibility(TextView.VISIBLE);
+								OweboardFragment.totalFriends.setText(dueCount+"/"+OweboardFragment.friendListAdapter.getCount()+" "+getResources().getString(
+										R.string.label_owesactions_listview));
+							}
 						}
+						Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_reset), Toast.LENGTH_SHORT);
 					}
-					Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_reset), Toast.LENGTH_SHORT);
 				}
 				
 			});

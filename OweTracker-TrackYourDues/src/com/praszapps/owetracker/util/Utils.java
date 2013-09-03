@@ -13,6 +13,7 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
+import android.view.Gravity;
 import android.widget.Toast;
 
 public class Utils {
@@ -74,7 +75,10 @@ public class Utils {
 	
 	public static void showToast(Context context, String text, int displayTime) {
 		if(displayTime == Toast.LENGTH_LONG || displayTime == Toast.LENGTH_SHORT) {
-			Toast.makeText(context, text, displayTime).show();
+			
+			Toast toast = Toast.makeText(context, text, displayTime);
+			toast.setGravity(Gravity.CENTER, 0, 0);
+			toast.show();
 		}
 		
 	}

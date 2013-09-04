@@ -31,7 +31,11 @@ public class Utils {
 			String positiveString, String negativeString, String neutralString, final DialogResponse response){
 		
 		AlertDialog.Builder alert = new AlertDialog.Builder(context);
-		alert.setTitle(title);
+		
+		if(title != null) {
+			alert.setTitle(title);
+		}
+		
 		alert.setMessage(message);
 		
 		if(icon != null) {

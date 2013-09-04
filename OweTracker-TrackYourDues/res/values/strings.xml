@@ -10,7 +10,7 @@
 	<string name="strNoRecordsFound">No friend added\n\nAdd a friend\'s name to get started</string>
 	<string name="strNoFriendSelected">No friend selected</string>
 	<string name="strNoDueRecordsFound">No due added\n\nTap on the \"+\" icon on the top bar to add dues</string>
-	<string name="menu_item_close_due">Clear dues/Delete friend</string>
+	<string name="menu_item_close_due">Reset dues/Delete friend</string>
 	<string name="menu_item_edit_friend">Edit Friend</string>
 	<string name="menu_item_add_friend">Add friend</string>
 	<string name="toast_msg_add_friend_name">Please enter name</string>
@@ -38,7 +38,7 @@
 	<string name="array_givetake_item_gave">I owe/Friend gave</string>
 	<string name="array_givetake_item_took">Friend owes/I gave</string>
 	<string name="label_edit">Edit</string>
-	<string name="label_delete">Delete</string>
+	<string name="label_delete">Delete friend</string>
 	<string name="toast_msg_add_due_amount">Please enter amount</string>
 	<string name="toast_msg_add_due_date">Please enter date</string>
 	<string name="toast_msg_add_due_givetake">Please select who owes whom</string>
@@ -51,9 +51,8 @@
 	<string name="toast_msg_due_invalid_date ">Date cannot be greater than today\'s date. </string>
 	<string name="delete_due_alert_title">Deleting Due</string>
 	<string name="delete_due_alert_msg">Are you sure you want to delete this due?</string>
-	<string name="delete_reset_friend_alert_title">Reset dues / delete friend?</string>
-	<string name="delete_reset_friend_alert_msg">Do you want to reset the due value to zero or completely delete the friend details?</string>
-	<string name="label_reset">Reset</string>
+	<string name="delete_reset_friend_alert_msg">Reset dues or delete friend details?</string>
+	<string name="label_reset">Reset dues</string>
 	<string name="add_due_dialog_title">Add due</string>
 	<string name="edit_due_dialog_title">Edit due</string>
 	<string name="edit_friend_dialog_title">Edit friend</string>

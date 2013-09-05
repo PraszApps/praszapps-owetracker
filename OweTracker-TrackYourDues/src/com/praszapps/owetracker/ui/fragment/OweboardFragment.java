@@ -7,6 +7,9 @@ import android.app.Dialog;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.widget.SearchView;
+import android.support.v7.widget.SearchView.OnQueryTextListener;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -93,6 +96,24 @@ public class OweboardFragment extends ListFragment {
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		inflater.inflate(R.menu.oweboard_menu, menu);
+		SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.item_search));
+	    searchView.setOnQueryTextListener(new OnQueryTextListener() {
+			
+			@Override
+			public boolean onQueryTextSubmit(String arg0) {
+				// TODO Auto-generated method stub
+				Utils.showToast(getActivity(), "Typed - "+arg0, Toast.LENGTH_SHORT);
+				return false;
+			}
+			
+			@Override
+			//
+			public boolean onQueryTextChange(String arg0) {
+				// TODO Auto-generated method stub
+				Utils.showToast(getActivity(), "I am typing -- "+arg0, Toast.LENGTH_SHORT);
+				return false;
+			}
+		});
 	}
 
 	@Override

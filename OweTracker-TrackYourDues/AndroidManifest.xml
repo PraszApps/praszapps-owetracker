@@ -33,7 +33,8 @@
         <activity
             android:name=".ui.activity.MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/oweboard_title" />
+            android:label="@string/oweboard_title" >
+        </activity>
         <activity
             android:name=".ui.activity.RootActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"

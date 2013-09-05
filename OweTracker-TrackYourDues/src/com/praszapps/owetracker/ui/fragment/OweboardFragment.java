@@ -5,10 +5,12 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.app.Dialog;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.SearchView;
+import android.support.v7.widget.SearchView.OnCloseListener;
 import android.support.v7.widget.SearchView.OnQueryTextListener;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -35,7 +37,7 @@ import com.praszapps.owetracker.util.Utils;
 public class OweboardFragment extends ListFragment {
 
 	private View v;
-	static TextView totalFriends;
+	static TextView totalFriends, emptyView;
 	private ListView listViewOwelist;
 	static FriendAdapter friendListAdapter;
 	private EditText editTextfriendName;
@@ -43,6 +45,7 @@ public class OweboardFragment extends ListFragment {
 	private Button buttonSave;
 	private Dialog d;
 	private RootActivity rAct;
+	private SearchView searchView = null; 
 	private static ArrayList<Friend> friendList = null;
 	private static SQLiteDatabase db;
 	private OnFriendNameClickListener mFriendName;
@@ -56,11 +59,10 @@ public class OweboardFragment extends ListFragment {
 
 		// Use the GoogleAnalytics singleton to get a Tracker.
 		v = inflater.inflate(R.layout.fragment_oweboard, container, false);
-		
+		emptyView = (TextView) v.findViewById(R.id.empty_friendlist);
 		rAct = (RootActivity) getActivity();
 		db = rAct.database;
-		listViewOwelist = (ListView) v.findViewById(android.R.id.list);
-		listViewOwelist.setEmptyView(v.findViewById(R.id.empty_friendlist));
+		setTotalFriendListView();
 		if (!MainActivity.isSinglePane) {
 			// Set selector if in tab
 			listViewOwelist.setSelector(R.color.blue_header);
@@ -74,6 +76,12 @@ public class OweboardFragment extends ListFragment {
 		return v;
 	}
 	
+	private void setTotalFriendListView() {
+		listViewOwelist = (ListView) v.findViewById(android.R.id.list);
+		emptyView.setText(getResources().getString(R.string.strNoRecordsFound));
+		listViewOwelist.setEmptyView(emptyView);
+	}
+
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
@@ -96,24 +104,36 @@ public class OweboardFragment extends ListFragment {
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		inflater.inflate(R.menu.oweboard_menu, menu);
-		SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.item_search));
+		
+		searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.item_search));
 	    searchView.setOnQueryTextListener(new OnQueryTextListener() {
 			
 			@Override
-			public boolean onQueryTextSubmit(String arg0) {
-				// TODO Auto-generated method stub
-				Utils.showToast(getActivity(), "Typed - "+arg0, Toast.LENGTH_SHORT);
-				return false;
+			public boolean onQueryTextSubmit(String searchString) {
+				new SearchAsyncTask().execute(searchString);
+				return true;
 			}
 			
 			@Override
-			//
-			public boolean onQueryTextChange(String arg0) {
-				// TODO Auto-generated method stub
-				Utils.showToast(getActivity(), "I am typing -- "+arg0, Toast.LENGTH_SHORT);
-				return false;
+			public boolean onQueryTextChange(String searchString) {
+				new SearchAsyncTask().execute(searchString);
+				return true;
+			}
+			
+		});
+	    
+	    searchView.setOnCloseListener(new OnCloseListener() {
+			
+			@Override
+			public boolean onClose() {
+				setTotalFriendListView();
+				updateFriendCount();
+				searchView.onActionViewCollapsed();
+				return true;
 			}
 		});
+	    
+	    
 	}
 
 	@Override
@@ -123,6 +143,7 @@ public class OweboardFragment extends ListFragment {
 			//Show UI to add a friend
 			showAddFriendDialog();
 		}
+		
 		return super.onOptionsItemSelected(item);
 	}
 	
@@ -267,6 +288,58 @@ public class OweboardFragment extends ListFragment {
 	
 	public interface OnFriendNameClickListener {
 		public void OnFriendNameClick(String friendId, String currency);
+		
+	}
+	
+	
+	
+	/**
+	 * This AsyncTask shall search for a friend's name in the list
+	 * @author Prasannajeet Pani
+	 *
+	 */
+	private class SearchAsyncTask extends AsyncTask<String, Void, String> {
+		
+		private ArrayList<Friend> searchList;
+		private FriendAdapter searchListAdapter;
+
+		@Override
+		protected void onPreExecute() {
+			searchList = new ArrayList<Friend>();
+		}
+
+		@Override
+		protected String doInBackground(String... params) {
+			
+			for(Friend friend : friendList) {
+		        if(friend.getName() != null && (friend.getName().trim().startsWith(params[0]) 
+		        		|| friend.getName().trim().contains(params[0]))) {
+		        	searchList.add(friend);
+		        }
+			}
+			
+			if(searchList.size() > 0) {
+				return params[0];
+			} else {
+				return null;
+			}
+		}
+		
+		@Override
+		protected void onPostExecute(String result) {
+			
+			if(result!=null) {
+				searchListAdapter = new FriendAdapter(getActivity(), R.layout.oweboard_list_item, searchList);
+				listViewOwelist.setAdapter(searchListAdapter);
+			} else {
+				emptyView.setText(getResources().getString(R.string.strNoResults));
+				searchListAdapter = null;
+			}
+			listViewOwelist.setAdapter(searchListAdapter);
+
+		}
+
+		
 		
 	}
 	

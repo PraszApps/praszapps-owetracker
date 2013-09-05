@@ -8,7 +8,7 @@
         android:icon="@drawable/search"
         android:orderInCategory="1"
         android:title="@string/label_search"
-        owetracker:showAsAction="always|withText"/>
+        owetracker:showAsAction="always|withText|collapseActionView"/>
     <item
         android:id="@+id/item_add_friend"
         android:icon="@drawable/addfriend"

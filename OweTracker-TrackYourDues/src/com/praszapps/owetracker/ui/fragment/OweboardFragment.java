@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.SearchView;
-import android.support.v7.widget.SearchView.OnCloseListener;
 import android.support.v7.widget.SearchView.OnQueryTextListener;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -83,8 +82,6 @@ public class OweboardFragment extends ListFragment {
 		listViewOwelist.setEmptyView(emptyView);
 		listViewOwelist.setAdapter(friendListAdapter);
 		isInSearchMode = false;
-		searchList = null;
-		searchListAdapter = null;
 	}
 
 	@Override
@@ -106,6 +103,7 @@ public class OweboardFragment extends ListFragment {
 		
 		if(isInSearchMode) {
 			mFriendName.OnFriendNameClick(searchList.get(position).getId(), searchList.get(position).getCurrency());
+			searchView.clearFocus();
 		} else {
 			mFriendName.OnFriendNameClick(friendList.get(position).getId(), friendList.get(position).getCurrency());
 		}
@@ -117,6 +115,9 @@ public class OweboardFragment extends ListFragment {
 		inflater.inflate(R.menu.oweboard_menu, menu);
 		
 		searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.item_search));
+		
+		
+		
 	    searchView.setOnQueryTextListener(new OnQueryTextListener() {
 			
 			@Override
@@ -127,22 +128,27 @@ public class OweboardFragment extends ListFragment {
 			
 			@Override
 			public boolean onQueryTextChange(String searchString) {
-					new SearchAsyncTask().execute(searchString);				
-				return true;
+				if(!searchString.equals("")) {
+					new SearchAsyncTask().execute(searchString);
+				} else {
+					listViewOwelist.setAdapter(friendListAdapter);
+					isInSearchMode = false;
+				}
+				return false;
 			}
 			
 		});
 	    
-	    searchView.setOnCloseListener(new OnCloseListener() {
-			
-			@Override
-			public boolean onClose() {
-				setTotalFriendListView();
-				searchView.onActionViewCollapsed();
-				return true;
-			}
-		});
-	    
+	    searchView.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
+	        @Override
+	        public void onFocusChange(View view, boolean queryTextFocused) {
+	            if(!queryTextFocused) {
+	                searchView.setQuery("", false);
+	                isInSearchMode = false;
+	            }
+	        }
+	    });
+	   
 	    
 	}
 
@@ -334,7 +340,6 @@ public class OweboardFragment extends ListFragment {
 		
 		@Override
 		protected void onPostExecute(String result) {
-			
 			if(result!=null) {
 				searchListAdapter = new FriendAdapter(getActivity(), R.layout.oweboard_list_item, searchList);
 				listViewOwelist.setAdapter(searchListAdapter);

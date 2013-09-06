@@ -39,16 +39,17 @@ public class OweboardFragment extends ListFragment {
 	private View v;
 	static TextView totalFriends, emptyView;
 	private ListView listViewOwelist;
-	static FriendAdapter friendListAdapter;
+	static FriendAdapter friendListAdapter, searchListAdapter;
 	private EditText editTextfriendName;
 	private Spinner spinnerCurrency;
 	private Button buttonSave;
 	private Dialog d;
 	private RootActivity rAct;
 	private SearchView searchView = null; 
-	private static ArrayList<Friend> friendList = null;
+	private static ArrayList<Friend> friendList = null, searchList = null;
 	private static SQLiteDatabase db;
 	private OnFriendNameClickListener mFriendName;
+	private Boolean isInSearchMode = false;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -81,6 +82,9 @@ public class OweboardFragment extends ListFragment {
 		emptyView.setText(getResources().getString(R.string.strNoRecordsFound));
 		listViewOwelist.setEmptyView(emptyView);
 		listViewOwelist.setAdapter(friendListAdapter);
+		isInSearchMode = false;
+		searchList = null;
+		searchListAdapter = null;
 	}
 
 	@Override
@@ -99,7 +103,13 @@ public class OweboardFragment extends ListFragment {
 	
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
-		mFriendName.OnFriendNameClick(friendList.get(position).getId(), friendList.get(position).getCurrency());
+		
+		if(isInSearchMode) {
+			mFriendName.OnFriendNameClick(searchList.get(position).getId(), searchList.get(position).getCurrency());
+		} else {
+			mFriendName.OnFriendNameClick(friendList.get(position).getId(), friendList.get(position).getCurrency());
+		}
+		
 	}
 
 	@Override
@@ -300,9 +310,6 @@ public class OweboardFragment extends ListFragment {
 	 */
 	private class SearchAsyncTask extends AsyncTask<String, Void, String> {
 		
-		private ArrayList<Friend> searchList;
-		private FriendAdapter searchListAdapter;
-
 		@Override
 		protected void onPreExecute() {
 			searchList = new ArrayList<Friend>();
@@ -336,7 +343,7 @@ public class OweboardFragment extends ListFragment {
 				searchListAdapter = null;
 			}
 			listViewOwelist.setAdapter(searchListAdapter);
-
+			isInSearchMode = true;
 		}
 
 		

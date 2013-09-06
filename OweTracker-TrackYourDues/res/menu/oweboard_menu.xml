@@ -4,10 +4,10 @@
 
     <item
         android:id="@+id/item_search"
-        owetracker:actionViewClass="android.support.v7.widget.SearchView"
         android:icon="@drawable/search"
         android:orderInCategory="1"
         android:title="@string/label_search"
+        owetracker:actionViewClass="android.support.v7.widget.SearchView"
         owetracker:showAsAction="always|withText|collapseActionView"/>
     <item
         android:id="@+id/item_add_friend"

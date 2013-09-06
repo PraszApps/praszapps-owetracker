@@ -80,6 +80,7 @@ public class OweboardFragment extends ListFragment {
 		listViewOwelist = (ListView) v.findViewById(android.R.id.list);
 		emptyView.setText(getResources().getString(R.string.strNoRecordsFound));
 		listViewOwelist.setEmptyView(emptyView);
+		listViewOwelist.setAdapter(friendListAdapter);
 	}
 
 	@Override
@@ -116,7 +117,7 @@ public class OweboardFragment extends ListFragment {
 			
 			@Override
 			public boolean onQueryTextChange(String searchString) {
-				new SearchAsyncTask().execute(searchString);
+					new SearchAsyncTask().execute(searchString);				
 				return true;
 			}
 			
@@ -127,7 +128,6 @@ public class OweboardFragment extends ListFragment {
 			@Override
 			public boolean onClose() {
 				setTotalFriendListView();
-				updateFriendCount();
 				searchView.onActionViewCollapsed();
 				return true;
 			}
@@ -312,8 +312,8 @@ public class OweboardFragment extends ListFragment {
 		protected String doInBackground(String... params) {
 			
 			for(Friend friend : friendList) {
-		        if(friend.getName() != null && (friend.getName().trim().startsWith(params[0]) 
-		        		|| friend.getName().trim().contains(params[0]))) {
+		        if(friend.getName() != null && (friend.getName().trim().toLowerCase().startsWith(params[0].trim().toLowerCase()) 
+		        		|| friend.getName().trim().toLowerCase().contains(params[0].trim().toLowerCase()))) {
 		        	searchList.add(friend);
 		        }
 			}

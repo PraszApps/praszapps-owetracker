@@ -1,5 +1,7 @@
 package com.praszapps.owetracker.ui.activity;
 
+import java.lang.reflect.Field;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -8,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewConfiguration;
 
 import com.praszapps.owetracker.R;
 import com.praszapps.owetracker.ui.fragment.DueFragment;
@@ -35,6 +38,19 @@ public class MainActivity extends RootActivity implements OnFriendNameClickListe
 		// Set the activity container
 		setContentView(R.layout.activity_main);
 		View v = findViewById(R.id.fragment_container);
+
+		// ActionBar overflow will be visible even for devices with physical menu buttons
+		try {
+			ViewConfiguration config = ViewConfiguration.get(this);
+			Field menuKeyField = ViewConfiguration.class
+					.getDeclaredField("sHasPermanentMenuKey");
+			if (menuKeyField != null) {
+				menuKeyField.setAccessible(true);
+				menuKeyField.setBoolean(config, false);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		if(v == null) {
 			//Running on tablet

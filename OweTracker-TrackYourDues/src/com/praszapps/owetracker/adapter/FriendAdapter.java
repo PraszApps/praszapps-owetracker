@@ -54,6 +54,8 @@ public class FriendAdapter extends ArrayAdapter<Friend> {
 		// get elements in the layout
 		TextView textViewFriendName = (TextView) listItem
 				.findViewById(R.id.textViewFriendName);
+		TextView textViewOweSummary = (TextView) listItem
+				.findViewById(R.id.textViewOweSummary);
 		ImageView status = (ImageView) listItem
 				.findViewById(R.id.imageViewStatus);
 
@@ -70,6 +72,7 @@ public class FriendAdapter extends ArrayAdapter<Friend> {
 			status.setImageResource(R.drawable.greensquare);
 		}
 		textViewFriendName.setText(friend.getName());
+		textViewOweSummary.setText(friend.toString());
 		return listItem;
 	}
 

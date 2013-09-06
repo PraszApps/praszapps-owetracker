@@ -12,6 +12,11 @@ import android.database.sqlite.SQLiteOpenHelper;
 import com.praszapps.owetracker.bo.Due;
 import com.praszapps.owetracker.bo.Friend;
 
+/**
+ * Contains all the Database related APIs necessary to run the application
+ * @author Prasannajeet Pani
+ *
+ */
 public class DatabaseHelper extends SQLiteOpenHelper {
 	
 	// All Static variables
@@ -28,7 +33,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	//Friend Column Names
 	public static final String FRIEND_COLUMN_ID = "friend_id";
 	public static final String FRIEND_COLUMN_NAME = "friend_name";
-	//public static final String FRIEND_COLUMN_IMAGE = "image";
 	public static final String FRIEND_COLUMN_CURRENCY = "currency";
 	public static final String FRIEND_COLUMN_DUE = "total_amt_due";
 	
@@ -37,11 +41,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
  			+ "("
  			+ "friend_id				VARCHAR(50) PRIMARY KEY NOT NULL,"
  			+ "friend_name				VARCHAR(75),"
- 			//+ "image					BLOB," 
  			+ "currency                 VARCHAR(5),"
  			+ "total_amt_due 			INT"
  			+");";
-	
+	// Due column names
 	public static final String SQL_DROP_TABLE_DUE = "DROP TABLE IF EXISTS friend_due";
 	public static final String DUE_COLUMN_ID = "due_id";
 	public static final String DUE_COLUMN_FRIEND_ID = "friend_id";
@@ -57,16 +60,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
  			+ "reason                   VARCHAR(100)"
  			+");";
 	
+	/**
+	 * 
+	 * Adds a new Friend Data into the database
+	 * @param friend - object of the Friend class to be added to the database
+	 * @param db - Database instance
+	 * @return True if success, false if failure
+	 */
 	public static Boolean createFriendRecord(Friend friend, SQLiteDatabase db) {
 		String id = friend.getId();
 		String name = friend.getName();
-		//String image = null;
 		String currency = friend.getCurrency();
-		int totalAmtDue = 0; //write an API to calc total amt due
+		int totalAmtDue = 0;
 		ContentValues values = new ContentValues();
 		values.put(FRIEND_COLUMN_ID, id);
 		values.put(FRIEND_COLUMN_NAME, name);
-		//values.put(FRIEND_COLUMN_IMAGE, image);
 		values.put(FRIEND_COLUMN_CURRENCY, currency);
 		values.put(FRIEND_COLUMN_DUE, totalAmtDue);
 		if(db.insert(TABLE_FRIEND, null, values) != -1) {
@@ -77,6 +85,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		
 	}
 	
+	
+	/**
+	 * Used to retrieve details of all the friends that are stored in the database, sorted by their names
+	 * @param db - instance of the database
+	 * @return ArrayList of Friend type containing details of all friends
+	 */
 	public static ArrayList<Friend> getAllFriends(SQLiteDatabase db) {
 		ArrayList<Friend> friendList = new ArrayList<Friend>();
 		// Select All Query

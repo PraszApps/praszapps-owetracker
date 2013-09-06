@@ -180,7 +180,7 @@ public class DueFragment extends ListFragment {
 		case R.id.item_close_due:
 			Utils.showAlertDialog(getActivity(), null, 
 					getResources().getString(R.string.delete_reset_friend_alert_msg), 
-					null, false, getResources().getString(R.string.label_delete), getResources().getString(R.string.label_reset),
+					null, false, getResources().getString(R.string.label_delete_friend), getResources().getString(R.string.label_reset),
 					getResources().getString(R.string.label_cancel), new Utils.DialogResponse() {
 				
 				@Override

@@ -120,7 +120,14 @@ public class Utils {
 	public static String getCurrencyFromArrayItem(String arrayItem) {
 		
 		if(arrayItem.equals(OweTrackerApplication.getContext().getResources().getString(R.string.array_currency_item_rupee))) {
-			return OweTrackerApplication.getContext().getResources().getString(R.string.currency_rupee);
+			
+			if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.ICE_CREAM_SANDWICH){
+			    // Rupee symbol replaced by INR for below ICS version
+					return "INR ";
+				} else {
+					return OweTrackerApplication.getContext().getResources().getString(R.string.currency_rupee);
+				}
+			
 		} else if(arrayItem.equals(OweTrackerApplication.getContext().getResources().getString(R.string.array_currency_item_dollar))) {
 			return OweTrackerApplication.getContext().getResources().getString(R.string.currency_dollar);
 		} else if(arrayItem.equals(OweTrackerApplication.getContext().getResources().getString(R.string.array_currency_item_yen))) {
@@ -136,7 +143,7 @@ public class Utils {
 	
 	public static String getArrayItemFromCurrency(String currency) {
 		
-		if(currency.equals(OweTrackerApplication.getContext().getResources().getString(R.string.currency_rupee))) {
+		if(currency.equals(OweTrackerApplication.getContext().getResources().getString(R.string.currency_rupee)) || currency.equals("INR ")) {
 			return OweTrackerApplication.getContext().getResources().getString(R.string.array_currency_item_rupee);
 		} else if(currency.equals(OweTrackerApplication.getContext().getResources().getString(R.string.currency_dollar))) {
 			return OweTrackerApplication.getContext().getResources().getString(R.string.array_currency_item_dollar);

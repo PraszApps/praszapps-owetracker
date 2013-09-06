@@ -20,7 +20,7 @@
         android:id="@+id/item_add_due"
         android:icon="@drawable/adddue"
         android:orderInCategory="2"
-        owetracker:showAsAction="always|withText"
+        owetracker:showAsAction="ifRoom|withText"
         android:title="@string/menu_item_add_new_due"/>
 
 </menu>

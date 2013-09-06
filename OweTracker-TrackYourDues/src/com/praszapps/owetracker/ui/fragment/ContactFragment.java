@@ -13,6 +13,7 @@ import android.widget.RatingBar;
 import android.widget.Toast;
 
 import com.praszapps.owetracker.R;
+import com.praszapps.owetracker.util.Constants;
 import com.praszapps.owetracker.util.Utils;
 
 public class ContactFragment extends Fragment {
@@ -37,8 +38,8 @@ public class ContactFragment extends Fragment {
 					Intent i = new Intent(Intent.ACTION_SEND);
 					i.setType("message/rfc822");
 					i.putExtra(Intent.EXTRA_EMAIL,
-							new String[] { "prasannajeet89@gmail.com" });
-					i.putExtra(Intent.EXTRA_SUBJECT, "Owetracker - Feedback");
+							new String[] { Constants.EMAIL_ID_FEEDBACK });
+					i.putExtra(Intent.EXTRA_SUBJECT, Constants.EMAIL_SUBJ_FEEDBACK);
 					i.putExtra(Intent.EXTRA_TEXT,
 							feedbackText.getText().toString()
 									+ "\n\nRating -- " + ratingBar.getRating());

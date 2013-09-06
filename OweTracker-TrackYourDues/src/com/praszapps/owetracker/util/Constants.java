@@ -20,4 +20,6 @@ public class Constants {
 	public static final String IS_ADDING_FIRST_DUE = "adding_first_due";
 	public static final String IS_OPENING_ABOUT_FIRST_TIME = "opening_about_first_time";
 	public static final String DATE_FORMAT = "dd-MMM-yyyy";
+	public static final String EMAIL_ID_FEEDBACK = "developer.praszapps@gmail.com";
+	public static final String EMAIL_SUBJ_FEEDBACK = "OweTracker - Feedback";
 }

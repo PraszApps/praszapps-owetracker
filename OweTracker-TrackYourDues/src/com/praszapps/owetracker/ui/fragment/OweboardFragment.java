@@ -145,6 +145,7 @@ public class OweboardFragment extends ListFragment {
 	            if(!queryTextFocused) {
 	                searchView.setQuery("", false);
 	                isInSearchMode = false;
+	                emptyView.setText(getResources().getString(R.string.strNoRecordsFound));
 	            }
 	        }
 	    });

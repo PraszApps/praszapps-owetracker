@@ -15,6 +15,11 @@ import com.praszapps.owetracker.R;
 import com.praszapps.owetracker.bo.Due;
 import com.praszapps.owetracker.util.Constants;
 
+/**
+ * This is the Adapter of the listview of the dues screen of the friend
+ * @author Prasannajeet Pani
+ *
+ */
 public class DueAdapter extends ArrayAdapter<Due> {
 
 	//Declaring variables
@@ -25,6 +30,14 @@ public class DueAdapter extends ArrayAdapter<Due> {
 	String currency;
 	String friendName;
 
+	/**
+	 * Constructor of DueAdapter
+	 * @param mContext - The context where it is called
+	 * @param layoutResourceId - The resource that is called
+	 * @param data - The ArrayList of Due type that is to be passed
+	 * @param currency - Display currency
+	 * @param friendName - Name of the friend whose dues are displayed
+	 */
 	public DueAdapter(Context mContext, int layoutResourceId, ArrayList<Due> data, String currency, String friendName) {
 
 		//Initializing views
@@ -64,6 +77,8 @@ public class DueAdapter extends ArrayAdapter<Due> {
 		ImageView imageViewDueStatus = (ImageView) listItem.findViewById(R.id.imageViewDueStatus);
 		textViewDate.setText(dueData.get(position).getFormattedDate());
 		String summary = null;
+		
+		// Setting the type of transaction that has been done
 		if(dueData.get(position).getAmount() >=0 ) {
 			summary = Constants.YOU_OWE+" "+currency+Math.abs(dueData.get(position).getAmount());
 		} else {
@@ -75,6 +90,7 @@ public class DueAdapter extends ArrayAdapter<Due> {
 		textViewReason.setText(dueData.get(position).getReason());
 		dueData.get(position).setCurrency(currency);
 		
+		// Showing the visual indicator for the type of due
 		if (dueData.get(position).getAmount() <= 0) {
 			imageViewDueStatus.setImageResource(R.drawable.bluesquare);
 		} else {

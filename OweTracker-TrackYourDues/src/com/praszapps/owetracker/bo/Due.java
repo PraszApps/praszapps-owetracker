@@ -7,7 +7,11 @@ import java.util.Locale;
 
 import com.praszapps.owetracker.util.Constants;
 
-
+/**
+ * Class for the due type object for a friend
+ * @author Prasannajeet Pani
+ *
+ */
 public class Due {
 
 	private String dueId;

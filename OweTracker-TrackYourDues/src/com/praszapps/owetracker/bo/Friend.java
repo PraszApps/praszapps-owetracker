@@ -2,7 +2,11 @@ package com.praszapps.owetracker.bo;
 
 import com.praszapps.owetracker.util.Constants;
 
-
+/**
+ * Class for the friend type of object
+ * @author Prasannajeet Pani
+ *
+ */
 public class Friend {
 
 	String id;

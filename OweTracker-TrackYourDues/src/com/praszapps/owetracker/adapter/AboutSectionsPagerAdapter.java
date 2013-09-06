@@ -10,7 +10,11 @@ import com.praszapps.owetracker.ui.fragment.AboutFragment;
 import com.praszapps.owetracker.ui.fragment.ContactFragment;
 
 
-
+/**
+ * The Adapter for the ViewPager of the About Activity Tabs
+ * @author Prasannajeet Pani
+ *
+ */
 public class AboutSectionsPagerAdapter extends FragmentPagerAdapter {
 
         public AboutSectionsPagerAdapter(FragmentManager fm) {

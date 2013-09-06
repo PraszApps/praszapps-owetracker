@@ -1,6 +1,5 @@
 package com.praszapps.owetracker.util;
 
-
 import com.praszapps.owetracker.R;
 import com.praszapps.owetracker.application.OweTrackerApplication;
 

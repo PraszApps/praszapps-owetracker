@@ -14,6 +14,11 @@ import android.widget.TextView;
 import com.praszapps.owetracker.R;
 import com.praszapps.owetracker.bo.Friend;
 
+/**
+ * The Adapter class of the Friend type object list view
+ * @author Prasannajeet Pani
+ *
+ */
 public class FriendAdapter extends ArrayAdapter<Friend> {
 
 	// Declaring variables
@@ -22,6 +27,13 @@ public class FriendAdapter extends ArrayAdapter<Friend> {
 	int layoutResourceId;
 	ArrayList<Friend> friendData = null;
 
+	
+	/**
+	 * Constructor of the FriendAdapter
+	 * @param mContext - The context of the application
+	 * @param layoutResourceId - The layout resource ID
+	 * @param data - Arraylist of Friend type to be passed for processing
+	 */
 	public FriendAdapter(Context mContext, int layoutResourceId, ArrayList<Friend> data) {
 
 		// Setting constructor
@@ -36,21 +48,20 @@ public class FriendAdapter extends ArrayAdapter<Friend> {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View listItem = convertView;
-		//Utils.showLog(getClass().getSimpleName(), "getView() starts",Log.VERBOSE);
 		// inflate the oweboard_list_item.xml parent
 		LayoutInflater inflater = ((Activity) mContext).getLayoutInflater();
 		listItem = inflater.inflate(layoutResourceId, parent, false);
 		// get elements in the layout
 		TextView textViewFriendName = (TextView) listItem
 				.findViewById(R.id.textViewFriendName);
-		TextView textViewOweSummary = (TextView) listItem
-				.findViewById(R.id.textViewOweSummary);
 		ImageView status = (ImageView) listItem
 				.findViewById(R.id.imageViewStatus);
 
 		// Set data for each row
 		Friend friend = friendData.get(position);
 		friend.setSummary(friend.getOweAmount());
+		
+		// Show the appropriate indicator depending on the type of transaction done
 		if (friend.getOweAmount() < 0) {
 			status.setImageResource(R.drawable.bluesquare);
 		} else if(friend.getOweAmount() > 0) {
@@ -59,8 +70,6 @@ public class FriendAdapter extends ArrayAdapter<Friend> {
 			status.setImageResource(R.drawable.greensquare);
 		}
 		textViewFriendName.setText(friend.getName());
-		textViewOweSummary.setText(friend.toString());
-		//Utils.showLog(getClass().getSimpleName(), "getView() ends", Log.VERBOSE);
 		return listItem;
 	}
 

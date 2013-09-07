@@ -118,9 +118,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		
 	}
 	
+	/**
+	 * Method to update the friend details
+	 * @param friend - The friend object to be updated
+	 * @param db - Database instance
+	 * @return - true if success, false if not
+	 */
 	public static Boolean updateFriend(Friend friend, SQLiteDatabase db) {
 		String sql = String.format("SELECT friend_id FROM friend WHERE friend_id = '%s';", friend.getId());
 		Cursor c = db.rawQuery(sql, null);
+		
+		// Checking if the uuid exists
 		if(c.getCount() > 0) {
 			c.moveToFirst();
 			ContentValues values = new ContentValues();
@@ -150,7 +158,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		Cursor c;
 		String sql;
 		
-		sql = String.format("SELECT SUM("+DUE_COLUMN_AMOUNT+") AS TOTAL_DUE FROM "+TABLE_DUE+" WHERE "+DUE_COLUMN_FRIEND_ID+" = '%s'", friendId);
+		sql = String.format("SELECT SUM("+DUE_COLUMN_AMOUNT+") AS TOTAL_DUE FROM "+
+		TABLE_DUE+" WHERE "+DUE_COLUMN_FRIEND_ID+" = '%s'", friendId);
 		c = db.rawQuery(sql, null);
 		if(c.getCount() > 0) {
 			c.moveToFirst();
@@ -161,7 +170,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		c = db.rawQuery(sql, null);
 		if(c.getCount() > 0) {
 			c.moveToFirst();
-			sql = String.format("UPDATE friend SET " + "total_amt_due = '%d'" + " WHERE friend_id = '%s' ;", due, friendId);
+			sql = String.format("UPDATE friend SET " + "total_amt_due = '%d'" + 
+			" WHERE friend_id = '%s' ;", due, friendId);
 			dbExecSQL(db, sql);
 		}
 		
@@ -190,6 +200,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		}
 	}
 		
+	/**
+	 * Get the total number of friends with dues
+	 * @param db - Database instance
+	 * @return Total number of friends with dues
+	 */
 	public static int getFriendsWithDuesCount(SQLiteDatabase db) {
 		String sql = "SELECT * FROM "+TABLE_FRIEND+" WHERE "+FRIEND_COLUMN_DUE+" != 0;";
 		Cursor c = db.rawQuery(sql, null);
@@ -200,6 +215,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		return count;
 	}
 	
+	/**
+	 * 
+	 * Returns the currency symbol of the friend
+	 * @param friendId - Unique ID of the friend whose currency is sought
+	 * @param db - Database instance
+	 * @return Currency symbol
+	 */
 	public static String getCurrency(String friendId, SQLiteDatabase db) {
 		String sql = "SELECT currency FROM "+TABLE_FRIEND+" WHERE "+FRIEND_COLUMN_ID+" = '"+friendId+"';";
 		String currency = null;
@@ -234,7 +256,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	
 		
 	public static Boolean deleteDueData(String dueId, SQLiteDatabase db) {
-		String sql = String.format("SELECT "+DUE_COLUMN_ID+","+DUE_COLUMN_FRIEND_ID+" FROM "+TABLE_DUE+" WHERE "+DUE_COLUMN_ID+" = '"+dueId+"';");
+		String sql = String.format("SELECT "+DUE_COLUMN_ID+","+DUE_COLUMN_FRIEND_ID+" " +
+				"FROM "+TABLE_DUE+" WHERE "+DUE_COLUMN_ID+" = '"+dueId+"';");
 		Cursor c = db.rawQuery(sql, null);
 		if(c.getCount() == 1) {
 			c.moveToFirst();
@@ -274,7 +297,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	}
 	
 	
-	
+	/**
+	 * Creates a new due record in the database
+	 * @param dueToAdd - Due object to insert into the database
+	 * @param db - Database instance
+	 * @return true if sucess, false if failure
+	 */
 	public static Boolean addDue(Due dueToAdd, SQLiteDatabase db) {
 		String dueId = dueToAdd.getDueId();
 		String friendId = dueToAdd.getFriendId();
@@ -296,8 +324,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		
 	}
 	
+	/**
+	 * Method updates a due of the friend
+	 * @param dueToUpdate - Due object to update
+	 * @param db - Database instance
+	 * @return - true if updation is successful, false if not
+	 */
 	public static Boolean updateDue(Due dueToUpdate, SQLiteDatabase db) {
-		String sql = String.format("SELECT friend_id FROM "+ TABLE_DUE +" WHERE "+DUE_COLUMN_ID+" = '%s' ;", dueToUpdate.getDueId());
+		String sql = String.format("SELECT friend_id FROM "+ TABLE_DUE +
+				" WHERE "+DUE_COLUMN_ID+" = '%s' ;", dueToUpdate.getDueId());
 		Cursor c = db.rawQuery(sql, null);
 		if(c.getCount() == 1) {
 			c.moveToFirst();
@@ -324,11 +359,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		}
 
 	}
-	
+
+	/**
+	 * Method to retrieve complete list of dues for a given friend
+	 * @param friendId - The friendID of the friend
+	 * @param db - Database instance
+	 * @return - ArrayList of Due type, the list of Dues for the given friend
+	 */
 	public static ArrayList<Due> getFriendDueList(String friendId, SQLiteDatabase db) {
 		ArrayList<Due> dueList = new ArrayList<Due>();
 		// Select All Query
-		String selectQuery = "SELECT * FROM "+TABLE_DUE+" WHERE "+FRIEND_COLUMN_ID+" = '"+friendId+"' ORDER BY "+DUE_COLUMN_DATE+" DESC;";
+		String selectQuery = "SELECT * FROM "+TABLE_DUE+" WHERE "+FRIEND_COLUMN_ID+" = '"+friendId
+				+"' ORDER BY "+DUE_COLUMN_DATE+" DESC;";
 
 		Cursor cursor = db.rawQuery(selectQuery, null);
 		// looping through all rows and adding to list

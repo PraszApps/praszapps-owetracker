@@ -16,6 +16,12 @@ import com.praszapps.owetracker.R;
 import com.praszapps.owetracker.util.Constants;
 import com.praszapps.owetracker.util.Utils;
 
+/**
+ * 
+ * This fragment displayed the Contact form in the Contact tab of the About activity
+ * @author Prasannajeet Pani
+ *
+ */
 public class ContactFragment extends Fragment {
 
 	EditText feedbackText;
@@ -23,7 +29,11 @@ public class ContactFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		
+		// Inflate the view
 		View v = inflater.inflate(R.layout.fragment_contact, container, false);
+		
+		// Initialise the views of the contact form
 		feedbackText = (EditText) v.findViewById(R.id.editTextFeedback);
 		ratingBar = (RatingBar) v.findViewById(R.id.ratingBarApprate);
 		Button sendFeedback = (Button) v.findViewById(R.id.buttonSend);
@@ -35,6 +45,8 @@ public class ContactFragment extends Fragment {
 					Utils.showToast(getActivity(),
 							"Please enter feedback", Toast.LENGTH_SHORT);
 				} else {
+					
+					// Fire the email intent
 					Intent i = new Intent(Intent.ACTION_SEND);
 					i.setType("message/rfc822");
 					i.putExtra(Intent.EXTRA_EMAIL,

@@ -38,6 +38,7 @@ public class SplashActivity extends RootActivity {
 
 	@Override
 	public void onBackPressed() {
+		// Prevent app from closing when pressed on the back button
 		return;
 	}
 	

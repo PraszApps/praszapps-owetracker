@@ -9,7 +9,8 @@
 	<string name="label_owesactions_listview">friends with dues</string>
 	<string name="strNoRecordsFound">No friend added\n\nAdd a friend\'s name to get started</string>
 	<string name="strNoFriendSelected">No friend selected</string>
-	<string name="strNoDueRecordsFound">No due added\n\nTap on the \"+\" icon on the top bar to add dues</string>
+	<string name="strNoDueRecordsFound">No due added\n\nTap on the \"+\" 
+	    icon on the top bar to add dues</string>
 	<string name="menu_item_close_due">Reset dues/Delete friend</string>
 	<string name="menu_item_edit_friend">Edit Friend</string>
 	<string name="menu_item_add_friend">Add friend</string>
@@ -21,11 +22,13 @@
 	<string name="toast_msg_friend_data_get_failure">Failed to get data for the friend</string>
 	<string name="toast_msg_update_friend_success">Updated friend details successfully</string>
 	<string name="toast_msg_update_friend_failure">Failed to update friend details</string>
-	<string name="toast_msg_update_friend_negative">Friend with same name exists. Please check friend name.</string>
+	<string name="toast_msg_update_friend_negative">Friend with same name exists. 
+ check friend name.</string>
 	<string name="label_hint_enter_amount">Enter amount</string>
 	<string name="label_hint_enter_desc">Enter reason/description</string>
 	<string name="alertdialog_friend_title">Friend exists</string>
-	<string name="alertdialog_addfriend_message">A friend with same name exists. Do you want to save a new record?</string>
+	<string name="alertdialog_addfriend_message">A friend with same name exists. 
+	    Do you want to save a new record?</string>
 	<string name="label_yes">Yes</string>
 	<string name="label_no">No</string>
 	<string name="array_currency_item_select">Select display currency</string>
@@ -89,7 +92,16 @@
 	<string name="label_search">Search</string>
 	<string name="strNoResults">No results</string>
 	
-	<string name="lorem_ipsium">OweTracker app is made for android users who live among friends with whom they usually have dues with each other. This application will help them to keep a track of their dues with different friends.
-	    \n\nThe application helps you add friends and then add dues as you give/take and have easy access to the final amount you owe to each other.
+	<string name="share_app">Share app</string>
+	<string name="share_intent_text">Using OweTracker, now you can track your 
+	    dues between you &amp; your friends in a simple way. 
+	    Install it on your android phone or tab now!</string>
+	<string name="share_intent_subj">Check out this app!</string>
+	
+	<string name="lorem_ipsium">OweTracker app is made for android 
+	    users who live among friends with whom they usually have dues with each other. 
+	    This application will help them to keep a track of their dues with different friends.
+	    \n\nThe application helps you add friends and then add dues as you give/take and 
+	    have easy access to the final amount you owe to each other.
 	    </string>
 </resources>

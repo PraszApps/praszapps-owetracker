@@ -1,10 +1,13 @@
 package com.praszapps.owetracker.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBar.Tab;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -65,11 +68,47 @@ public class AboutActivity extends RootActivity implements android.support.v7.ap
 
 	}
 
+	
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		super.onCreateOptionsMenu(menu);
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.about_menu, menu);
+		return true;
+	}
+
+
+
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if (item.getItemId() == android.R.id.home) {
-			onBackPressed();
+			
 		}
+		
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			onBackPressed();
+			break;
+			
+		case R.id.item_share:
+			Intent intent = new Intent(Intent.ACTION_SEND);
+            intent.setType("text/plain");
+            intent.putExtra(Intent.EXTRA_TEXT, 
+            		getResources().getString(R.string.share_intent_text)+ " " +
+            		"https://play.google.com/store/apps/details?id=com.praszapps.owetracker");
+            intent.putExtra(android.content.Intent.EXTRA_SUBJECT, 
+            		getResources().getString(R.string.share_intent_subj));
+            intent.putExtra(android.content.Intent.EXTRA_TITLE, 
+            		getResources().getString(R.string.share_intent_subj));
+            startActivity(Intent.createChooser(intent, "Share"));
+			break;
+			
+		default:
+			break;
+		}
+		
 		return super.onOptionsItemSelected(item);
 	}
 

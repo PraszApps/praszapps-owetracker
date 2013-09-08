@@ -92,6 +92,7 @@ public class AboutActivity extends RootActivity implements android.support.v7.ap
 			onBackPressed();
 			break;
 			
+		// Tapping on the button fires the share intent
 		case R.id.item_share:
 			Intent intent = new Intent(Intent.ACTION_SEND);
             intent.setType("text/plain");

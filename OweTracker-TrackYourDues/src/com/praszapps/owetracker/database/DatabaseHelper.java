@@ -153,6 +153,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		
 	}
 	
+	/**
+	 * Method updates the due value of an existing friend, called after adding/editing/removing a due of a 
+	 * particular friend
+	 * @param friendId - The ID of the friend whose total dues need to be updated
+	 * @param db - Database instance
+	 */
 	public static void updateFriendDue(String friendId, SQLiteDatabase db) {
 		int due = 0;
 		Cursor c;
@@ -180,6 +186,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		}
 	}
 		
+	
+	/**
+	 * Method completely erases all dues and friend records
+	 * @param friendId - ID of the friend to delete
+	 * @param db - Database instance
+	 * @return - true if success, false if failure
+	 */
 	public static Boolean deleteFriendRecord(String friendId, SQLiteDatabase db) {
 		String sql = String.format("SELECT friend_name FROM friend WHERE friend_id = '%s' ;", friendId);
 		Cursor c = db.rawQuery(sql, null);
@@ -235,6 +248,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		return currency;
 	}
 	
+	/**
+	 * Method retrieves data of a particular friend
+	 * @param friendId - Friend whose data needs to be retrieved
+	 * @param db - Database instance
+	 * @return Friend object containing the details of a friend
+	 */
 	public static Friend getFriendData(String friendId, SQLiteDatabase db) {
 		String sql = String.format("SELECT * FROM friend WHERE friend_id = '%s'", friendId);
 		Cursor cursor = db.rawQuery(sql, null);
@@ -255,6 +274,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	}
 	
 		
+	/**
+	 * Method deletes a particular due of a friend
+	 * @param dueId - ID of the due to delete
+	 * @param db - Database instance
+	 * @return true if success, false if failure
+	 */
 	public static Boolean deleteDueData(String dueId, SQLiteDatabase db) {
 		String sql = String.format("SELECT "+DUE_COLUMN_ID+","+DUE_COLUMN_FRIEND_ID+" " +
 				"FROM "+TABLE_DUE+" WHERE "+DUE_COLUMN_ID+" = '"+dueId+"';");
@@ -276,6 +301,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		}
 	}
 	
+	/**
+	 * Clear all the dues of a friend
+	 * @param friendId - ID to clear dues
+	 * @param db - Database instance
+	 * @return true if success, false if failure
+	 */
 	public static Boolean deleteAllFriendDues(String friendId, SQLiteDatabase db) {
 		String sql = String.format("SELECT due_id FROM friend_due WHERE friend_id = '%s' ;", friendId);
 		Cursor c = db.rawQuery(sql, null);

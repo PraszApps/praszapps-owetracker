@@ -299,7 +299,7 @@ public class DueFragment extends ListFragment {
 		currencyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spinnerGaveTook.setAdapter(currencyAdapter);
 		editTextAmount = (EditText) d.findViewById(R.id.editTextAmount);
-		editTextAmount.setHint(R.string.label_hint_enter_amount);
+		editTextAmount.setHint(getResources().getString(R.string.label_hint_enter_amount)+" ("+friend.getCurrency()+")");
 		editTextReason = (EditText) d.findViewById(R.id.editTextReason);
 		editTextReason.setHint(R.string.label_hint_enter_desc);
 		buttonSave = (Button) d.findViewById(R.id.buttonSave);

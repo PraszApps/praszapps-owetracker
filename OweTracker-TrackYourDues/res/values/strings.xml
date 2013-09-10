@@ -40,9 +40,9 @@
 	<string name="array_givetake_item_select">Select who owes whom</string>
 	<string name="array_givetake_item_gave">I owe/Friend gave</string>
 	<string name="array_givetake_item_took">Friend owes/I gave</string>
-	<string name="label_edit">Edit</string>
+	<string name="label_edit">Edit due</string>
 	<string name="label_delete_friend">Delete friend</string>
-	<string name="label_del">Delete</string>
+	<string name="label_del">Delete due</string>
 	<string name="toast_msg_add_due_amount">Please enter amount</string>
 	<string name="toast_msg_add_due_date">Please enter date</string>
 	<string name="toast_msg_add_due_givetake">Please select who owes whom</string>

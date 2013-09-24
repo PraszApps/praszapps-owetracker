@@ -6,16 +6,16 @@
 
     <ListView
         android:id="@android:id/list"
+        android:layout_below="@+id/textViewOweSummary"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/duedivider"
         android:background="@color/listview_bg"
-        android:divider="@color/list_view_divider"
-        android:dividerHeight="1dp"
+        android:layout_marginTop="10dp"
+        android:divider="@null"
         android:hapticFeedbackEnabled="true" >
     </ListView>
-    
+
     <TextView
         android:id="@+id/textViewOweSummary"
         android:layout_width="wrap_content"
@@ -30,14 +30,6 @@
         android:textColor="@android:color/white"
         android:textStyle="bold"
         android:visibility="gone" />
-    
-    <View 
-        android:id="@+id/duedivider"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="2dp"
-        android:layout_below="@+id/textViewOweSummary"
-        android:background="@android:color/black"/>
 
     <TextView
         android:id="@+id/empty_duelist"
@@ -45,8 +37,8 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:gravity="center"
-        android:textColor="@color/black_overlay"
-        android:text="@string/strNoFriendSelected" >
+        android:text="@string/strNoFriendSelected"
+        android:textColor="@color/black_overlay" >
     </TextView>
 
 </RelativeLayout>

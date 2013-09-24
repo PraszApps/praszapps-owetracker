@@ -13,25 +13,18 @@
         android:background="@drawable/green_rounded_bg"
         android:gravity="center_horizontal"
         android:padding="10dp"
-        android:textStyle="bold"
-        android:textColor="@android:color/white"
         android:text="@string/label_owesactions_listview"
-        android:textAppearance="@android:style/TextAppearance.Medium" />
-    
-    <View 
-        android:id="@+id/frienddivider"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="2dp"
-        android:background="@android:color/black"/>
+        android:textAppearance="@android:style/TextAppearance.Medium"
+        android:textColor="@android:color/white"
+        android:textStyle="bold" />
 
     <ListView
         android:id="@android:id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
         android:background="@color/listview_bg"
-        android:divider="@color/list_view_divider"
-        android:dividerHeight="1dp"
+        android:divider="@null"
         android:fadingEdge="vertical|horizontal"
         android:fadingEdgeLength="10dp"
         android:fastScrollEnabled="true"
@@ -46,8 +39,8 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:gravity="center"
-        android:textColor="@color/black_overlay"
-        android:text="@string/strNoRecordsFound" >
+        android:text="@string/strNoRecordsFound"
+        android:textColor="@color/black_overlay" >
     </TextView>
 
 </LinearLayout>

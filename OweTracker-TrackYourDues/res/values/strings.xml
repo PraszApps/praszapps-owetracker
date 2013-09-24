@@ -93,6 +93,8 @@
 	<string name="strNoResults">No results</string>
 	
 	<string name="share_app">Share app</string>
+	<string name="rate_app">Rate</string>
+	
 	<string name="share_intent_text">Using OweTracker, now you can track your 
 	    dues between you &amp; your friends in a simple way. 
 	    Install it on your android phone or tab now!</string>

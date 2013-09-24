@@ -1,6 +1,7 @@
 package com.praszapps.owetracker.ui.activity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
@@ -104,6 +105,15 @@ public class AboutActivity extends RootActivity implements android.support.v7.ap
             intent.putExtra(android.content.Intent.EXTRA_TITLE, 
             		getResources().getString(R.string.share_intent_subj));
             startActivity(Intent.createChooser(intent, "Share"));
+			break;
+			
+			
+		case R.id.item_rate:
+			try {
+	            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id="+Constants.PACKAGE_NAME)));
+	        } catch (android.content.ActivityNotFoundException anfe) {
+	            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id="+Constants.PACKAGE_NAME)));
+	        }
 			break;
 			
 		default:

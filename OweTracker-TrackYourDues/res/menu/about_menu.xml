@@ -3,10 +3,17 @@
     xmlns:owetracker="http://schemas.android.com/apk/res-auto" >
 
     <item
-        android:id="@+id/item_share"
+        android:id="@+id/item_rate"
         android:icon="@drawable/share"
         android:orderInCategory="1"
-        android:title="@string/share_app"
+        android:title="@string/rate_app"
         owetracker:showAsAction="ifRoom|withText"/>
 
+    <item
+        android:id="@+id/item_share"
+        android:icon="@drawable/share"
+        android:orderInCategory="2"
+        android:title="@string/share_app"
+        owetracker:showAsAction="ifRoom|withText"/>
+    
 </menu>

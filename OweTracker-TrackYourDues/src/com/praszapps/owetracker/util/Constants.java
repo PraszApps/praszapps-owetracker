@@ -21,4 +21,5 @@ public class Constants {
 	public static final String DATE_FORMAT = "dd-MMM-yyyy";
 	public static final String EMAIL_ID_FEEDBACK = "developer.praszapps@gmail.com";
 	public static final String EMAIL_SUBJ_FEEDBACK = "OweTracker - Feedback";
+	public static final String PACKAGE_NAME = "com.praszapps.owetracker";
 }

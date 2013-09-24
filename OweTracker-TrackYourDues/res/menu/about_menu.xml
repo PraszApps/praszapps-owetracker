@@ -13,7 +13,8 @@
         android:id="@+id/item_share"
         android:icon="@drawable/share"
         android:orderInCategory="2"
-        android:title="@string/share_app"
-        owetracker:showAsAction="ifRoom|withText"/>
+        android:title="@null"
+        owetracker:showAsAction="ifRoom|withText"
+        owetracker:actionProviderClass="android.support.v7.widget.ShareActionProvider"/>
     
 </menu>

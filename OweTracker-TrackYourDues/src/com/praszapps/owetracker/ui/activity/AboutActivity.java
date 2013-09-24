@@ -4,9 +4,11 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBar.Tab;
+import android.support.v7.widget.ShareActionProvider;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -28,6 +30,8 @@ public class AboutActivity extends RootActivity implements android.support.v7.ap
 	
 	AboutSectionsPagerAdapter aboutAdapter;
 	ViewPager mViewPager;
+	private ShareActionProvider mShareActionProvider;
+	private Intent intent;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +70,16 @@ public class AboutActivity extends RootActivity implements android.support.v7.ap
 			Utils.showToast(this, getResources().getString(R.string.toast_msg_swipe), Toast.LENGTH_LONG);
 			RootActivity.owetrackerPrefs.edit().putBoolean(Constants.IS_OPENING_ABOUT_FIRST_TIME, false).commit();
 		}
+		
+		intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_TEXT, 
+        		getResources().getString(R.string.share_intent_text)+ " " +
+        		"https://play.google.com/store/apps/details?id=com.praszapps.owetracker");
+        intent.putExtra(android.content.Intent.EXTRA_SUBJECT, 
+        		getResources().getString(R.string.share_intent_subj));
+        intent.putExtra(android.content.Intent.EXTRA_TITLE, 
+        		getResources().getString(R.string.share_intent_subj));
 
 	}
 
@@ -76,6 +90,12 @@ public class AboutActivity extends RootActivity implements android.support.v7.ap
 		super.onCreateOptionsMenu(menu);
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.about_menu, menu);
+		MenuItem item = menu.findItem(R.id.item_share);
+		mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
+		// Connect the dots: give the ShareActionProvider its Share Intent
+	    if (mShareActionProvider != null) {
+	        mShareActionProvider.setShareIntent(intent);
+	    }
 		return true;
 	}
 
@@ -92,21 +112,6 @@ public class AboutActivity extends RootActivity implements android.support.v7.ap
 		case android.R.id.home:
 			onBackPressed();
 			break;
-			
-		// Tapping on the button fires the share intent
-		case R.id.item_share:
-			Intent intent = new Intent(Intent.ACTION_SEND);
-            intent.setType("text/plain");
-            intent.putExtra(Intent.EXTRA_TEXT, 
-            		getResources().getString(R.string.share_intent_text)+ " " +
-            		"https://play.google.com/store/apps/details?id=com.praszapps.owetracker");
-            intent.putExtra(android.content.Intent.EXTRA_SUBJECT, 
-            		getResources().getString(R.string.share_intent_subj));
-            intent.putExtra(android.content.Intent.EXTRA_TITLE, 
-            		getResources().getString(R.string.share_intent_subj));
-            startActivity(Intent.createChooser(intent, "Share"));
-			break;
-			
 			
 		case R.id.item_rate:
 			try {

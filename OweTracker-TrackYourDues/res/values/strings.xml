@@ -91,8 +91,6 @@
 	
 	<string name="label_search">Search</string>
 	<string name="strNoResults">No results</string>
-	
-	<string name="share_app">Share app</string>
 	<string name="rate_app">Rate</string>
 	
 	<string name="share_intent_text">Using OweTracker, now you can track your 

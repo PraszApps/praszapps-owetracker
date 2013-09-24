@@ -1,7 +1,6 @@
 package com.praszapps.owetracker.ui.activity;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.MenuItemCompat;
@@ -114,11 +113,7 @@ public class AboutActivity extends RootActivity implements android.support.v7.ap
 			break;
 			
 		case R.id.item_rate:
-			try {
-	            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id="+Constants.PACKAGE_NAME)));
-	        } catch (android.content.ActivityNotFoundException anfe) {
-	            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id="+Constants.PACKAGE_NAME)));
-	        }
+			Utils.goToGooglePlayPage(this);
 			break;
 			
 		default:

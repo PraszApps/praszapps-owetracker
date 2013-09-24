@@ -13,8 +13,10 @@ import com.praszapps.owetracker.application.OweTrackerApplication;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.DialogInterface.OnClickListener;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.util.Log;
 import android.view.Gravity;
 import android.widget.Toast;
@@ -179,6 +181,17 @@ public class Utils {
 		} else {
 			return null;
 		}
+	}
+	
+	public static void goToGooglePlayPage(Context ctx) {
+		try {
+            ctx.startActivity(new Intent(Intent.ACTION_VIEW, 
+            		Uri.parse("market://details?id="+Constants.PACKAGE_NAME)));
+        } catch (android.content.ActivityNotFoundException anfe) {
+        	ctx.startActivity(new Intent(Intent.ACTION_VIEW, 
+            		Uri.parse("http://play.google.com/store/apps/details?id="
+            +Constants.PACKAGE_NAME)));
+        }
 	}
 	
 	/**

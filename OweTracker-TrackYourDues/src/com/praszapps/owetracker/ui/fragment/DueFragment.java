@@ -9,6 +9,7 @@ import java.util.Locale;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -42,6 +43,7 @@ import com.praszapps.owetracker.ui.activity.MainActivity;
 import com.praszapps.owetracker.ui.activity.RootActivity;
 import com.praszapps.owetracker.util.Constants;
 import com.praszapps.owetracker.util.Utils;
+import com.praszapps.owetracker.util.Utils.DialogResponse;
 
 public class DueFragment extends ListFragment {
 
@@ -60,7 +62,8 @@ public class DueFragment extends ListFragment {
 	private Button buttonSave;
 	private Due due;
 	private static int calendarYear, calendarMonth, calendarDay;
-	private static Calendar cld = Calendar.getInstance();;
+	private static Calendar cld = Calendar.getInstance();
+	private SharedPreferences owetrackerPrefs = RootActivity.owetrackerPrefs;
 	DialogFragment datepicker;
 	@SuppressLint("SimpleDateFormat")
 	private static SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
@@ -165,9 +168,75 @@ public class DueFragment extends ListFragment {
 		super.onOptionsItemSelected(item);
 		switch (item.getItemId()) {
 		case android.R.id.home:
-			//Go back to due list
-			getFragmentManager().popBackStack();
-            return true;
+			
+			if (owetrackerPrefs.getBoolean(Constants.DONT_SHOW_AGAIN, false)) {
+				//Utils.showToast(getActivity(), "Dont show again is true", Toast.LENGTH_SHORT);
+				//Go back to due list
+				getFragmentManager().popBackStack();
+	            return true;
+			} else {
+				//Utils.showToast(this, "Dont show again is false", Toast.LENGTH_SHORT);
+				long launch_count = owetrackerPrefs.getLong(Constants.LAUNCH_COUNT, 0)+1;
+			     owetrackerPrefs.edit().putLong(Constants.LAUNCH_COUNT, launch_count).commit();
+			     Long date_firstLaunch = owetrackerPrefs.getLong(Constants.DATE_FIRST_LAUNCH, 0);
+			     if (date_firstLaunch == 0) {
+			            date_firstLaunch = System.currentTimeMillis();
+			            owetrackerPrefs.edit().putLong(Constants.DATE_FIRST_LAUNCH, date_firstLaunch).commit();
+			     }
+			     
+			  // Wait at least n days before opening
+			  //Utils.showToast(getActivity(), "launch count is --- "+launch_count, Toast.LENGTH_SHORT);
+			  if (launch_count >= Constants.LAUNCHES_UNTIL_PROMPT) {
+				  //Utils.showToast(getActivity(), "It has number of launches needed to prompt", Toast.LENGTH_SHORT);
+				  //Utils.showToast(getActivity(), "Difference --- "+(date_firstLaunch - System.currentTimeMillis()), Toast.LENGTH_SHORT);
+				  if (System.currentTimeMillis() >= date_firstLaunch + 
+						  (/*Constants.DAYS_UNTIL_PROMPT * 24 * 60 * */60 * 1000)) {
+					  //Utils.showToast(getActivity(), "It will show prompt", Toast.LENGTH_SHORT);
+					  Utils.showAlertDialog(getActivity(), getResources().getString(R.string.rate_dialog_title),
+							  getResources().getString(R.string.rate_dialog_msg), null, false, 
+							  getResources().getString(R.string.rate_dialog_now), 
+							  getResources().getString(R.string.rate_dialog_never), 
+							  getResources().getString(R.string.rate_dialog_later), new DialogResponse() {
+						@Override
+						public void onPositive() {
+							Utils.goToGooglePlayPage(getActivity());
+							owetrackerPrefs.edit().putBoolean(Constants.DONT_SHOW_AGAIN, true).commit();
+							//Go back to due list
+							getFragmentManager().popBackStack();
+						}
+						
+						@Override
+						public void onNeutral() {
+							owetrackerPrefs.edit().putLong(Constants.LAUNCH_COUNT, 0).commit();
+							owetrackerPrefs.edit().putLong(Constants.DATE_FIRST_LAUNCH, 
+									System.currentTimeMillis()).commit();
+							//Go back to due list
+							getFragmentManager().popBackStack();
+						}
+						
+						@Override
+						public void onNegative() {
+							owetrackerPrefs.edit().putBoolean(Constants.DONT_SHOW_AGAIN, true).commit();
+							//Go back to due list
+							getFragmentManager().popBackStack();
+						}
+						
+						
+					});
+			    	return true;
+				  } else {
+					  //Utils.showToast(getActivity(), "It still wont show prompt", Toast.LENGTH_SHORT);
+					//Go back to due list
+						getFragmentManager().popBackStack();
+			            return true;
+				  }
+			  } else {
+				  //Utils.showToast(getActivity(), "It wont show prompt", Toast.LENGTH_SHORT);
+				  //Go back to due list
+				  getFragmentManager().popBackStack();
+		            return true;
+			  }
+			}
             
 		case R.id.item_add_due:
 			showDueDialog(Constants.MODE_ADD, null);

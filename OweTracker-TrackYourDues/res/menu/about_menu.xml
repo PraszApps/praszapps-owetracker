@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/item_rate"
-        android:icon="@drawable/share"
+        android:icon="@drawable/rate"
         android:orderInCategory="1"
         android:title="@string/rate_app"
         owetracker:showAsAction="ifRoom|withText"/>

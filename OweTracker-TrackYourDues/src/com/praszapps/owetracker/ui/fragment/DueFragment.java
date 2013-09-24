@@ -325,6 +325,7 @@ public class DueFragment extends ListFragment {
 			
 			@Override
 			public void onClick(View v) {
+				editTextDate.setEnabled(false);
 				datepicker.show(getFragmentManager(), "datePicker");
 			}
 		});
@@ -499,7 +500,7 @@ public class DueFragment extends ListFragment {
 				editTextDate.setText(getResources().getString(R.string.label_date)+" "+dateFormat.format(cld.getTimeInMillis()));
 			}
 			
-			
+			editTextDate.setEnabled(true);
 			
 		}
 	}

@@ -1,6 +1,8 @@
 package com.praszapps.owetracker.database;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -11,6 +13,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.praszapps.owetracker.bo.Due;
 import com.praszapps.owetracker.bo.Friend;
+import com.praszapps.owetracker.util.Constants;
 
 /**
  * Contains all the Database related APIs necessary to run the application
@@ -105,6 +108,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				friend.setName(cursor.getString(1));
 				friend.setCurrency(cursor.getString(2));
 				friend.setOweAmount(Integer.parseInt(cursor.getString(3)));
+				friend.setTotalRecords(getDueCountForFriend(cursor.getString(0), db));
+				friend.setLastUpdated(lastDueAdded(cursor.getString(0), db));
 				// Adding friend to list
 				friendList.add(friend);
 			} while (cursor.moveToNext());
@@ -425,6 +430,45 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		return dueList;
 		
 	} 
+	
+	/**
+	 * Gets the total number of dues for the friend
+	 * @param friendID - ID of the friend
+	 * @param db - Instance of database
+	 * @return - Total number of dues
+	 */
+	private static String getDueCountForFriend(String friendID, SQLiteDatabase db) {
+		String sql = "SELECT "+DUE_COLUMN_ID+" FROM "+TABLE_DUE+" WHERE "+DUE_COLUMN_FRIEND_ID+" = '"+friendID+"';";
+		Cursor c = db.rawQuery(sql, null);
+		String count = c.getCount()+"";
+		
+		if(!c.isClosed()) {
+			c.close();
+		}
+		return count;
+	}
+	
+	/**
+	 * Method will return the last due of the friend
+	 * @param friendID - ID of the friend
+	 * @param db - Instance of database
+	 * @return String describing the last due date
+	 */
+	private static String lastDueAdded(String friendID, SQLiteDatabase db) {
+		Cursor c = db.query(TABLE_DUE, new String [] {"MAX("+DUE_COLUMN_DATE+")"},
+				DUE_COLUMN_FRIEND_ID+" = '"+friendID+"'", null, null, null, null);
+		c.moveToFirst();
+		Long dateinMilis = c.getLong(c.getColumnIndex("MAX("+DUE_COLUMN_DATE+")"));
+		SimpleDateFormat dateFormat = new SimpleDateFormat(Constants.DATE_FORMAT, Locale.ENGLISH);
+		String response;
+		if(dateinMilis == 0) {
+			response = "";
+		} else {
+			response = Constants.LAST_UPDATE+" - "+dateFormat.format(dateinMilis);
+		}
+		
+		return response;
+	}
 	
 	
 	

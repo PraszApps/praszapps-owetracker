@@ -3,6 +3,7 @@ package com.praszapps.owetracker.ui.activity;
 import java.lang.reflect.Field;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -55,9 +56,11 @@ public class MainActivity extends RootActivity implements OnFriendNameClickListe
 		if(v == null) {
 			//Running on tablet
 			isSinglePane = false;
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 		} else {
 			//Its running on phone
 			isSinglePane = true;
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 			if (savedInstanceState == null) {
 				FragmentManager fm = getSupportFragmentManager();
 				FragmentTransaction ft = fm.beginTransaction();

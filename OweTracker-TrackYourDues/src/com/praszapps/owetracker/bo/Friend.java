@@ -14,21 +14,18 @@ public class Friend {
 	int oweAmount;
 	String summary;
 	String currency;
-
-	// For Sample Data
-	public Friend(String name, int oweAmount) {
-		super();
-		this.name = name;
-		this.oweAmount = oweAmount;
-	}
+	String totalRecords;
+	String lastUpdated;
 
 	public Friend(String id, String name, int oweAmount, 
-			String currency) {
+			String currency, String totalRecords, String lastUpdated) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.oweAmount = oweAmount;
 		this.currency = currency;
+		this.totalRecords = totalRecords;
+		this.lastUpdated = lastUpdated;
 	}
 	
 	public Friend() {
@@ -76,17 +73,33 @@ public class Friend {
 	public void setSummary(int oweAmount) {
 		this.summary = currency+Math.abs(oweAmount);
 	}
+	
+	public String getTotalRecords() {
+		return totalRecords;
+	}
+
+	public void setTotalRecords(String totalRecords) {
+		this.totalRecords = totalRecords;
+	}
+
+	public String getLastUpdated() {
+		return lastUpdated;
+	}
+
+	public void setLastUpdated(String lastUpdated) {
+		this.lastUpdated = lastUpdated;
+	}
 
 	@Override
 	public String toString() {
 		
 		String friendObjToString = null;
 		if(oweAmount < 0) {
-			friendObjToString = Constants.OWES_YOU+" "+currency+Math.abs(oweAmount);
+			friendObjToString = name+" : "+Constants.OWES_YOU+" "+currency+Math.abs(oweAmount);
 		} else if(oweAmount > 0) {
-			friendObjToString = Constants.YOU_OWE+" "+currency+Math.abs(oweAmount);
+			friendObjToString = name+" : "+Constants.YOU_OWE+" "+currency+Math.abs(oweAmount);
 		} else if(oweAmount == 0) {
-			friendObjToString = Constants.NO_DUES;
+			friendObjToString = name+" : "+Constants.NO_DUES;
 		}
 		
 		return friendObjToString;

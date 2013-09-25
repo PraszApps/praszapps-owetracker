@@ -14,25 +14,43 @@
         android:background="@drawable/card_bg" >
 
         <TextView
-            android:id="@+id/textViewFriendName"
+            android:id="@+id/textViewOweSummary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
-            android:layout_marginLeft="35dp"
+            android:layout_marginLeft="25dp"
             android:paddingRight="40dp"
+            android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@android:color/black"
             android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/textViewOweSummary"
+            android:id="@+id/textViewDateLastUpdated"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_below="@+id/textViewFriendName"
-            android:layout_marginLeft="45dp"
-            android:paddingBottom="5dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/textViewOweSummary"
+            android:layout_marginTop="20dp"
             android:paddingRight="10dp"
             android:textColor="@color/due_list_item_desc_color"
-            android:textSize="15sp" />
+            android:textSize="12sp"
+            android:textStyle="italic" />
+        
+        <TextView
+            android:id="@+id/textViewTotalTransactions"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/textViewOweSummary"
+            android:layout_marginTop="20dp"
+            android:paddingLeft="25dp"
+            android:textColor="@color/due_list_item_desc_color"
+            android:textSize="12sp"
+            android:textStyle="italic" />
+        
     </RelativeLayout>
 
     <ImageView

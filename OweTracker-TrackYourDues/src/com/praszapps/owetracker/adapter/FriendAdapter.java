@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.praszapps.owetracker.R;
 import com.praszapps.owetracker.bo.Friend;
+import com.praszapps.owetracker.util.Constants;
 
 /**
  * The Adapter class of the Friend type object list view
@@ -52,8 +53,10 @@ public class FriendAdapter extends ArrayAdapter<Friend> {
 		LayoutInflater inflater = ((Activity) mContext).getLayoutInflater();
 		listItem = inflater.inflate(layoutResourceId, parent, false);
 		// get elements in the layout
-		TextView textViewFriendName = (TextView) listItem
-				.findViewById(R.id.textViewFriendName);
+		TextView textViewDateLastUpdated = (TextView) listItem
+				.findViewById(R.id.textViewDateLastUpdated);
+		TextView textViewDateTotalTrans = (TextView) listItem
+				.findViewById(R.id.textViewTotalTransactions);
 		TextView textViewOweSummary = (TextView) listItem
 				.findViewById(R.id.textViewOweSummary);
 		ImageView status = (ImageView) listItem
@@ -71,8 +74,15 @@ public class FriendAdapter extends ArrayAdapter<Friend> {
 		} else if(friend.getOweAmount() == 0) {
 			status.setImageResource(R.drawable.greensquare);
 		}
-		textViewFriendName.setText(friend.getName());
+		
+		if(friend.getLastUpdated() == null || friend.getLastUpdated().equals("")) {
+			textViewDateLastUpdated.setVisibility(TextView.INVISIBLE);
+		} else {
+			textViewDateLastUpdated.setVisibility(TextView.VISIBLE);
+			textViewDateLastUpdated.setText(friend.getLastUpdated());
+		}
 		textViewOweSummary.setText(friend.toString());
+		textViewDateTotalTrans.setText(Constants.TOTAL_RECORDS+" - "+friend.getTotalRecords());
 		return listItem;
 	}
 

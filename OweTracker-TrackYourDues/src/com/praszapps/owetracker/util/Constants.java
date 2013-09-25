@@ -8,9 +8,10 @@ public class Constants {
 	public static final String OWES_YOU = OweTrackerApplication.getContext().getResources().getString(R.string.owes_me);
 	public static final String YOU_OWE = OweTrackerApplication.getContext().getResources().getString(R.string.i_owe);
 	public static final String NO_DUES = OweTrackerApplication.getContext().getResources().getString(R.string.no_dues);
+	public static final String TOTAL_RECORDS = OweTrackerApplication.getContext().getResources().getString(R.string.total_records);
+	public static final String LAST_UPDATE = OweTrackerApplication.getContext().getResources().getString(R.string.last_update);
 	public static final String BUNDLE_EXTRA_CURRENCY = "currency";
 	public static final String BUNDLE_EXTRA_FRIENDID = "friendId";
-	public static final String CURRENCY_RS = "Rs";
 	public static final long SPLASH_SCREEN_TIMEOUT = 2000;
 	public static final String MODE_ADD = "add";
 	public static final String MODE_EDIT = "edit";
@@ -24,7 +25,7 @@ public class Constants {
 	public static final String PACKAGE_NAME = "com.praszapps.owetracker";
 	public static final String LAUNCH_COUNT = "launch_count";
 	public final static int DAYS_UNTIL_PROMPT = 3;
-    public final static int LAUNCHES_UNTIL_PROMPT = 1;
+    public final static int LAUNCHES_UNTIL_PROMPT = 15;
     public static final String DONT_SHOW_AGAIN = "dontshowagain";
     public static final String DATE_FIRST_LAUNCH = "date_firstlaunch";
 }

@@ -98,7 +98,7 @@
     <string name="rate_dialog_never">Don\'t Remind Me</string>
     <string name="rate_dialog_later">Remind me later</string>
     <string name="total_records">Total records</string>
-    <string name="last_update">Last due</string>
+    <string name="last_update">Pending since</string>
     
     
     <string name="lorem_ipsium">OweTracker app is made for android 

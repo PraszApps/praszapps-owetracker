@@ -9,7 +9,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RatingBar;
 import android.widget.Toast;
 
 import com.praszapps.owetracker.R;
@@ -25,7 +24,6 @@ import com.praszapps.owetracker.util.Utils;
 public class ContactFragment extends Fragment {
 
 	EditText feedbackText;
-	RatingBar ratingBar;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -35,7 +33,6 @@ public class ContactFragment extends Fragment {
 		
 		// Initialise the views of the contact form
 		feedbackText = (EditText) v.findViewById(R.id.editTextFeedback);
-		ratingBar = (RatingBar) v.findViewById(R.id.ratingBarApprate);
 		Button sendFeedback = (Button) v.findViewById(R.id.buttonSend);
 		sendFeedback.setOnClickListener(new OnClickListener() {
 
@@ -53,8 +50,7 @@ public class ContactFragment extends Fragment {
 							new String[] { Constants.EMAIL_ID_FEEDBACK });
 					i.putExtra(Intent.EXTRA_SUBJECT, Constants.EMAIL_SUBJ_FEEDBACK);
 					i.putExtra(Intent.EXTRA_TEXT,
-							feedbackText.getText().toString()
-									+ "\n\nRating -- " + ratingBar.getRating());
+							feedbackText.getText().toString());
 					try {
 						startActivity(Intent.createChooser(i, "Send Mail"));
 					} catch (android.content.ActivityNotFoundException ex) {

@@ -33,32 +33,12 @@
             android:text="@string/label_feedback"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@android:color/black" />
-
-        <TextView
-            android:id="@+id/rateTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/editTextFeedback"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="20dp"
-            android:text=""
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@android:color/black" />
-
-        <RatingBar
-            android:id="@+id/ratingBarApprate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/rateTitle"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="24dp"
-            android:rating="3" />
-
+            
         <Button
             android:id="@+id/buttonSend"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/ratingBarApprate"
+            android:layout_below="@+id/editTextFeedback"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="30dp"
             android:text="@string/label_send_feedback"
@@ -70,7 +50,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/textViewFeedbackTitle"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
             android:ems="10"
             android:hint="@string/feedback_hint"
             android:inputType="textMultiLine|textCapSentences"

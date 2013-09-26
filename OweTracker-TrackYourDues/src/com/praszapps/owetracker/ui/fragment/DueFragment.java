@@ -13,7 +13,6 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.ListFragment;
 import android.support.v7.view.ActionMode;
 import android.support.v7.view.ActionMode.Callback;
@@ -49,14 +48,15 @@ import com.praszapps.owetracker.util.Utils.DialogResponse;
 public class DueFragment extends ListFragment {
 
 	private View v;
-	private Friend friend, updateFriend;
+	private static Friend friend;
 	private RootActivity rAct;
-	private TextView textViewOweSummary, emptyTextView;
+	private static TextView textViewOweSummary;
+	private static TextView emptyTextView;
 	private static EditText editTextDate;
 	private ListView listViewTransactions;
-	private ArrayList<Due> duesList = new ArrayList<Due>();
-	private SQLiteDatabase db;
-	private DueAdapter dueListAdapter;
+	private static ArrayList<Due> duesList = new ArrayList<Due>();
+	private static SQLiteDatabase db;
+	private static DueAdapter dueListAdapter;
 	private Dialog d;
 	private EditText editTextAmount, editTextReason;
 	private Spinner spinnerGaveTook;
@@ -258,41 +258,35 @@ public class DueFragment extends ListFragment {
 			showDueDialog(Constants.MODE_ADD, null);
 			return true;
 			
-		case R.id.item_edit_friend:
-			showEditFriendDialog();
-			return true;
-			
-		case R.id.item_close_due:
-			Utils.showAlertDialog(getActivity(), null, 
-					getResources().getString(R.string.delete_reset_friend_alert_msg), 
-					null, false, getResources().getString(R.string.label_delete_friend), getResources().getString(R.string.label_reset),
-					getResources().getString(R.string.label_cancel), new Utils.DialogResponse() {
+		case R.id.item_reset_due:
+			Utils.showAlertDialog(getActivity(),  
+					getResources().getString(R.string.label_reset), 
+					getResources().getString(R.string.label_sure),
+					null, false, getResources().getString(R.string.label_yes), 
+					getResources().getString(R.string.label_no),
+					null, new Utils.DialogResponse() {
 				
 				@Override
 				public void onPositive() {
-					// Delete all records of dues and friends
-					DatabaseHelper.deleteAllFriendDues(friend.getId(), db);
-					DatabaseHelper.deleteFriendRecord(friend.getId(), db);
-					if(MainActivity.isSinglePane) {
-						FragmentManager fm = getFragmentManager();
-						Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_delete), Toast.LENGTH_SHORT);
-						fm.popBackStackImmediate();
+					if(duesList.size() == 0) {
+						// Show error if there are no dues to reset
+						Utils.showToast(getActivity(), getResources().getString(R.string.no_dues_to_reset), Toast.LENGTH_SHORT);
 					} else {
+						// Delete dues and reset due value to zero
+						DatabaseHelper.deleteAllFriendDues(friend.getId(), db);
 						updateDueList();
-						OweboardFragment.updateListView();
-						setHasOptionsMenu(false);
-						((MainActivity)getActivity()).getSupportActionBar().setTitle(getResources().getString(R.string.oweboard_title));
-						int dueCount = DatabaseHelper.getFriendsWithDuesCount(db);
-						if(dueCount == 0 && OweboardFragment.friendListAdapter.getCount() == 0) {
-							OweboardFragment.totalFriends.setVisibility(TextView.GONE);
-						} else {
-							OweboardFragment.totalFriends.setVisibility(TextView.VISIBLE);
-							OweboardFragment.totalFriends.setText(dueCount+"/"+OweboardFragment.friendListAdapter.getCount()+" "+getResources().getString(
-									R.string.label_owesactions_listview));
+						updateFriendSummary();
+						if(!MainActivity.isSinglePane) {
+							int dueCount = DatabaseHelper.getFriendsWithDuesCount(db);
+							if(dueCount == 0 && OweboardFragment.getFriendListAdapter().getCount() == 0) {
+								OweboardFragment.getTotalFriends().setVisibility(TextView.GONE);
+							} else {
+								OweboardFragment.getTotalFriends().setVisibility(TextView.VISIBLE);
+								OweboardFragment.getTotalFriends().setText(dueCount+"/"+OweboardFragment.getFriendListAdapter().getCount()+" "+getResources().getString(
+										R.string.label_owesactions_listview));
+							}
 						}
-						textViewOweSummary.setVisibility(TextView.GONE);
-						emptyTextView.setText(getResources().getString(R.string.strNoFriendSelected));
-						Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_delete), Toast.LENGTH_SHORT);
+						Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_reset), Toast.LENGTH_SHORT);
 					}
 				}
 				
@@ -304,26 +298,7 @@ public class DueFragment extends ListFragment {
 				@Override
 				public void onNegative() {
 					
-					if(duesList.size() == 0) {
-						// Show error if there are no dues to reset
-						Utils.showToast(getActivity(), getResources().getString(R.string.no_dues_to_reset), Toast.LENGTH_SHORT);
-					} else {
-						// Delete dues and reset due value to zero
-						DatabaseHelper.deleteAllFriendDues(friend.getId(), db);
-						updateDueList();
-						updateFriendSummary();
-						if(!MainActivity.isSinglePane) {
-							int dueCount = DatabaseHelper.getFriendsWithDuesCount(db);
-							if(dueCount == 0 && OweboardFragment.friendListAdapter.getCount() == 0) {
-								OweboardFragment.totalFriends.setVisibility(TextView.GONE);
-							} else {
-								OweboardFragment.totalFriends.setVisibility(TextView.VISIBLE);
-								OweboardFragment.totalFriends.setText(dueCount+"/"+OweboardFragment.friendListAdapter.getCount()+" "+getResources().getString(
-										R.string.label_owesactions_listview));
-							}
-						}
-						Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_reset), Toast.LENGTH_SHORT);
-					}
+					//Do nothing
 				}
 				
 			});
@@ -467,11 +442,11 @@ public class DueFragment extends ListFragment {
 						updateFriendSummary();
 						if(!MainActivity.isSinglePane) {
 							int dueCount = DatabaseHelper.getFriendsWithDuesCount(db);
-							if(dueCount == 0 && OweboardFragment.friendListAdapter.getCount() == 0) {
-								OweboardFragment.totalFriends.setVisibility(TextView.GONE);
+							if(dueCount == 0 && OweboardFragment.getFriendListAdapter().getCount() == 0) {
+								OweboardFragment.getTotalFriends().setVisibility(TextView.GONE);
 							} else {
-								OweboardFragment.totalFriends.setVisibility(TextView.VISIBLE);
-								OweboardFragment.totalFriends.setText(dueCount+"/"+OweboardFragment.friendListAdapter.getCount()+" "+getResources().getString(
+								OweboardFragment.getTotalFriends().setVisibility(TextView.VISIBLE);
+								OweboardFragment.getTotalFriends().setText(dueCount+"/"+OweboardFragment.getFriendListAdapter().getCount()+" "+getResources().getString(
 										R.string.label_owesactions_listview));
 							}
 						}
@@ -499,7 +474,7 @@ public class DueFragment extends ListFragment {
 	
 	}
 		
-	@SuppressWarnings("unchecked")
+	/*@SuppressWarnings("unchecked")
 	private void showEditFriendDialog() {
 		d = new Dialog(getActivity());
 		d.setContentView(R.layout.dialog_add_update_friend);
@@ -550,7 +525,7 @@ public class DueFragment extends ListFragment {
 				}
 		});
 		d.show();
-	}
+	}*/
 	
 	public static class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
 
@@ -591,8 +566,16 @@ public class DueFragment extends ListFragment {
 	}
 	
 	
-	private void updateDueList() {
-		OweboardFragment.updateListView();
+	public static void updateSummary(Friend updateFriend) {
+		textViewOweSummary.setText(updateFriend.toString());
+	}
+	
+	public static void handleFriendDelete() {
+		textViewOweSummary.setVisibility(TextView.GONE);
+		emptyTextView.setText(Constants.NO_FRIENDS);
+	}
+	
+	public static void updateDueList() {
 		duesList = DatabaseHelper.getFriendDueList(friend.getId(), db);
 		dueListAdapter.clear();
 		dueListAdapter.setCurrency(friend.getCurrency());
@@ -612,6 +595,7 @@ public class DueFragment extends ListFragment {
 		
 		@Override
 		public void onDestroyActionMode(ActionMode mode) {
+			mActionMode = null;
 			mode = null;
 		}
 		
@@ -629,11 +613,11 @@ public class DueFragment extends ListFragment {
 		public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
 			
 			switch (item.getItemId()) {
-			case R.id.item_edit:
+			case R.id.item_edit_due:
 				showDueDialog(Constants.MODE_EDIT, due.getDueId());
 				mode.finish();
 				break;
-			case R.id.item_delete:
+			case R.id.item_delete_due:
 				Utils.showAlertDialog(
 						getActivity(),
 						getResources().getString(
@@ -653,16 +637,16 @@ public class DueFragment extends ListFragment {
 									int dueCount = DatabaseHelper
 											.getFriendsWithDuesCount(db);
 									if (dueCount == 0
-											&& OweboardFragment.friendListAdapter
+											&& OweboardFragment.getFriendListAdapter()
 													.getCount() == 0) {
-										OweboardFragment.totalFriends
+										OweboardFragment.getTotalFriends()
 												.setVisibility(TextView.GONE);
 									} else {
-										OweboardFragment.totalFriends
+										OweboardFragment.getTotalFriends()
 												.setVisibility(TextView.VISIBLE);
-										OweboardFragment.totalFriends.setText(dueCount
+										OweboardFragment.getTotalFriends().setText(dueCount
 												+ "/"
-												+ OweboardFragment.friendListAdapter
+												+ OweboardFragment.getFriendListAdapter()
 														.getCount()
 												+ " "
 												+ getResources()

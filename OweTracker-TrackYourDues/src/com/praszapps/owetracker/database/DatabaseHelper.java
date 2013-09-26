@@ -130,7 +130,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	 * @return - true if success, false if not
 	 */
 	public static Boolean updateFriend(Friend friend, SQLiteDatabase db) {
-		String sql = String.format("SELECT friend_id FROM friend WHERE friend_id = '%s';", friend.getId());
+		String sql = String.format("SELECT friend_id FROM friend WHERE friend_id = '%s'", friend.getId());
 		Cursor c = db.rawQuery(sql, null);
 		
 		// Checking if the uuid exists

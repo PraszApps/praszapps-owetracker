@@ -7,8 +7,11 @@ import android.app.Dialog;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.ListFragment;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v7.view.ActionMode;
+import android.support.v7.view.ActionMode.Callback;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.SearchView.OnQueryTextListener;
 import android.view.LayoutInflater;
@@ -17,6 +20,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,14 +36,16 @@ import com.praszapps.owetracker.bo.Friend;
 import com.praszapps.owetracker.database.DatabaseHelper;
 import com.praszapps.owetracker.ui.activity.MainActivity;
 import com.praszapps.owetracker.ui.activity.RootActivity;
+import com.praszapps.owetracker.util.Constants;
 import com.praszapps.owetracker.util.Utils;
 
 public class OweboardFragment extends ListFragment {
 
 	private View v;
-	static TextView totalFriends, emptyView;
+	private static TextView totalFriends;
+	private TextView emptyView;
 	private ListView listViewOwelist;
-	static FriendAdapter friendListAdapter, searchListAdapter;
+	private static FriendAdapter friendListAdapter, searchListAdapter;
 	private EditText editTextfriendName;
 	private Spinner spinnerCurrency;
 	private Button buttonSave;
@@ -49,7 +56,28 @@ public class OweboardFragment extends ListFragment {
 	private static SQLiteDatabase db;
 	private OnFriendNameClickListener mFriendName;
 	private Boolean isInSearchMode = false;
+	private Friend friend = null;
+	@SuppressWarnings("unused")
+	private ActionMode mActionMode = null;
 	
+	
+	
+	public static TextView getTotalFriends() {
+		return totalFriends;
+	}
+
+	public static void setTotalFriends(TextView totalFriends) {
+		OweboardFragment.totalFriends = totalFriends;
+	}
+
+	public static FriendAdapter getFriendListAdapter() {
+		return friendListAdapter;
+	}
+
+	public static void setFriendListAdapter(FriendAdapter friendListAdapter) {
+		OweboardFragment.friendListAdapter = friendListAdapter;
+	}
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -81,6 +109,16 @@ public class OweboardFragment extends ListFragment {
 		emptyView.setText(getResources().getString(R.string.strNoRecordsFound));
 		listViewOwelist.setEmptyView(emptyView);
 		listViewOwelist.setAdapter(friendListAdapter);
+		listViewOwelist.setOnItemLongClickListener(new OnItemLongClickListener() {
+
+			@Override
+			public boolean onItemLongClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				friend = friendListAdapter.getItem(position);
+				mActionMode = ((MainActivity) getActivity()).startSupportActionMode(mCallback);
+				return true;
+			}
+		});
 		isInSearchMode = false;
 	}
 
@@ -109,6 +147,8 @@ public class OweboardFragment extends ListFragment {
 		}
 		v.setSelected(true);
 	}
+	
+	
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -158,7 +198,7 @@ public class OweboardFragment extends ListFragment {
 		if(item.getItemId() == R.id.item_add_friend) {
 			//Utils.showLog(getClass().getSimpleName(), "Adding a friend", Log.VERBOSE);
 			//Show UI to add a friend
-			showAddFriendDialog();
+			showFriendDialog(Constants.MODE_ADD, null);
 		}
 		
 		return super.onOptionsItemSelected(item);
@@ -199,16 +239,28 @@ public class OweboardFragment extends ListFragment {
 		}
 	}
 		
-	private void showAddFriendDialog() {
+	@SuppressWarnings("unchecked")
+	private void showFriendDialog(final String modeOfOp, final Friend friendToUpdate) {
+
 		d = new Dialog(getActivity());
 		d.setContentView(R.layout.dialog_add_update_friend);
-		d.setTitle(getResources().getString(R.string.add_friend_title));
 		spinnerCurrency = (Spinner) d.findViewById(R.id.spinnerCurrency);
 		ArrayAdapter<String> currencyAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.string_array_currency));
 		currencyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spinnerCurrency.setAdapter(currencyAdapter);
+		
 		editTextfriendName = (EditText) d.findViewById(R.id.editTextFriendName);
 		buttonSave = (Button) d.findViewById(R.id.buttonSave);
+		
+		if(modeOfOp.equals(Constants.MODE_ADD)) {
+			d.setTitle(getResources().getString(R.string.add_friend_title));
+		} else if(modeOfOp.equals(Constants.MODE_EDIT)) {
+			editTextfriendName.setText(friendToUpdate.getName());
+			d.setTitle(getResources().getString(R.string.edit_friend_dialog_title));
+			spinnerCurrency.setSelection(((ArrayAdapter<String>) spinnerCurrency.getAdapter()).getPosition(Utils.getArrayItemFromCurrency(friendToUpdate.getCurrency())));
+		}
+		
+		
 		buttonSave.setOnClickListener(new View.OnClickListener() {
 			
 			private Friend addFriend;
@@ -223,53 +275,78 @@ public class OweboardFragment extends ListFragment {
 					Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_add_friend_currency), Toast.LENGTH_SHORT);
 					return;
 				} else {
-					
 					//Add data to database
 					addFriend = new Friend();
-					addFriend.setId(Utils.generateUniqueID());
+					if(modeOfOp.equals(Constants.MODE_ADD)) {
+						addFriend.setId(Utils.generateUniqueID());
+					} else if(modeOfOp.equals(Constants.MODE_EDIT)) {
+						addFriend.setId(friendToUpdate.getId());
+					}
+					
 					addFriend.setName(editTextfriendName.getText().toString().trim());
 					addFriend.setCurrency(Utils.getCurrencyFromArrayItem(spinnerCurrency.getSelectedItem().toString()));
-					
-					//Check if name is same as one's already in the list and prompt to add another one
-							
-					if(isFriendNameExist(addFriend.getName()) && friendList != null ) {
-						Utils.showAlertDialog(getActivity(), getResources().getString(R.string.alertdialog_friend_title), getResources().getString(R.string.alertdialog_addfriend_message), null, false, getResources().getString(R.string.label_yes), getResources().getString(R.string.label_no), null, new Utils.DialogResponse() {
-							
-							@Override
-							public void onPositive() {
-								if(DatabaseHelper.createFriendRecord(addFriend, db)) {
-									Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_add_friend_success), Toast.LENGTH_SHORT);
-									d.dismiss();
-									updateListView();
-									updateFriendCount();
-								} else {
-									Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_add_friend_failure), Toast.LENGTH_SHORT);
-								}
-							}
-							
-							@Override
-							public void onNeutral() {
-								// No response;
+					if(modeOfOp.equals(Constants.MODE_ADD)) {
+						//Check if name is same as one's already in the list and prompt to add another one
+						
+						if(isFriendNameExist(addFriend.getName()) && friendList != null ) {
+							Utils.showAlertDialog(getActivity(), getResources().getString(R.string.alertdialog_friend_title), getResources().getString(R.string.alertdialog_addfriend_message), null, false, getResources().getString(R.string.label_yes), getResources().getString(R.string.label_no), null, new Utils.DialogResponse() {
 								
+								@Override
+								public void onPositive() {
+									if(DatabaseHelper.createFriendRecord(addFriend, db)) {
+										Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_add_friend_success), Toast.LENGTH_SHORT);
+										d.dismiss();
+										updateListView();
+										updateFriendCount();
+									} else {
+										Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_add_friend_failure), Toast.LENGTH_SHORT);
+									}
+								}
+								
+								@Override
+								public void onNeutral() {
+									// No response;
+									
+								}
+								
+								@Override
+								public void onNegative() {
+									Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_update_friend_negative), Toast.LENGTH_SHORT);
+									return;
+								}
+							});
+						} else {
+							if(DatabaseHelper.createFriendRecord(addFriend, db)) {
+								Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_add_friend_success), Toast.LENGTH_SHORT);
+								d.dismiss();
+								updateListView();
+								updateFriendCount();
+							} else {
+								Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_add_friend_failure), Toast.LENGTH_SHORT);
 							}
 							
-							@Override
-							public void onNegative() {
-								Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_update_friend_negative), Toast.LENGTH_SHORT);
-								return;
-							}
-						});
-					} else {
-						if(DatabaseHelper.createFriendRecord(addFriend, db)) {
-							Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_add_friend_success), Toast.LENGTH_SHORT);
-							d.dismiss();
-							updateListView();
-							updateFriendCount();
-						} else {
-							Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_add_friend_failure), Toast.LENGTH_SHORT);
 						}
 						
+					} else if(modeOfOp.equals(Constants.MODE_EDIT)) {
+						if(DatabaseHelper.updateFriend(addFriend, db)) {
+							Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_update_friend_success), Toast.LENGTH_SHORT);
+							
+							if(!(MainActivity.isSinglePane)) {
+								DueFragment.updateSummary(DatabaseHelper.getFriendData(addFriend.getId(), db));
+								DueFragment.updateDueList();
+								((MainActivity)getActivity()).getSupportActionBar().setTitle(addFriend.getName());
+							}
+							
+							updateListView();
+							d.dismiss();
+							
+						} else {
+							Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_update_friend_failure), Toast.LENGTH_SHORT);
+						}
+
 					}
+					
+					
 				}
 				
 			
@@ -293,7 +370,7 @@ public class OweboardFragment extends ListFragment {
 		}
 	}
 
-	public static void updateListView() {
+	private void updateListView() {
 		friendList = DatabaseHelper.getAllFriends(db);
 		friendListAdapter.clear();
 		for(int i = 0; i<friendList.size(); i++) {
@@ -307,8 +384,6 @@ public class OweboardFragment extends ListFragment {
 		public void OnFriendNameClick(String friendId, String currency);
 		
 	}
-	
-	
 	
 	/**
 	 * This AsyncTask shall search for a friend's name in the list
@@ -351,10 +426,101 @@ public class OweboardFragment extends ListFragment {
 			listViewOwelist.setAdapter(searchListAdapter);
 			isInSearchMode = true;
 		}
-
-		
 		
 	}
 	
+	private android.support.v7.view.ActionMode.Callback mCallback = new Callback() {
+		
+		@Override
+		public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+			return false;
+		}
+		
+		@Override
+		public void onDestroyActionMode(ActionMode mode) {
+			mActionMode = null;
+			mode = null;
+			friend = null;
+		}
+		
+		@Override
+		public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+			// Inflate a menu resource providing context menu items
+	        MenuInflater inflater = mode.getMenuInflater();
+	        mode.setTitle(friend.getName());
+	        inflater.inflate(R.menu.friend_context_menu, menu);
+	        return true;
+		}
+		
+		@Override
+		public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+			
+			switch (item.getItemId()) {
+			case R.id.item_edit_friend:
+				showFriendDialog(Constants.MODE_EDIT, friend);
+				break;
+			case R.id.item_delete_friend:
+				
+				showDeleteFriendDialog(friend);
+				
+				
+				break;
+			}
+			mode.finish();
+			return true;
+		}
+	};
+	
+	private void showDeleteFriendDialog(final Friend deleteFriend) {
+		Utils.showAlertDialog(getActivity(), getResources().getString(R.string.label_delete_friend), 
+				getResources().getString(R.string.label_sure), null, false, getResources().getString(R.string.label_yes), 
+				getResources().getString(R.string.label_no), null, new Utils.DialogResponse() {
+			
+			@Override
+			public void onPositive() {
+				// Delete all records of dues and friends
+				DatabaseHelper.deleteAllFriendDues(deleteFriend.getId(), db);
+				DatabaseHelper.deleteFriendRecord(deleteFriend.getId(), db);
+				
+				updateListView();
+				
+				if(MainActivity.isSinglePane) {
+					FragmentManager fm = getFragmentManager();
+					Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_delete), Toast.LENGTH_SHORT);
+					fm.popBackStackImmediate();
+				} else {
+					
+					updateListView();
+					if(!MainActivity.isSinglePane) {
+						DueFragment.updateDueList();
+						((MainActivity)getActivity()).getSupportActionBar().setTitle(getResources().getString(R.string.oweboard_title));
+						DueFragment.handleFriendDelete();
+					}
+					
+					
+					int dueCount = DatabaseHelper.getFriendsWithDuesCount(db);
+					if(dueCount == 0 && OweboardFragment.friendListAdapter.getCount() == 0) {
+						totalFriends.setVisibility(TextView.GONE);
+					} else {
+						totalFriends.setVisibility(TextView.VISIBLE);
+						totalFriends.setText(dueCount+"/"+OweboardFragment.friendListAdapter.getCount()+" "+getResources().getString(
+								R.string.label_owesactions_listview));
+					}
+
+					Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_delete), Toast.LENGTH_SHORT);
+				}
+			}
+			
+			@Override
+			public void onNeutral() {
+				// No action
+			}
+			
+			@Override
+			public void onNegative() {
+				// No action
+			}
+		});
+	}
 	
 }

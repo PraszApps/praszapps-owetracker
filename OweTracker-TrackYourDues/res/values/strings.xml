@@ -10,7 +10,8 @@
     <string name="strNoRecordsFound">No friend added\n\nAdd a friend\'s name to get started</string>
     <string name="strNoFriendSelected">No friend selected</string>
     <string name="strNoDueRecordsFound">No dues added</string>
-    <string name="menu_item_close_due">Reset dues/Delete friend</string>
+    <string name="menu_item_reset_due">Reset dues</string>
+    <string name="menu_item_delete_friend">Delete friend</string>
     <string name="menu_item_edit_friend">Edit Friend</string>
     <string name="menu_item_add_friend">Add friend</string>
     <string name="toast_msg_add_friend_name">Please enter name</string>
@@ -53,15 +54,14 @@
     <string name="toast_msg_due_invalid_date ">Date cannot be further than today\'s date. </string>
     <string name="delete_due_alert_title">Confirm deleting due</string>
     <string name="delete_due_alert_msg">Are you sure you want to delete?</string>
-    <string name="delete_reset_friend_alert_msg">Reset dues or delete friend details?</string>
     <string name="label_reset">Reset dues</string>
+    <string name="label_sure">Are you sure?</string>
     <string name="add_due_dialog_title">Add due</string>
     <string name="edit_due_dialog_title">Edit due</string>
     <string name="edit_friend_dialog_title">Edit friend</string>
     <string name="label_date">Date:</string>
     <string name="menu_item_about">About</string>
     <string name="label_save">Save</string>
-    <string name="label_cancel">Cancel</string>
     <string name="toast_msg_reset">Dues reset</string>
     <string name="toast_msg_delete">Friend deleted</string>
     <string name="label_feedback">We\'d love to hear from you!</string>

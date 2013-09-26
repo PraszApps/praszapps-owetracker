@@ -3,12 +3,13 @@
     xmlns:owetracker="http://schemas.android.com/apk/res-auto" >
 
     <item
-        android:id="@+id/item_edit"
+        android:id="@+id/item_edit_due"
+        android:icon="@drawable/edit"
         android:orderInCategory="99"
         android:title="@string/label_edit"
         owetracker:showAsAction="ifRoom"/>
     <item
-        android:id="@+id/item_delete"
+        android:id="@+id/item_delete_due"
         android:orderInCategory="99"
         android:title="@string/label_del"
         owetracker:showAsAction="ifRoom"/>

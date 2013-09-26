@@ -121,64 +121,6 @@ public class DueFragment extends ListFragment {
 		
 	}
 	
-	/*@Override
-	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
-		if (v.getId()== android.R.id.list) {
-		    String[] menuItems = getResources().getStringArray(R.array.array_due_item_options);
-		    for (int i = 0; i<menuItems.length; i++) {
-		      menu.add(Menu.NONE, i, i, menuItems[i]);
-		    }
-		}
-	}
-	
-	@Override
-	public boolean onContextItemSelected(MenuItem item) {
-		AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
-		due = dueListAdapter.getItem(info.position);
-		switch(item.getItemId()) {
-		case 0:
-			showDueDialog(Constants.MODE_EDIT, due.getDueId());
-			break;
-		case 1:
-			Utils.showAlertDialog(getActivity(), getResources().getString(R.string.delete_due_alert_title),
-					getResources().getString(R.string.delete_due_alert_msg), null, false, 
-					getResources().getString(R.string.label_yes), 
-					getResources().getString(R.string.label_no), null, new Utils.DialogResponse() {
-				
-				@Override
-				public void onPositive() {
-					DatabaseHelper.deleteDueData(due.getDueId(), db);
-					updateDueList();
-					updateFriendSummary();
-					if(!MainActivity.isSinglePane) {
-						int dueCount = DatabaseHelper.getFriendsWithDuesCount(db);
-						if(dueCount == 0 && OweboardFragment.friendListAdapter.getCount() == 0) {
-							OweboardFragment.totalFriends.setVisibility(TextView.GONE);
-						} else {
-							OweboardFragment.totalFriends.setVisibility(TextView.VISIBLE);
-							OweboardFragment.totalFriends.setText(dueCount+"/"+OweboardFragment.friendListAdapter.getCount()+" "+getResources().getString(
-									R.string.label_owesactions_listview));
-						}
-					}
-				}
-				
-				@Override
-				public void onNeutral() {
-					// Do nothing
-				}
-				
-				@Override
-				public void onNegative() {
-					// Do nothing
-					
-				}
-			});
-			break;
-		}
-		return super.onContextItemSelected(item);
-		
-	}
-*/
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		super.onOptionsItemSelected(item);
@@ -256,6 +198,9 @@ public class DueFragment extends ListFragment {
             
 		case R.id.item_add_due:
 			showDueDialog(Constants.MODE_ADD, null);
+			if(!MainActivity.isSinglePane) {
+				new OweboardFragment().updateListView();
+			}
 			return true;
 			
 		case R.id.item_reset_due:
@@ -274,7 +219,7 @@ public class DueFragment extends ListFragment {
 					} else {
 						// Delete dues and reset due value to zero
 						DatabaseHelper.deleteAllFriendDues(friend.getId(), db);
-						updateDueList();
+						updateDueList(friend.getId());
 						updateFriendSummary();
 						if(!MainActivity.isSinglePane) {
 							int dueCount = DatabaseHelper.getFriendsWithDuesCount(db);
@@ -285,6 +230,7 @@ public class DueFragment extends ListFragment {
 								OweboardFragment.getTotalFriends().setText(dueCount+"/"+OweboardFragment.getFriendListAdapter().getCount()+" "+getResources().getString(
 										R.string.label_owesactions_listview));
 							}
+							new OweboardFragment().updateListView();
 						}
 						Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_reset), Toast.LENGTH_SHORT);
 					}
@@ -313,7 +259,10 @@ public class DueFragment extends ListFragment {
 
 	private void updateFriendSummary() {
 		friend = DatabaseHelper.getFriendData(friend.getId(), db);
-		textViewOweSummary.setText(friend.toString());
+		if(friend != null) {
+			textViewOweSummary.setText(friend.toString().split(":")[1].trim());
+		}
+		
 	}
 
 	@Override
@@ -328,7 +277,7 @@ public class DueFragment extends ListFragment {
 		emptyTextView.setText(getResources().getString(R.string.strNoDueRecordsFound));
 		friend = DatabaseHelper.getFriendData(friendId, db);
 		if(friend != null) {
-			textViewOweSummary.setText(friend.toString());
+			textViewOweSummary.setText(friend.toString().split(":")[1].trim());
 			duesList.clear();
 			duesList = DatabaseHelper.getFriendDueList(friendId, db);
 			if(duesList != null) {
@@ -438,7 +387,7 @@ public class DueFragment extends ListFragment {
 					
 					if(success) {
 						DatabaseHelper.updateFriendDue(friend.getId(), db);
-						updateDueList();
+						updateDueList(friend.getId());
 						updateFriendSummary();
 						if(!MainActivity.isSinglePane) {
 							int dueCount = DatabaseHelper.getFriendsWithDuesCount(db);
@@ -460,6 +409,10 @@ public class DueFragment extends ListFragment {
 							
 						} else if(mode.equals(Constants.MODE_EDIT)) {
 							Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_due_update_success), Toast.LENGTH_SHORT);
+							
+						}
+						if(!MainActivity.isSinglePane) {
+							new OweboardFragment().updateListView();
 						}
 						d.dismiss();
 					} else {
@@ -473,59 +426,6 @@ public class DueFragment extends ListFragment {
 		d.show();
 	
 	}
-		
-	/*@SuppressWarnings("unchecked")
-	private void showEditFriendDialog() {
-		d = new Dialog(getActivity());
-		d.setContentView(R.layout.dialog_add_update_friend);
-		d.setTitle(getResources().getString(R.string.edit_friend_dialog_title));
-		final Spinner spinnerCurrency = (Spinner) d.findViewById(R.id.spinnerCurrency);
-		ArrayAdapter<String> currencyAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.string_array_currency));
-		currencyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		spinnerCurrency.setAdapter(currencyAdapter);
-		spinnerCurrency.setSelection(((ArrayAdapter<String>) spinnerCurrency.getAdapter()).getPosition(Utils.getArrayItemFromCurrency(friend.getCurrency())));
-		final EditText editTextfriendName = (EditText) d.findViewById(R.id.editTextFriendName);
-		editTextfriendName.setText(friend.getName());
-		Button buttonSave = (Button) d.findViewById(R.id.buttonSave);
-		buttonSave.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-
-				if(editTextfriendName.getText().toString().trim().equals("")|| editTextfriendName.getText().toString().trim() == null) {
-					Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_add_friend_name), Toast.LENGTH_SHORT);
-					return;
-				} else if(spinnerCurrency.getSelectedItem().toString().equals(getResources().getString(R.string.array_currency_item_select))) {
-					Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_add_friend_currency), Toast.LENGTH_SHORT);
-					return;
-				} else {
-					//Add data to database
-					updateFriend = new Friend();
-					updateFriend.setId(friend.getId());
-					updateFriend.setName(editTextfriendName.getText().toString().trim());
-					updateFriend.setCurrency(Utils.getCurrencyFromArrayItem(spinnerCurrency.getSelectedItem().toString()));
-					
-						if(DatabaseHelper.updateFriend(updateFriend, db)) {
-							Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_update_friend_success), Toast.LENGTH_SHORT);
-							
-							friend = DatabaseHelper.getFriendData(friend.getId(), db);
-							textViewOweSummary.setText(friend.toString());
-							
-							if(!MainActivity.isSinglePane) {
-								OweboardFragment.updateListView();
-							}
-							updateDueList();
-							d.dismiss();
-							
-						} else {
-							Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_update_friend_failure), Toast.LENGTH_SHORT);
-						}
-						((MainActivity)getActivity()).getSupportActionBar().setTitle(friend.getName());
-					}
-				}
-		});
-		d.show();
-	}*/
 	
 	public static class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
 
@@ -570,20 +470,24 @@ public class DueFragment extends ListFragment {
 		textViewOweSummary.setText(updateFriend.toString());
 	}
 	
-	public static void handleFriendDelete() {
+	public void handleFriendDelete() {
 		textViewOweSummary.setVisibility(TextView.GONE);
 		emptyTextView.setText(Constants.NO_FRIENDS);
+		setHasOptionsMenu(false);
 	}
 	
-	public static void updateDueList() {
-		duesList = DatabaseHelper.getFriendDueList(friend.getId(), db);
-		dueListAdapter.clear();
-		dueListAdapter.setCurrency(friend.getCurrency());
-		dueListAdapter.setFriendName(friend.getName());
-		for(int i = 0; i<duesList.size(); i++) {
-			dueListAdapter.add(duesList.get(i));
+	public static void updateDueList(String friendId) {
+		duesList = DatabaseHelper.getFriendDueList(friendId, db);
+		
+		if(dueListAdapter != null) {
+			dueListAdapter.clear();
+			dueListAdapter.setCurrency(friend.getCurrency());
+			dueListAdapter.setFriendName(friend.getName());
+			for(int i = 0; i<duesList.size(); i++) {
+				dueListAdapter.add(duesList.get(i));
+			}
+			dueListAdapter.notifyDataSetChanged();
 		}
-		dueListAdapter.notifyDataSetChanged();
 	}
 	
 	private android.support.v7.view.ActionMode.Callback mCallback = new Callback() {
@@ -631,19 +535,16 @@ public class DueFragment extends ListFragment {
 							@Override
 							public void onPositive() {
 								DatabaseHelper.deleteDueData(due.getDueId(), db);
-								updateDueList();
+								updateDueList(friend.getId());
 								updateFriendSummary();
 								if (!MainActivity.isSinglePane) {
-									int dueCount = DatabaseHelper
-											.getFriendsWithDuesCount(db);
-									if (dueCount == 0
-											&& OweboardFragment.getFriendListAdapter()
-													.getCount() == 0) {
-										OweboardFragment.getTotalFriends()
-												.setVisibility(TextView.GONE);
+									new OweboardFragment().updateListView();
+									
+									int dueCount = DatabaseHelper.getFriendsWithDuesCount(db);
+									if (dueCount == 0 && OweboardFragment.getFriendListAdapter().getCount() == 0) {
+										OweboardFragment.getTotalFriends().setVisibility(TextView.GONE);
 									} else {
-										OweboardFragment.getTotalFriends()
-												.setVisibility(TextView.VISIBLE);
+										OweboardFragment.getTotalFriends().setVisibility(TextView.VISIBLE);
 										OweboardFragment.getTotalFriends().setText(dueCount
 												+ "/"
 												+ OweboardFragment.getFriendListAdapter()
@@ -653,7 +554,7 @@ public class DueFragment extends ListFragment {
 														.getString(
 																R.string.label_owesactions_listview));
 									}
-								}
+								} 
 							}
 
 							@Override

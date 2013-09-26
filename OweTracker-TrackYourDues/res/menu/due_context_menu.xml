@@ -7,11 +7,12 @@
         android:icon="@drawable/edit"
         android:orderInCategory="99"
         android:title="@string/label_edit"
-        owetracker:showAsAction="ifRoom"/>
+        owetracker:showAsAction="ifRoom|withText"/>
     <item
         android:id="@+id/item_delete_due"
         android:orderInCategory="99"
+        android:icon="@drawable/delete"
         android:title="@string/label_del"
-        owetracker:showAsAction="ifRoom"/>
+        owetracker:showAsAction="ifRoom|withText"/>
 
 </menu>

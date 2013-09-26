@@ -12,7 +12,7 @@
 
     <item
         android:id="@+id/item_delete_friend"
-        android:icon="@drawable/done"
+        android:icon="@drawable/delete"
         android:orderInCategory="3"
         owetracker:showAsAction="ifRoom|withText"
         android:title="@string/menu_item_delete_friend"/>

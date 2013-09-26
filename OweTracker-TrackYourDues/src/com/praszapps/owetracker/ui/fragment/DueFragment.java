@@ -619,6 +619,8 @@ public class DueFragment extends ListFragment {
 		public boolean onCreateActionMode(ActionMode mode, Menu menu) {
 			// Inflate a menu resource providing context menu items
 	        MenuInflater inflater = mode.getMenuInflater();
+	        mode.setTitle(due.getFormattedDate());
+	        mode.setSubtitle(due.getReason());
 	        inflater.inflate(R.menu.due_context_menu, menu);
 	        return true;
 		}

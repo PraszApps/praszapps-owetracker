@@ -107,7 +107,7 @@ public class OweboardFragment extends ListFragment {
 		} else {
 			mFriendName.OnFriendNameClick(friendList.get(position).getId(), friendList.get(position).getCurrency());
 		}
-		
+		v.setSelected(true);
 	}
 
 	@Override

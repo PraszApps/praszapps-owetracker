@@ -15,8 +15,8 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.ListFragment;
-import android.view.ContextMenu;
-import android.view.ContextMenu.ContextMenuInfo;
+import android.support.v7.view.ActionMode;
+import android.support.v7.view.ActionMode.Callback;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,6 +25,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -64,7 +65,9 @@ public class DueFragment extends ListFragment {
 	private static int calendarYear, calendarMonth, calendarDay;
 	private static Calendar cld = Calendar.getInstance();
 	private SharedPreferences owetrackerPrefs = RootActivity.owetrackerPrefs;
-	DialogFragment datepicker;
+	private DialogFragment datepicker;
+	@SuppressWarnings("unused")
+	private ActionMode mActionMode = null;
 	@SuppressLint("SimpleDateFormat")
 	private static SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
 	
@@ -84,6 +87,19 @@ public class DueFragment extends ListFragment {
 		textViewOweSummary = (TextView) v.findViewById(R.id.textViewOweSummary);
 		listViewTransactions = (ListView) v.findViewById(android.R.id.list);
 		listViewTransactions.setEmptyView(v.findViewById(R.id.empty_duelist));
+		listViewTransactions.setOnItemLongClickListener(new OnItemLongClickListener() {
+
+			@Override
+			public boolean onItemLongClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				due = dueListAdapter.getItem(position);
+				mActionMode = ((MainActivity) getActivity()).startSupportActionMode(mCallback);
+				return false;
+				
+			}
+		});
+		
+		
 		rAct = (RootActivity) getActivity();
 		db = rAct.database;
 		
@@ -105,7 +121,7 @@ public class DueFragment extends ListFragment {
 		
 	}
 	
-	@Override
+	/*@Override
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
 		if (v.getId()== android.R.id.list) {
 		    String[] menuItems = getResources().getStringArray(R.array.array_due_item_options);
@@ -162,7 +178,7 @@ public class DueFragment extends ListFragment {
 		return super.onContextItemSelected(item);
 		
 	}
-
+*/
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		super.onOptionsItemSelected(item);
@@ -586,6 +602,90 @@ public class DueFragment extends ListFragment {
 		}
 		dueListAdapter.notifyDataSetChanged();
 	}
+	
+	private android.support.v7.view.ActionMode.Callback mCallback = new Callback() {
+		
+		@Override
+		public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+			return false;
+		}
+		
+		@Override
+		public void onDestroyActionMode(ActionMode mode) {
+			mode = null;
+		}
+		
+		@Override
+		public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+			// Inflate a menu resource providing context menu items
+	        MenuInflater inflater = mode.getMenuInflater();
+	        inflater.inflate(R.menu.due_context_menu, menu);
+	        return true;
+		}
+		
+		@Override
+		public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+			
+			switch (item.getItemId()) {
+			case R.id.item_edit:
+				showDueDialog(Constants.MODE_EDIT, due.getDueId());
+				mode.finish();
+				break;
+			case R.id.item_delete:
+				Utils.showAlertDialog(
+						getActivity(),
+						getResources().getString(
+								R.string.delete_due_alert_title),
+						getResources().getString(R.string.delete_due_alert_msg),
+						null, false,
+						getResources().getString(R.string.label_yes),
+						getResources().getString(R.string.label_no), null,
+						new Utils.DialogResponse() {
+
+							@Override
+							public void onPositive() {
+								DatabaseHelper.deleteDueData(due.getDueId(), db);
+								updateDueList();
+								updateFriendSummary();
+								if (!MainActivity.isSinglePane) {
+									int dueCount = DatabaseHelper
+											.getFriendsWithDuesCount(db);
+									if (dueCount == 0
+											&& OweboardFragment.friendListAdapter
+													.getCount() == 0) {
+										OweboardFragment.totalFriends
+												.setVisibility(TextView.GONE);
+									} else {
+										OweboardFragment.totalFriends
+												.setVisibility(TextView.VISIBLE);
+										OweboardFragment.totalFriends.setText(dueCount
+												+ "/"
+												+ OweboardFragment.friendListAdapter
+														.getCount()
+												+ " "
+												+ getResources()
+														.getString(
+																R.string.label_owesactions_listview));
+									}
+								}
+							}
+
+							@Override
+							public void onNeutral() {
+								// Do nothing
+							}
+
+							@Override
+							public void onNegative() {
+								// Do nothing
+
+							}
+						});
+				break;
+			}
+			return true;
+		}
+	};
 	
 	
 }

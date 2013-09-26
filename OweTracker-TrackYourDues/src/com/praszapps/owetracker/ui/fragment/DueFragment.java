@@ -16,6 +16,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.ListFragment;
 import android.support.v7.view.ActionMode;
 import android.support.v7.view.ActionMode.Callback;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -71,6 +72,20 @@ public class DueFragment extends ListFragment {
 	@SuppressLint("SimpleDateFormat")
 	private static SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
 	
+	
+	
+	@Override
+	public void onPrepareOptionsMenu(Menu menu) {
+		super.onPrepareOptionsMenu(menu);
+		Log.e("Pani", "Onpre of due");
+		if(OweboardFragment.showDueActionItems) {
+			Log.e("Pani", "Onpre shoowing due");
+			menu.findItem(R.id.item_reset_due).setVisible(true);
+			menu.findItem(R.id.item_add_due).setVisible(true);
+		}
+		
+	}
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -473,7 +488,6 @@ public class DueFragment extends ListFragment {
 	public void handleFriendDelete() {
 		textViewOweSummary.setVisibility(TextView.GONE);
 		emptyTextView.setText(Constants.NO_FRIENDS);
-		setHasOptionsMenu(false);
 	}
 	
 	public static void updateDueList(String friendId) {

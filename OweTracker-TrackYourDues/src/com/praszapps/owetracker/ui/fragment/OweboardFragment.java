@@ -13,6 +13,7 @@ import android.support.v7.view.ActionMode;
 import android.support.v7.view.ActionMode.Callback;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.SearchView.OnQueryTextListener;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -58,7 +59,8 @@ public class OweboardFragment extends ListFragment {
 	private Friend friendData = null;
 	@SuppressWarnings("unused")
 	private ActionMode mActionMode = null;
-	
+	private boolean isReset = false;
+	public static boolean showDueActionItems = false;
 	
 	
 	public static TextView getTotalFriends() {
@@ -144,6 +146,8 @@ public class OweboardFragment extends ListFragment {
 		} else {
 			mFriendName.OnFriendNameClick(friendList.get(position).getId(), friendList.get(position).getCurrency());
 		}
+		showDueActionItems = true;
+		((MainActivity) getActivity()).supportInvalidateOptionsMenu();
 		v.setSelected(true);
 	}
 	
@@ -151,45 +155,48 @@ public class OweboardFragment extends ListFragment {
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		inflater.inflate(R.menu.oweboard_menu, menu);
 		
-		searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.item_search));
+		if(!isReset) {
+			inflater.inflate(R.menu.oweboard_menu, menu);
 		
-		
-		
-	    searchView.setOnQueryTextListener(new OnQueryTextListener() {
+			searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.item_search));
 			
-			@Override
-			public boolean onQueryTextSubmit(String searchString) {
-				new SearchAsyncTask().execute(searchString);
-				return true;
-			}
 			
-			@Override
-			public boolean onQueryTextChange(String searchString) {
-				if(!searchString.equals("")) {
+			
+		    searchView.setOnQueryTextListener(new OnQueryTextListener() {
+				
+				@Override
+				public boolean onQueryTextSubmit(String searchString) {
 					new SearchAsyncTask().execute(searchString);
-				} else {
-					listViewOwelist.setAdapter(friendListAdapter);
-					isInSearchMode = false;
+					return true;
 				}
-				return false;
-			}
-			
-		});
-	    
-	    searchView.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
-	        @Override
-	        public void onFocusChange(View view, boolean queryTextFocused) {
-	            if(!queryTextFocused) {
-	                searchView.setQuery("", false);
-	                isInSearchMode = false;
-	                emptyView.setText(getResources().getString(R.string.strNoRecordsFound));
-	            }
-	        }
-	    });
-	   
-	    
+				
+				@Override
+				public boolean onQueryTextChange(String searchString) {
+					if(!searchString.equals("")) {
+						new SearchAsyncTask().execute(searchString);
+					} else {
+						listViewOwelist.setAdapter(friendListAdapter);
+						isInSearchMode = false;
+					}
+					return false;
+				}
+				
+			});
+		    
+		    searchView.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
+		        @Override
+		        public void onFocusChange(View view, boolean queryTextFocused) {
+		            if(!queryTextFocused) {
+		                searchView.setQuery("", false);
+		                isInSearchMode = false;
+		                emptyView.setText(getResources().getString(R.string.strNoRecordsFound));
+		            }
+		        }
+		    });
+		   
+
+		}
 	}
 
 	@Override
@@ -469,6 +476,30 @@ public class OweboardFragment extends ListFragment {
 		}
 	};
 	
+	
+	
+	@Override
+	public void onPrepareOptionsMenu(Menu menu) {
+		super.onPrepareOptionsMenu(menu);
+		if(isReset) {
+			Log.e("Pani", "is reset is true");
+			getActivity().getMenuInflater().inflate(R.menu.oweboard_menu, menu);
+			MenuItem itemReset = menu.findItem(R.id.item_reset_due);
+			MenuItem itemAddDue = menu.findItem(R.id.item_add_due);
+			if(itemReset != null ) {
+				itemReset.setVisible(false);
+			}
+			
+			if(itemAddDue != null) {
+				itemAddDue.setVisible(false);
+			}
+			
+			isReset = false;
+		}
+		
+		Log.e("Pani", "here");
+	}
+
 	private void showDeleteFriendDialog(final Friend deleteFriend) {
 		Utils.showAlertDialog(getActivity(), getResources().getString(R.string.label_delete_friend), 
 				getResources().getString(R.string.label_sure), null, false, getResources().getString(R.string.label_yes), 
@@ -486,7 +517,9 @@ public class OweboardFragment extends ListFragment {
 					DueFragment.updateDueList(friendData.getId());
 					new DueFragment().handleFriendDelete();
 					((MainActivity)getActivity()).getSupportActionBar().setTitle(getResources().getString(R.string.oweboard_title));
-					new DueFragment().setMenuVisibility(false);
+					isReset = true;
+					showDueActionItems = false;
+					((MainActivity)getActivity()).supportInvalidateOptionsMenu();
 				}
 				
 				int dueCount = DatabaseHelper.getFriendsWithDuesCount(db);

@@ -46,9 +46,9 @@
     <string name="toast_msg_add_due_givetake">Please select who owes whom</string>
     <string name="toast_msg_add_due_reason">Please enter description</string>
     <string name="label_enter_friend_name">Enter name of friend</string>
-    <string name="toast_msg_due_add_success">Due added successfully</string>
+    <string name="toast_msg_due_add_success">Added due</string>
     <string name="toast_msg_due_add_failure">Unable to add due</string>
-    <string name="toast_msg_due_update_success">Due updated successfully</string>
+    <string name="toast_msg_due_update_success">Updated due</string>
     <string name="toast_msg_due_update_failure">Unable to update due</string>
     <string name="toast_msg_due_invalid_date ">Date cannot be further than today\'s date. </string>
     <string name="delete_due_alert_title">Confirm deleting due</string>

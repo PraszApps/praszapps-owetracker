@@ -9,8 +9,7 @@
     <string name="label_owesactions_listview">friends with dues</string>
     <string name="strNoRecordsFound">No friend added\n\nAdd a friend\'s name to get started</string>
     <string name="strNoFriendSelected">No friend selected</string>
-    <string name="strNoDueRecordsFound">No due added\n\nTap on the \"+\" 
-	    icon on the top bar to add dues</string>
+    <string name="strNoDueRecordsFound">No dues added</string>
     <string name="menu_item_close_due">Reset dues/Delete friend</string>
     <string name="menu_item_edit_friend">Edit Friend</string>
     <string name="menu_item_add_friend">Add friend</string>
@@ -20,10 +19,9 @@
     <string name="toast_msg_add_friend_success">Friend added auccesfully</string>
     <string name="toast_msg_add_friend_failure">Failed to add friend</string>
     <string name="toast_msg_friend_data_get_failure">Failed to get data for the friend</string>
-    <string name="toast_msg_update_friend_success">Updated friend details successfully</string>
-    <string name="toast_msg_update_friend_failure">Failed to update friend details</string>
-    <string name="toast_msg_update_friend_negative">Friend with same name exists. 
- check friend name.</string>
+    <string name="toast_msg_update_friend_success">Updated friend details</string>
+    <string name="toast_msg_update_friend_failure">Could not update friend details</string>
+    <string name="toast_msg_update_friend_negative">Friend with same name exists</string>
     <string name="label_hint_enter_amount">Enter amount</string>
     <string name="label_hint_enter_desc">Enter reason/description</string>
     <string name="alertdialog_friend_title">Friend exists</string>
@@ -52,9 +50,9 @@
     <string name="toast_msg_due_add_failure">Unable to add due</string>
     <string name="toast_msg_due_update_success">Due updated successfully</string>
     <string name="toast_msg_due_update_failure">Unable to update due</string>
-    <string name="toast_msg_due_invalid_date ">Date cannot be greater than today\'s date. </string>
-    <string name="delete_due_alert_title">Deleting Due</string>
-    <string name="delete_due_alert_msg">Are you sure you want to delete this due?</string>
+    <string name="toast_msg_due_invalid_date ">Date cannot be further than today\'s date. </string>
+    <string name="delete_due_alert_title">Confirm deleting due</string>
+    <string name="delete_due_alert_msg">Are you sure you want to delete?</string>
     <string name="delete_reset_friend_alert_msg">Reset dues or delete friend details?</string>
     <string name="label_reset">Reset dues</string>
     <string name="add_due_dialog_title">Add due</string>
@@ -70,8 +68,8 @@
     <string name="label_send_feedback">E-mail developers</string>
     <string name="feedback_hint">Your comments/feedback/suggestions. Speak your mind!</string>
     <string name="menu_item_add_new_due">Add new due</string>
-    <string name="toast_msg_long_press">You can long press dues to edit or delete</string>
-    <string name="toast_msg_swipe">Swipe left or right to switch between tabs</string>
+    <string name="toast_msg_long_press">Long press dues to edit or delete</string>
+    <string name="toast_msg_swipe">Swipe left/right to switch between tabs</string>
     <string name="owes_me">Owes me</string>
     <string name="i_owe">I owe</string>
     <string name="no_dues">No Dues</string>
@@ -93,7 +91,7 @@
     <string name="share_intent_subj">Check out this app!</string>
     
     <string name="rate_dialog_title">Rate the app</string>
-    <string name="rate_dialog_msg">Would you like to rate OweTracker in Google Play?</string>
+    <string name="rate_dialog_msg">Rate OweTracker in Google Play?</string>
     <string name="rate_dialog_now">Rate now</string>
     <string name="rate_dialog_never">Don\'t Remind Me</string>
     <string name="rate_dialog_later">Remind me later</string>

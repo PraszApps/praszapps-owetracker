@@ -58,6 +58,10 @@ public class MainActivity extends RootActivity implements OnFriendNameClickListe
 			//Running on tablet
 			isSinglePane = false;
 			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+			if(dueFrag == null) {
+				dueFrag = (DueFragment)getSupportFragmentManager().findFragmentById(R.id.due_frag);
+			}
+			
 		} else {
 			//Its running on phone
 			isSinglePane = true;
@@ -115,7 +119,6 @@ public class MainActivity extends RootActivity implements OnFriendNameClickListe
 			 * via reference to fragment
 			 */
 			//get reference to FriendDueFragment
-			setDueFrag((DueFragment)getSupportFragmentManager().findFragmentById(R.id.due_frag));
 			getDueFrag().showDetails(friendId, currency);
 		}
 	
@@ -127,13 +130,5 @@ public class MainActivity extends RootActivity implements OnFriendNameClickListe
 	public DueFragment getDueFrag() {
 		return dueFrag;
 	}
-
-	/**
-	 * @param dueFrag the dueFrag to set
-	 */
-	public void setDueFrag(DueFragment dueFrag) {
-		this.dueFrag = dueFrag;
-	}
-
 		
 }

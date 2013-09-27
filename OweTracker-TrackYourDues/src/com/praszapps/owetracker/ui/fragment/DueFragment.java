@@ -16,7 +16,6 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.ListFragment;
 import android.support.v7.view.ActionMode;
 import android.support.v7.view.ActionMode.Callback;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -72,19 +71,6 @@ public class DueFragment extends ListFragment {
 	@SuppressLint("SimpleDateFormat")
 	private static SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
 	
-	
-	
-	@Override
-	public void onPrepareOptionsMenu(Menu menu) {
-		super.onPrepareOptionsMenu(menu);
-		Log.e("Pani", "Onpre of due");
-		if(OweboardFragment.showDueActionItems) {
-			Log.e("Pani", "Onpre shoowing due");
-			menu.findItem(R.id.item_reset_due).setVisible(true);
-			menu.findItem(R.id.item_add_due).setVisible(true);
-		}
-		
-	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -219,19 +205,21 @@ public class DueFragment extends ListFragment {
 			return true;
 			
 		case R.id.item_reset_due:
-			Utils.showAlertDialog(getActivity(),  
-					getResources().getString(R.string.label_reset), 
-					getResources().getString(R.string.label_sure),
-					null, false, getResources().getString(R.string.label_yes), 
-					getResources().getString(R.string.label_no),
-					null, new Utils.DialogResponse() {
+			
+			if(duesList.size() == 0) {
+				// Show error if there are no dues to reset
+				Utils.showToast(getActivity(), getResources().getString(R.string.no_dues_to_reset), Toast.LENGTH_SHORT);
+			} else {
 				
-				@Override
-				public void onPositive() {
-					if(duesList.size() == 0) {
-						// Show error if there are no dues to reset
-						Utils.showToast(getActivity(), getResources().getString(R.string.no_dues_to_reset), Toast.LENGTH_SHORT);
-					} else {
+				Utils.showAlertDialog(getActivity(),  
+						getResources().getString(R.string.label_reset), 
+						getResources().getString(R.string.label_sure),
+						null, false, getResources().getString(R.string.label_yes), 
+						getResources().getString(R.string.label_no),
+						null, new Utils.DialogResponse() {
+					
+					@Override
+					public void onPositive() {
 						// Delete dues and reset due value to zero
 						DatabaseHelper.deleteAllFriendDues(friend.getId(), db);
 						updateDueList(friend.getId());
@@ -249,22 +237,21 @@ public class DueFragment extends ListFragment {
 						}
 						Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_reset), Toast.LENGTH_SHORT);
 					}
-				}
-				
-				@Override
-				public void onNeutral() {
-					//Do nothing
-				}
-				
-				@Override
-				public void onNegative() {
 					
-					//Do nothing
-				}
-				
-			});
-			return true;
-			
+					@Override
+					public void onNeutral() {
+						//Do nothing
+					}
+					
+					@Override
+					public void onNegative() {
+						
+						//Do nothing
+					}
+					
+				});
+				return true;
+			}
 		}
 		
 		

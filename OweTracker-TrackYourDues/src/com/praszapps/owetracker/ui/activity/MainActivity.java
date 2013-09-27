@@ -31,7 +31,8 @@ import com.praszapps.owetracker.util.Constants;
 public class MainActivity extends RootActivity implements OnFriendNameClickListener{
 
 	public static boolean isSinglePane;
-		
+	private DueFragment dueFrag = null;	
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -114,10 +115,24 @@ public class MainActivity extends RootActivity implements OnFriendNameClickListe
 			 * via reference to fragment
 			 */
 			//get reference to FriendDueFragment
-			DueFragment dueFrag = (DueFragment)getSupportFragmentManager().findFragmentById(R.id.due_frag);
-			dueFrag.showDetails(friendId, currency);
+			setDueFrag((DueFragment)getSupportFragmentManager().findFragmentById(R.id.due_frag));
+			getDueFrag().showDetails(friendId, currency);
 		}
 	
+	}
+
+	/**
+	 * @return the dueFrag
+	 */
+	public DueFragment getDueFrag() {
+		return dueFrag;
+	}
+
+	/**
+	 * @param dueFrag the dueFrag to set
+	 */
+	public void setDueFrag(DueFragment dueFrag) {
+		this.dueFrag = dueFrag;
 	}
 
 		

@@ -14,7 +14,7 @@
         android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwzyz ."
         android:hint="@string/label_enter_friend_name"
         android:ems="10"
-        android:inputType="textPersonName" >
+        android:inputType="textPersonName|textCapWords" >
     </EditText>
 
     <Spinner

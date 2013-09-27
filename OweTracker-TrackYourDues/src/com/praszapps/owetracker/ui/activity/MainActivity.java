@@ -58,9 +58,6 @@ public class MainActivity extends RootActivity implements OnFriendNameClickListe
 			//Running on tablet
 			isSinglePane = false;
 			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-			if(dueFrag == null) {
-				dueFrag = (DueFragment)getSupportFragmentManager().findFragmentById(R.id.due_frag);
-			}
 			
 		} else {
 			//Its running on phone
@@ -128,6 +125,9 @@ public class MainActivity extends RootActivity implements OnFriendNameClickListe
 	 * @return the dueFrag
 	 */
 	public DueFragment getDueFrag() {
+		if(dueFrag == null) {
+			dueFrag = (DueFragment)getSupportFragmentManager().findFragmentById(R.id.due_frag);
+		}
 		return dueFrag;
 	}
 		

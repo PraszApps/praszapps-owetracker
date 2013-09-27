@@ -80,10 +80,7 @@ public class OweboardFragment extends ListFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		//Utils.showLog(getClass().getSimpleName(), "onCreateView() starts", Log.VERBOSE);
-		// Get the GoogleAnalytics singleton. Note that the SDK uses
-	   // the application context to avoid leaking the current context.
 
-		// Use the GoogleAnalytics singleton to get a Tracker.
 		v = inflater.inflate(R.layout.fragment_oweboard, container, false);
 		emptyView = (TextView) v.findViewById(R.id.empty_friendlist);
 		rAct = (RootActivity) getActivity();

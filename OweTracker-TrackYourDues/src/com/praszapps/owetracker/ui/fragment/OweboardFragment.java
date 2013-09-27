@@ -87,10 +87,6 @@ public class OweboardFragment extends ListFragment {
 		rAct = (RootActivity) getActivity();
 		db = rAct.database;
 		setTotalFriendListView();
-		if (!MainActivity.isSinglePane) {
-			// Set selector if in tab
-			listViewOwelist.setSelector(R.color.blue_header);
-		}
 		totalFriends = (TextView) v.findViewById(R.id.listFriends);
 		
 		setHasOptionsMenu(true);
@@ -430,7 +426,9 @@ public class OweboardFragment extends ListFragment {
 		@Override
 		public void onDestroyActionMode(ActionMode mode) {
 			mActionMode = null;	
-			listItemView.setSelected(false);
+			if(MainActivity.isSinglePane) {
+				listItemView.setSelected(false);
+			}
 			mode = null;
 		}
 		
@@ -438,7 +436,6 @@ public class OweboardFragment extends ListFragment {
 		public boolean onCreateActionMode(ActionMode mode, Menu menu) {
 			// Inflate a menu resource providing context menu items
 	        MenuInflater inflater = mode.getMenuInflater();
-	        
 	        mode.setTitle(friendData.getName());
 	        inflater.inflate(R.menu.friend_context_menu, menu);
 	        return true;

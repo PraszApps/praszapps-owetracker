@@ -464,7 +464,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		if(dateinMilis == 0) {
 			response = "";
 		} else {
-			response = Constants.LAST_UPDATE+" - "+dateFormat.format(dateinMilis);
+			response = Constants.LAST_UPDATE+" "+dateFormat.format(dateinMilis);
 		}
 		
 		return response;

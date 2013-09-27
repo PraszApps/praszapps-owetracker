@@ -58,6 +58,7 @@ public class OweboardFragment extends ListFragment {
 	private Friend friendData = null;
 	@SuppressWarnings("unused")
 	private ActionMode mActionMode = null;
+	private View listItemView = null;
 	
 	
 	public static TextView getTotalFriends() {
@@ -109,8 +110,10 @@ public class OweboardFragment extends ListFragment {
 			@Override
 			public boolean onItemLongClick(AdapterView<?> parent, View view,
 					int position, long id) {
+				listItemView = view;
 				friendData = friendListAdapter.getItem(position);
 				mActionMode = ((MainActivity) getActivity()).startSupportActionMode(mCallback);
+				listItemView.setSelected(true);
 				return true;
 			}
 		});
@@ -140,7 +143,10 @@ public class OweboardFragment extends ListFragment {
 		} else {
 			mFriendName.OnFriendNameClick(friendList.get(position).getId(), friendList.get(position).getCurrency());
 		}
-		v.setSelected(true);
+		
+		if(!MainActivity.isSinglePane) {
+			v.setSelected(true);
+		}
 	}
 	
 	
@@ -150,9 +156,6 @@ public class OweboardFragment extends ListFragment {
 		inflater.inflate(R.menu.oweboard_menu, menu);
 	
 		searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.item_search));
-		
-		
-		
 	    searchView.setOnQueryTextListener(new OnQueryTextListener() {
 			
 			@Override
@@ -338,12 +341,7 @@ public class OweboardFragment extends ListFragment {
 						}
 
 					}
-					
-					
-				}
-				
-			
-			
+				}			
 			}
 		});
 		d.show();
@@ -431,7 +429,8 @@ public class OweboardFragment extends ListFragment {
 		
 		@Override
 		public void onDestroyActionMode(ActionMode mode) {
-			mActionMode = null;
+			mActionMode = null;	
+			listItemView.setSelected(false);
 			mode = null;
 		}
 		
@@ -450,62 +449,56 @@ public class OweboardFragment extends ListFragment {
 			switch (item.getItemId()) {
 			case R.id.item_edit_friend:
 				showFriendDialog(Constants.MODE_EDIT, friendData);
+				mode.finish();
 				break;
 			case R.id.item_delete_friend:
 				
-				showDeleteFriendDialog(friendData);
-				
-				
+				Utils.showAlertDialog(getActivity(), getResources().getString(R.string.label_delete_friend), 
+						getResources().getString(R.string.label_sure), null, false, getResources().getString(R.string.label_yes), 
+						getResources().getString(R.string.label_no), null, new Utils.DialogResponse() {
+					
+					@Override
+					public void onPositive() {
+						// Delete all records of dues and friends
+						DatabaseHelper.deleteAllFriendDues(friendData.getId(), db);
+						DatabaseHelper.deleteFriendRecord(friendData.getId(), db);
+						updateListView();
+						
+						if(!MainActivity.isSinglePane) {
+							
+							DueFragment.updateDueList(friendData.getId());
+							new DueFragment().handleFriendDelete();
+							((MainActivity)getActivity()).getSupportActionBar().setTitle(getResources().getString(R.string.oweboard_title));
+							((MainActivity)getActivity()).getDueFrag().setHasOptionsMenu(false);
+						}
+						
+						int dueCount = DatabaseHelper.getFriendsWithDuesCount(db);
+						if(dueCount == 0 && OweboardFragment.friendListAdapter.getCount() == 0) {
+							totalFriends.setVisibility(TextView.GONE);
+						} else {
+							totalFriends.setVisibility(TextView.VISIBLE);
+							totalFriends.setText(dueCount+"/"+OweboardFragment.friendListAdapter.getCount()+" "+getResources().getString(
+									R.string.label_owesactions_listview));
+						}
+						Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_delete), Toast.LENGTH_SHORT);
+						
+					}
+					
+					@Override
+					public void onNeutral() {
+						// No action
+					}
+					
+					@Override
+					public void onNegative() {
+						// No action
+					}
+				});
+				mode.finish();
 				break;
 			}
-			mode.finish();
 			return true;
 		}
 	};
-	
-
-	private void showDeleteFriendDialog(final Friend deleteFriend) {
-		Utils.showAlertDialog(getActivity(), getResources().getString(R.string.label_delete_friend), 
-				getResources().getString(R.string.label_sure), null, false, getResources().getString(R.string.label_yes), 
-				getResources().getString(R.string.label_no), null, new Utils.DialogResponse() {
-			
-			@Override
-			public void onPositive() {
-				// Delete all records of dues and friends
-				DatabaseHelper.deleteAllFriendDues(deleteFriend.getId(), db);
-				DatabaseHelper.deleteFriendRecord(deleteFriend.getId(), db);
-				updateListView();
-				
-				if(!MainActivity.isSinglePane) {
-					
-					DueFragment.updateDueList(friendData.getId());
-					new DueFragment().handleFriendDelete();
-					((MainActivity)getActivity()).getSupportActionBar().setTitle(getResources().getString(R.string.oweboard_title));
-					((MainActivity)getActivity()).getDueFrag().setHasOptionsMenu(false);
-				}
-				
-				int dueCount = DatabaseHelper.getFriendsWithDuesCount(db);
-				if(dueCount == 0 && OweboardFragment.friendListAdapter.getCount() == 0) {
-					totalFriends.setVisibility(TextView.GONE);
-				} else {
-					totalFriends.setVisibility(TextView.VISIBLE);
-					totalFriends.setText(dueCount+"/"+OweboardFragment.friendListAdapter.getCount()+" "+getResources().getString(
-							R.string.label_owesactions_listview));
-				}
-
-				Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_delete), Toast.LENGTH_SHORT);
-			}
-			
-			@Override
-			public void onNeutral() {
-				// No action
-			}
-			
-			@Override
-			public void onNegative() {
-				// No action
-			}
-		});
-	}
 	
 }

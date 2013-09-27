@@ -70,6 +70,7 @@ public class DueFragment extends ListFragment {
 	private ActionMode mActionMode = null;
 	@SuppressLint("SimpleDateFormat")
 	private static SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
+	private View dueItemView = null;
 	
 
 	@Override
@@ -93,10 +94,11 @@ public class DueFragment extends ListFragment {
 			@Override
 			public boolean onItemLongClick(AdapterView<?> parent, View view,
 					int position, long id) {
+				dueItemView = view;
 				due = dueListAdapter.getItem(position);
 				mActionMode = ((MainActivity) getActivity()).startSupportActionMode(mCallback);
+				dueItemView.setSelected(true);
 				return false;
-				
 			}
 		});
 		
@@ -245,7 +247,6 @@ public class DueFragment extends ListFragment {
 					
 					@Override
 					public void onNegative() {
-						
 						//Do nothing
 					}
 					
@@ -416,12 +417,13 @@ public class DueFragment extends ListFragment {
 						if(!MainActivity.isSinglePane) {
 							new OweboardFragment().updateListView();
 						}
+						listViewTransactions.setSelected(false);
 						d.dismiss();
 					} else {
 						Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_due_add_failure), Toast.LENGTH_SHORT);
+						listViewTransactions.setSelected(false);
 						d.dismiss();
 					}
-					return;
 				}
 			}
 		});
@@ -501,6 +503,7 @@ public class DueFragment extends ListFragment {
 		@Override
 		public void onDestroyActionMode(ActionMode mode) {
 			mActionMode = null;
+			dueItemView.setSelected(false);
 			mode = null;
 		}
 		
@@ -515,7 +518,7 @@ public class DueFragment extends ListFragment {
 		}
 		
 		@Override
-		public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+		public boolean onActionItemClicked(final ActionMode mode, MenuItem item) {
 			
 			switch (item.getItemId()) {
 			case R.id.item_edit_due:
@@ -555,7 +558,7 @@ public class DueFragment extends ListFragment {
 														.getString(
 																R.string.label_owesactions_listview));
 									}
-								} 
+								}
 							}
 
 							@Override
@@ -566,9 +569,9 @@ public class DueFragment extends ListFragment {
 							@Override
 							public void onNegative() {
 								// Do nothing
-
 							}
 						});
+				mode.finish();
 				break;
 			}
 			return true;

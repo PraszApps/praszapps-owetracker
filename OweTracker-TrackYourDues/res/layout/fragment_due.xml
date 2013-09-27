@@ -13,6 +13,7 @@
         android:background="@color/listview_bg"
         android:layout_marginTop="10dp"
         android:divider="@null"
+        android:drawSelectorOnTop="true"
         android:hapticFeedbackEnabled="true" >
     </ListView>
 

@@ -28,6 +28,7 @@
         android:fadingEdge="vertical|horizontal"
         android:fadingEdgeLength="10dp"
         android:fastScrollEnabled="true"
+        android:drawSelectorOnTop="true"
         android:overScrollMode="always"
         android:saveEnabled="true"
         android:scrollingCache="true"

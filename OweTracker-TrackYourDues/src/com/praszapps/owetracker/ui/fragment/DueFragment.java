@@ -98,7 +98,7 @@ public class DueFragment extends ListFragment {
 				due = dueListAdapter.getItem(position);
 				mActionMode = ((MainActivity) getActivity()).startSupportActionMode(mCallback);
 				dueItemView.setSelected(true);
-				return false;
+				return true;
 			}
 		});
 		

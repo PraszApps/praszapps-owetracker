@@ -151,7 +151,7 @@ public class DueFragment extends ListFragment {
 				  //Utils.showToast(getActivity(), "It has number of launches needed to prompt", Toast.LENGTH_SHORT);
 				  //Utils.showToast(getActivity(), "Difference --- "+(date_firstLaunch - System.currentTimeMillis()), Toast.LENGTH_SHORT);
 				  if (System.currentTimeMillis() >= date_firstLaunch + 
-						  (/*Constants.DAYS_UNTIL_PROMPT * 24 * 60 * */60 * 1000)) {
+						  (Constants.DAYS_UNTIL_PROMPT * 24 * 60 * 60 * 1000)) {
 					  //Utils.showToast(getActivity(), "It will show prompt", Toast.LENGTH_SHORT);
 					  Utils.showAlertDialog(getActivity(), getResources().getString(R.string.rate_dialog_title),
 							  getResources().getString(R.string.rate_dialog_msg), null, false, 

@@ -26,7 +26,7 @@ public class Constants {
 	public static final String LAUNCH_COUNT = "launch_count";
 	public final static int DAYS_UNTIL_PROMPT = 3;
     public final static int LAUNCHES_UNTIL_PROMPT = 15;
-    public static final String DONT_SHOW_AGAIN = "dontshowagain";
-    public static final String DATE_FIRST_LAUNCH = "date_firstlaunch";
+    public static final String DONT_SHOW_AGAIN = "dontshowagain_1";
+    public static final String DATE_FIRST_LAUNCH = "date_firstlaunch_1";
     public static final String NO_FRIENDS = OweTrackerApplication.getContext().getResources().getString(R.string.strNoFriendSelected);
 }

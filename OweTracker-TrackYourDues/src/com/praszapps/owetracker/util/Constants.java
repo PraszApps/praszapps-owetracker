@@ -12,7 +12,7 @@ public class Constants {
 	public static final String LAST_UPDATE = OweTrackerApplication.getContext().getResources().getString(R.string.last_update);
 	public static final String BUNDLE_EXTRA_CURRENCY = "currency";
 	public static final String BUNDLE_EXTRA_FRIENDID = "friendId";
-	public static final long SPLASH_SCREEN_TIMEOUT = 2000;
+	public static final long SPLASH_SCREEN_TIMEOUT = 1000;
 	public static final String MODE_ADD = "add";
 	public static final String MODE_EDIT = "edit";
 	public static final String SHARED_PREFERENCES_NAME = "owetracker_prefs";

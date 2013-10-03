@@ -62,7 +62,6 @@ public class MainActivity extends RootActivity implements OnFriendNameClickListe
 		} else {
 			//Its running on phone
 			isSinglePane = true;
-			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 			if (savedInstanceState == null) {
 				FragmentManager fm = getSupportFragmentManager();
 				FragmentTransaction ft = fm.beginTransaction();

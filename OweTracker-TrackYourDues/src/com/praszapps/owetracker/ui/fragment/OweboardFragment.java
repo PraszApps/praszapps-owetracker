@@ -56,7 +56,6 @@ public class OweboardFragment extends ListFragment {
 	private OnFriendNameClickListener mFriendName;
 	private Boolean isInSearchMode = false;
 	private Friend friendData = null;
-	@SuppressWarnings("unused")
 	private ActionMode mActionMode = null;
 	private View listItemView = null;
 	
@@ -142,6 +141,10 @@ public class OweboardFragment extends ListFragment {
 		
 		if(!MainActivity.isSinglePane) {
 			v.setSelected(true);
+		}
+		
+		if(mActionMode != null) {
+			mActionMode.finish();
 		}
 	}
 	

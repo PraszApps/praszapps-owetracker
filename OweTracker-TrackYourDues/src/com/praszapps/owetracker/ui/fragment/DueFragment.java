@@ -66,7 +66,6 @@ public class DueFragment extends ListFragment {
 	private static Calendar cld = Calendar.getInstance();
 	private SharedPreferences owetrackerPrefs = RootActivity.owetrackerPrefs;
 	private DialogFragment datepicker;
-	@SuppressWarnings("unused")
 	private ActionMode mActionMode = null;
 	@SuppressLint("SimpleDateFormat")
 	private static SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
@@ -124,6 +123,16 @@ public class DueFragment extends ListFragment {
 		
 	}
 	
+	
+	
+	@Override
+	public void onListItemClick(ListView l, View v, int position, long id) {
+		super.onListItemClick(l, v, position, id);
+		if(mActionMode != null) {
+			mActionMode.finish();
+		}
+	}
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		super.onOptionsItemSelected(item);

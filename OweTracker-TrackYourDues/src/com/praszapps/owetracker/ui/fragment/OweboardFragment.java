@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.view.ActionMode;
 import android.support.v7.view.ActionMode.Callback;
 import android.support.v7.widget.SearchView;
@@ -88,9 +89,11 @@ public class OweboardFragment extends ListFragment {
 		setTotalFriendListView();
 		totalFriends = (TextView) v.findViewById(R.id.listFriends);
 		
+		ActionBar aBar = ((MainActivity)getActivity()).getSupportActionBar();
 		setHasOptionsMenu(true);
-		((MainActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-		((MainActivity)getActivity()).getSupportActionBar().setTitle(R.string.oweboard_title);
+		aBar.setDisplayHomeAsUpEnabled(false);
+		aBar.setHomeButtonEnabled(false);
+		aBar.setTitle(R.string.oweboard_title);
 		//Utils.showLog(getClass().getSimpleName(), "onCreateView() ends", Log.VERBOSE);
 		return v;
 	}

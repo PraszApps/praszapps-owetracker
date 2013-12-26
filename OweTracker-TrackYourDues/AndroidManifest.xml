@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.praszapps.owetracker"
-    android:versionCode="111"
-    android:versionName="1.1.1" >
+    android:versionCode="112"
+    android:versionName="1.1.2" >
 
     <uses-sdk
         android:minSdkVersion="7"
-        android:targetSdkVersion="18" />
+        android:targetSdkVersion="19" />
 
     <application
         android:name=".application.OweTrackerApplication"

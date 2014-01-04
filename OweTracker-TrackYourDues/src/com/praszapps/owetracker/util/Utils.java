@@ -5,21 +5,30 @@
 
 package com.praszapps.owetracker.util;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
-import com.praszapps.owetracker.R;
-import com.praszapps.owetracker.application.OweTrackerApplication;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.DialogInterface.OnClickListener;
+import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.util.Log;
 import android.view.Gravity;
 import android.widget.Toast;
+
+import com.praszapps.owetracker.R;
+import com.praszapps.owetracker.application.OweTrackerApplication;
+import com.praszapps.owetracker.bo.Due;
+import com.praszapps.owetracker.bo.Friend;
+import com.praszapps.owetracker.database.DatabaseHelper;
 
 public class Utils {
 
@@ -215,6 +224,53 @@ public class Utils {
 		} else {
 			return null;
 		}
+	}
+	
+	public static void doExportData(SQLiteDatabase db) throws JSONException {
+		 ArrayList<Friend> friendData = DatabaseHelper.getAllFriendRecords(db);
+		 ArrayList<Due> dueData = DatabaseHelper.getAllDueRecords(db);
+		 
+		 JSONObject tablesJson = new JSONObject();
+		 
+		 JSONArray tables = new JSONArray();
+		
+		 JSONObject friendTableJson = new JSONObject();
+		 friendTableJson.put("Tablename", "friend");
+		 JSONArray friendTableRowsJson = new JSONArray();
+		 for(int i = 0; i < friendData.size(); i++) {
+			 JSONObject rowDataJson = new JSONObject();
+			 rowDataJson.put("friend_id", friendData.get(i).getId());
+			 rowDataJson.put("friend_name", friendData.get(i).getName());
+			 rowDataJson.put("currency", friendData.get(i).getCurrency());
+			 rowDataJson.put("total_amt_due", friendData.get(i).getAmount());
+			 friendTableRowsJson.put(rowDataJson);
+			 
+		 }
+		 friendTableJson.put("rows", friendTableRowsJson);
+		 tables.put(friendTableJson);
+		 
+		 JSONObject dueTableJson = new JSONObject();
+		 dueTableJson.put("Tablename", "due");
+		 JSONArray dueTableRowsJson = new JSONArray();
+		 for(int i = 0; i < dueData.size(); i++) {
+			 JSONObject rowDataJson = new JSONObject();
+			 rowDataJson.put("due_id", dueData.get(i).getDueId());
+			 rowDataJson.put("friend_id", dueData.get(i).getFriendId());
+			 rowDataJson.put("date", dueData.get(i).getDate());
+			 rowDataJson.put("amount", dueData.get(i).getAmount());
+			 rowDataJson.put("reason", dueData.get(i).getReason());
+			 dueTableRowsJson.put(rowDataJson);
+			 
+		 }
+		 dueTableJson.put("rows", dueTableRowsJson);
+		 
+		 tables.put(dueTableJson);
+		 
+		 tablesJson.put("Tables", tables);
+		 
+		 Log.e("Pani", "The JSON is --- "+tablesJson.toString());
+		 
+		 
 	}
 	
 }

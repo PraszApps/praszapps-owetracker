@@ -11,6 +11,7 @@ public class Friend {
 
 	String id;
 	String name;
+	int amount;
 	int oweAmount;
 	String summary;
 	String currency;
@@ -48,6 +49,14 @@ public class Friend {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public int getAmount() {
+		return amount;
+	}
+
+	public void setAmount(int amount) {
+		this.amount = amount;
 	}
 
 	public int getOweAmount() {

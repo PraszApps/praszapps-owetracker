@@ -66,7 +66,7 @@ public class AboutActivity extends RootActivity implements android.support.v7.ap
 		}
 		
 		if(RootActivity.owetrackerPrefs.getBoolean(Constants.IS_OPENING_ABOUT_FIRST_TIME, true)) {
-			Utils.showToast(this, getResources().getString(R.string.toast_msg_swipe), Toast.LENGTH_LONG);
+			Utils.showToast(this, getResources().getString(R.string.toast_msg_swipe), Toast.LENGTH_LONG, getLayoutInflater());
 			RootActivity.owetrackerPrefs.edit().putBoolean(Constants.IS_OPENING_ABOUT_FIRST_TIME, false).commit();
 		}
 		

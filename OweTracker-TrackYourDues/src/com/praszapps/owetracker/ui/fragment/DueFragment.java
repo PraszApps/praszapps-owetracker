@@ -70,7 +70,7 @@ public class DueFragment extends ListFragment {
 	@SuppressLint("SimpleDateFormat")
 	private static SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
 	private View dueItemView = null;
-	
+	private static LayoutInflater layoutInflater;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -78,6 +78,7 @@ public class DueFragment extends ListFragment {
 		//Utils.showLog(getClass().getSimpleName(), "onCreateView() starts", Log.VERBOSE);
 		
 		//Setting the View
+		layoutInflater = getLayoutInflater(savedInstanceState);
 		v = inflater.inflate(R.layout.fragment_due, container, false);
 		//Setting the action bar
 		if(MainActivity.isSinglePane) {
@@ -219,7 +220,7 @@ public class DueFragment extends ListFragment {
 			
 			if(duesList.size() == 0) {
 				// Show error if there are no dues to reset
-				Utils.showToast(getActivity(), getResources().getString(R.string.no_dues_to_reset), Toast.LENGTH_SHORT);
+				Utils.showToast(getActivity(), getResources().getString(R.string.no_dues_to_reset), Toast.LENGTH_SHORT, layoutInflater);
 			} else {
 				
 				Utils.showAlertDialog(getActivity(),  
@@ -246,7 +247,7 @@ public class DueFragment extends ListFragment {
 							}
 							new OweboardFragment().updateListView();
 						}
-						Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_reset), Toast.LENGTH_SHORT);
+						Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_reset), Toast.LENGTH_SHORT, layoutInflater);
 					}
 					
 					@Override
@@ -302,7 +303,7 @@ public class DueFragment extends ListFragment {
 		} else {
 			
 			//Show error message and close fragment
-			Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_friend_data_get_failure), Toast.LENGTH_SHORT);
+			Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_friend_data_get_failure), Toast.LENGTH_SHORT, layoutInflater);
 			getFragmentManager().popBackStack();
 		}
 	
@@ -356,16 +357,16 @@ public class DueFragment extends ListFragment {
 			@Override
 			public void onClick(View v) {
 				if(editTextDate.getText().toString().equals("")) {
-					Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_add_due_date), Toast.LENGTH_SHORT);
+					Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_add_due_date), Toast.LENGTH_SHORT, layoutInflater);
 					return;
 				} else if(spinnerGaveTook.getSelectedItem().toString().equals(getResources().getString(R.string.array_givetake_item_select))) {
-					Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_add_due_givetake), Toast.LENGTH_SHORT);
+					Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_add_due_givetake), Toast.LENGTH_SHORT, layoutInflater);
 					return;
 				} else if(editTextAmount.getText().toString().equals("") || editTextAmount.getText().toString() == null) {
-					Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_add_due_amount), Toast.LENGTH_SHORT);
+					Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_add_due_amount), Toast.LENGTH_SHORT, layoutInflater);
 					return;
 				} else if(editTextReason.getText().toString().equals("") || editTextReason.getText().toString() == null) {
-					Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_add_due_reason), Toast.LENGTH_SHORT);
+					Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_add_due_reason), Toast.LENGTH_SHORT, layoutInflater);
 					return;
 				} else {
 					addDue = new Due();
@@ -389,7 +390,7 @@ public class DueFragment extends ListFragment {
 						if(dueId!=null) {
 							addDue.setDueId(dueId);
 						} else {
-							Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_due_add_failure), Toast.LENGTH_SHORT);
+							Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_due_add_failure), Toast.LENGTH_SHORT, layoutInflater);
 							d.dismiss();
 							return;
 						}
@@ -412,15 +413,15 @@ public class DueFragment extends ListFragment {
 							}
 						}
 						if(mode.equals(Constants.MODE_ADD)) {
-							Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_due_add_success), Toast.LENGTH_SHORT);
+							Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_due_add_success), Toast.LENGTH_SHORT, layoutInflater);
 							
 							if(RootActivity.owetrackerPrefs.getBoolean(Constants.IS_ADDING_FIRST_DUE, true)) {
-								Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_long_press), Toast.LENGTH_LONG);
+								Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_long_press), Toast.LENGTH_LONG, layoutInflater);
 								RootActivity.owetrackerPrefs.edit().putBoolean(Constants.IS_ADDING_FIRST_DUE, false).commit();
 							}
 							
 						} else if(mode.equals(Constants.MODE_EDIT)) {
-							Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_due_update_success), Toast.LENGTH_SHORT);
+							Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_due_update_success), Toast.LENGTH_SHORT, layoutInflater);
 							
 						}
 						if(!MainActivity.isSinglePane) {
@@ -429,7 +430,7 @@ public class DueFragment extends ListFragment {
 						listViewTransactions.setSelected(false);
 						d.dismiss();
 					} else {
-						Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_due_add_failure), Toast.LENGTH_SHORT);
+						Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_due_add_failure), Toast.LENGTH_SHORT, layoutInflater);
 						listViewTransactions.setSelected(false);
 						d.dismiss();
 					}
@@ -464,7 +465,7 @@ public class DueFragment extends ListFragment {
 			cld.set(Calendar.SECOND, 0);
 			cld.set(Calendar.MILLISECOND, 0);
 			if (cld.getTime().after(new Date())){
-				Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_due_invalid_date), Toast.LENGTH_SHORT);
+				Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_due_invalid_date), Toast.LENGTH_SHORT, layoutInflater);
 				editTextDate.setText(getResources().getString(R.string.label_add_date));
 			}else{
 				calendarDay = day;

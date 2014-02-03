@@ -59,7 +59,7 @@ public class OweboardFragment extends ListFragment {
 	private Friend friendData = null;
 	private ActionMode mActionMode = null;
 	private View listItemView = null;
-	
+	private static LayoutInflater layoutInflater;
 	
 	public static TextView getTotalFriends() {
 		return totalFriends;
@@ -81,7 +81,7 @@ public class OweboardFragment extends ListFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		//Utils.showLog(getClass().getSimpleName(), "onCreateView() starts", Log.VERBOSE);
-
+		layoutInflater = getLayoutInflater(savedInstanceState);
 		v = inflater.inflate(R.layout.fragment_oweboard, container, false);
 		emptyView = (TextView) v.findViewById(R.id.empty_friendlist);
 		rAct = (RootActivity) getActivity();
@@ -267,10 +267,10 @@ public class OweboardFragment extends ListFragment {
 			public void onClick(View v) {
 				
 				if(editTextfriendName.getText().toString().trim().equals("")|| editTextfriendName.getText().toString().trim() == null) {
-					Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_add_friend_name), Toast.LENGTH_SHORT);
+					Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_add_friend_name), Toast.LENGTH_SHORT, layoutInflater);
 					return;
 				} else if(spinnerCurrency.getSelectedItem().toString().equals(getResources().getString(R.string.array_currency_item_select))) {
-					Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_add_friend_currency), Toast.LENGTH_SHORT);
+					Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_add_friend_currency), Toast.LENGTH_SHORT, layoutInflater);
 					return;
 				} else {
 					//Add data to database
@@ -292,12 +292,12 @@ public class OweboardFragment extends ListFragment {
 								@Override
 								public void onPositive() {
 									if(DatabaseHelper.createFriendRecord(addFriend, db)) {
-										Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_add_friend_success), Toast.LENGTH_SHORT);
+										Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_add_friend_success), Toast.LENGTH_SHORT, layoutInflater);
 										d.dismiss();
 										updateListView();
 										updateFriendCount();
 									} else {
-										Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_add_friend_failure), Toast.LENGTH_SHORT);
+										Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_add_friend_failure), Toast.LENGTH_SHORT, layoutInflater);
 									}
 								}
 								
@@ -309,25 +309,25 @@ public class OweboardFragment extends ListFragment {
 								
 								@Override
 								public void onNegative() {
-									Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_update_friend_negative), Toast.LENGTH_SHORT);
+									Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_update_friend_negative), Toast.LENGTH_SHORT, layoutInflater);
 									return;
 								}
 							});
 						} else {
 							if(DatabaseHelper.createFriendRecord(addFriend, db)) {
-								Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_add_friend_success), Toast.LENGTH_SHORT);
+								Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_add_friend_success), Toast.LENGTH_SHORT, layoutInflater);
 								d.dismiss();
 								updateListView();
 								updateFriendCount();
 							} else {
-								Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_add_friend_failure), Toast.LENGTH_SHORT);
+								Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_add_friend_failure), Toast.LENGTH_SHORT, layoutInflater);
 							}
 							
 						}
 						
 					} else if(modeOfOp.equals(Constants.MODE_EDIT)) {
 						if(DatabaseHelper.updateFriend(addFriend, db)) {
-							Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_update_friend_success), Toast.LENGTH_SHORT);
+							Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_update_friend_success), Toast.LENGTH_SHORT, layoutInflater);
 							
 							if(!(MainActivity.isSinglePane)) {
 								DueFragment.updateSummary(DatabaseHelper.getFriendData(addFriend.getId(), db));
@@ -339,7 +339,7 @@ public class OweboardFragment extends ListFragment {
 							d.dismiss();
 							
 						} else {
-							Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_update_friend_failure), Toast.LENGTH_SHORT);
+							Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_update_friend_failure), Toast.LENGTH_SHORT, layoutInflater);
 						}
 
 					}
@@ -483,7 +483,7 @@ public class OweboardFragment extends ListFragment {
 							totalFriends.setText(dueCount+"/"+OweboardFragment.friendListAdapter.getCount()+" "+getResources().getString(
 									R.string.label_owesactions_listview));
 						}
-						Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_delete), Toast.LENGTH_SHORT);
+						Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_delete), Toast.LENGTH_SHORT, layoutInflater);
 						
 					}
 					

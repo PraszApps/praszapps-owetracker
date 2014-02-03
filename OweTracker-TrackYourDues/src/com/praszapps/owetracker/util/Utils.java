@@ -22,6 +22,9 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.praszapps.owetracker.R;
@@ -114,11 +117,15 @@ public class Utils {
 	 * @param text - Text of the toast
 	 * @param displayTime - Toast.LENGTH_LONG or Toast.LENGHT_SHORT
 	 */
-	public static void showToast(Context context, String text, int displayTime) {
+	public static void showToast(Context context, String text, int displayTime, LayoutInflater inflater) {
 		if(displayTime == Toast.LENGTH_LONG || displayTime == Toast.LENGTH_SHORT) {
 			
-			Toast toast = Toast.makeText(context, text, displayTime);
+			View layout = inflater.inflate(R.layout.custom_toast_view, null);
+			TextView textToShow = (TextView) layout.findViewById(R.id.textToShow);
+			textToShow.setText(text);
+			Toast toast = new Toast(context);
 			toast.setGravity(Gravity.CENTER, 0, 0);
+			toast.setView(layout);
 			toast.show();
 		}
 		

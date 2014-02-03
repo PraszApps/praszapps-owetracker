@@ -89,7 +89,7 @@ public class RootActivity extends ActionBarActivity {
 			  ///Utils.showToast(RootActivity.this, "Difference --- "+(date_firstLaunch - System.currentTimeMillis()), Toast.LENGTH_SHORT);
 			  if (System.currentTimeMillis() >= date_firstLaunch + 
 					  (Constants.DAYS_UNTIL_PROMPT * 24 * 60 * 60 * 1000)) {
-				  Utils.showToast(this, "It will show prompt", Toast.LENGTH_SHORT);
+				  Utils.showToast(this, "It will show prompt", Toast.LENGTH_SHORT, getLayoutInflater());
 				  Utils.showAlertDialog(RootActivity.this, getResources().getString(R.string.rate_dialog_title),
 						  getResources().getString(R.string.rate_dialog_msg), null, false, 
 						  getResources().getString(R.string.rate_dialog_now), 

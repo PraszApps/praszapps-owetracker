@@ -23,14 +23,15 @@ import com.praszapps.owetracker.util.Utils;
  */
 public class ContactFragment extends Fragment {
 
-	EditText feedbackText;
+	private LayoutInflater layoutInflater;
+	private EditText feedbackText;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		
 		// Inflate the view
 		View v = inflater.inflate(R.layout.fragment_contact, container, false);
-		
+		layoutInflater = getLayoutInflater(savedInstanceState);
 		// Initialise the views of the contact form
 		feedbackText = (EditText) v.findViewById(R.id.editTextFeedback);
 		Button sendFeedback = (Button) v.findViewById(R.id.buttonSend);
@@ -40,7 +41,7 @@ public class ContactFragment extends Fragment {
 			public void onClick(View v) {
 				if (feedbackText.getText().toString().trim().equals("")) {
 					Utils.showToast(getActivity(),
-							"Please enter feedback", Toast.LENGTH_SHORT);
+							"Please enter feedback", Toast.LENGTH_SHORT, layoutInflater);
 				} else {
 					
 					// Fire the email intent
@@ -56,7 +57,7 @@ public class ContactFragment extends Fragment {
 					} catch (android.content.ActivityNotFoundException ex) {
 						Utils.showToast(getActivity(),
 								"There are no email clients installed",
-								Toast.LENGTH_SHORT);
+								Toast.LENGTH_SHORT, layoutInflater);
 					}
 				}
 

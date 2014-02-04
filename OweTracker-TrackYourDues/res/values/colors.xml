@@ -11,5 +11,6 @@
     <color name="pressed_actionbar_tab_indicator">#CC33B5E5</color>
     <color name="listview_bg">#DCDCDC</color>
     <color name="due_details_bg">#f3fbff</color>
-    
+    <color name="translucent_toast_bg">#cc0d8c7f</color>
+    <color name="stroke_green">#086156</color>
 </resources>

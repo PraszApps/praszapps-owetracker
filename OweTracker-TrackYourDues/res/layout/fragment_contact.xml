@@ -21,28 +21,37 @@
 
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:background="@drawable/about_bg" >
 
         <TextView
             android:id="@+id/textViewFeedbackTitle"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:gravity="center_horizontal"
+            android:paddingBottom="5dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="5dp"
             android:text="@string/label_feedback"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@android:color/black" />
-            
+            android:textColor="@android:color/white"
+            android:textStyle="bold" />
+
         <Button
             android:id="@+id/buttonSend"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/editTextFeedback"
             android:layout_centerHorizontal="true"
+            android:layout_marginBottom="30dp"
             android:layout_marginTop="30dp"
             android:text="@string/label_send_feedback"
-            android:textColor="@android:color/black" />
+            android:textColor="@android:color/white" />
 
         <EditText
             android:id="@+id/editTextFeedback"
@@ -50,15 +59,18 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/textViewFeedbackTitle"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="15dp"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/contact_edittext_bg"
             android:ems="10"
+            android:gravity="top|left"
             android:hint="@string/feedback_hint"
             android:inputType="textMultiLine|textCapSentences"
             android:minLines="5"
-            android:textColor="@android:color/black" />
-
+            android:paddingLeft="5dp"
+            android:paddingTop="5dp"
+            android:textColor="@color/stroke_green" />
     </RelativeLayout>
 
 </ScrollView>

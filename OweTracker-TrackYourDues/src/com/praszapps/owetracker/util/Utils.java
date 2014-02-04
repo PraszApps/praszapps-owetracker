@@ -21,7 +21,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -124,7 +123,7 @@ public class Utils {
 			TextView textToShow = (TextView) layout.findViewById(R.id.textToShow);
 			textToShow.setText(text);
 			Toast toast = new Toast(context);
-			toast.setGravity(Gravity.CENTER, 0, 0);
+			//toast.setGravity(Gravity.CENTER, 0, 0);
 			toast.setView(layout);
 			toast.show();
 		}

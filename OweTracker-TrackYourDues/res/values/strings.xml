@@ -66,7 +66,7 @@
     <string name="toast_msg_delete">Friend deleted</string>
     <string name="label_feedback">We\'d love to hear from you!</string>
     <string name="label_send_feedback">E-mail developers</string>
-    <string name="feedback_hint">Your comments/feedback/suggestions. Speak your mind!</string>
+    <string name="feedback_hint">Speak your mind!</string>
     <string name="menu_item_add_new_due">Add new due</string>
     <string name="toast_msg_long_press">Long press dues to edit or delete</string>
     <string name="toast_msg_swipe">Swipe left/right to switch between tabs</string>
@@ -99,16 +99,19 @@
     <string name="last_update">Pending since</string>
     
     
-    <string name="lorem_ipsium">OweTracker app is made for Android 
+    <string name="intro">OweTracker app is made for Android 
 	    users who live among friends with whom they usually have dues with each other. 
-	    This application will help them to keep a track of their dues with different friends.
-	    \n\nThe application helps you add friends and then add dues as you give/take and 
-	    have easy access to the final amount you owe to each other.\n\nDo you live in a shared apartment
+	    This application will help them to keep a track of their dues with different friends, it helps you add friends and then add dues as you give/take and 
+	    have easy access to the final amount you owe to each other.</string>
+	        
+    <string name="why_use_owetracker">Do you live in a shared apartment
 	     or do you have lot of friends with whom you usually owe money or lend money to? Is it tough for
 	      you to keep track of every single penny you need back? Do your friends usually remind you 
 	      of money you owe them and you have no idea when did that happen?\n\nUse the OweTracker app to 
-	      keep track of your dues in 3 simple steps\n\n\n1. Add friend\n2. Add dues of friend\n3. Keep track 
-	      easily\n\nKey Features\n---------------------\n1. Simple interface to add/edit/delete dues\n2. 
+	      keep track of your dues in 3 simple steps\n\n1. Add friend\n2. Add dues of friend\n3. Keep track 
+	      easily</string>
+	      
+    <string name="key_features">Key Features\n---------------------\n1. Simple interface to add/edit/delete dues\n2. 
 	      Using 5
 	       different currencies for display (Indian Rupee, Dollar, Pound, Euro and Yen) and more to come 
 	       soon\n3.

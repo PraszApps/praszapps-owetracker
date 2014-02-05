@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:paddingBottom="20dp" >
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -17,8 +18,6 @@
             android:hint="@string/label_add_date"
             android:inputType="date|none"
             android:textAppearance="?android:attr/textAppearanceMedium" >
-
-            <requestFocus />
         </EditText>
 
         <Spinner
@@ -55,15 +54,13 @@
 
         <Button
             android:id="@+id/buttonSave"
+            style="@style/btn_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="50dp"
-            android:paddingRight="50dp"
-            android:layout_centerHorizontal="true"
             android:layout_below="@+id/editTextReason"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
-            android:text="@string/label_save"
-            android:textStyle="bold" />
+            android:text="@string/label_save" />
     </RelativeLayout>
 
 </ScrollView>

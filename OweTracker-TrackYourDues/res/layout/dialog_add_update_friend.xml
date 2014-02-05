@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
-    android:focusableInTouchMode="true" >
+    android:focusableInTouchMode="true"
+    android:paddingBottom="20dp" >
 
     <EditText
         android:id="@+id/editTextFriendName"
@@ -12,33 +13,31 @@
         android:layout_marginRight="15dp"
         android:layout_marginTop="15dp"
         android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwzyz ."
-        android:hint="@string/label_enter_friend_name"
         android:ems="10"
+        android:hint="@string/label_enter_friend_name"
         android:inputType="textPersonName|textCapWords" >
     </EditText>
 
     <Spinner
         android:id="@+id/spinnerCurrency"
         android:layout_width="match_parent"
-        android:spinnerMode="dropdown"
-        android:prompt="@string/array_currency_item_select"
         android:layout_height="wrap_content"
         android:layout_below="@+id/editTextFriendName"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
-        android:entries="@array/string_array_currency" />
+        android:entries="@array/string_array_currency"
+        android:prompt="@string/array_currency_item_select"
+        android:spinnerMode="dropdown" />
 
     <Button
         android:id="@+id/buttonSave"
+        style="@style/btn_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/spinnerCurrency"
         android:layout_below="@+id/spinnerCurrency"
         android:layout_centerHorizontal="true"
-        android:paddingLeft="50dp"
-        android:paddingRight="50dp"
         android:layout_marginTop="30dp"
-        android:text="@string/label_save"
-        android:textStyle="bold" />
+        android:text="@string/label_save" />
 
 </RelativeLayout>

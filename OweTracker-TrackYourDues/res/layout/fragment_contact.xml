@@ -44,18 +44,14 @@
 
         <Button
             android:id="@+id/buttonSend"
+            style="@style/btn_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/editTextFeedback"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="25dp"
             android:layout_marginTop="30dp"
-            android:background="@drawable/btn_bg"
-            android:paddingLeft="25dp"
-            android:paddingRight="25dp"
-            android:text="@string/label_send_feedback"
-            android:textColor="@color/submit_button_text_color"
-            android:textStyle="bold" />
+            android:text="@string/label_send_feedback" />
 
         <EditText
             android:id="@+id/editTextFeedback"

@@ -20,6 +20,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -44,7 +45,7 @@ public class OweboardFragment extends ListFragment {
 
 	private View v;
 	private static TextView totalFriends;
-	private TextView emptyView;
+	private TextView emptyView, dialogTitle;
 	private ListView listViewOwelist;
 	private static FriendAdapter friendListAdapter, searchListAdapter;
 	private EditText editTextfriendName;
@@ -242,7 +243,9 @@ public class OweboardFragment extends ListFragment {
 	private void showFriendDialog(final String modeOfOp, final Friend friendToUpdate) {
 
 		d = new Dialog(getActivity());
+		d.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		d.setContentView(R.layout.dialog_add_update_friend);
+		dialogTitle = (TextView) d.findViewById(R.id.textViewTitleAddFriend);
 		spinnerCurrency = (Spinner) d.findViewById(R.id.spinnerCurrency);
 		ArrayAdapter<String> currencyAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.string_array_currency));
 		currencyAdapter.setDropDownViewResource(R.layout.spinner_green_dropdown_style);
@@ -265,13 +268,12 @@ public class OweboardFragment extends ListFragment {
 		buttonSave = (Button) d.findViewById(R.id.buttonSave);
 		
 		if(modeOfOp.equals(Constants.MODE_ADD)) {
-			d.setTitle(getResources().getString(R.string.add_friend_title));
+			dialogTitle.setText(getResources().getString(R.string.add_friend_title));
 		} else if(modeOfOp.equals(Constants.MODE_EDIT)) {
 			editTextfriendName.setText(friendToUpdate.getName());
-			d.setTitle(getResources().getString(R.string.edit_friend_dialog_title));
+			dialogTitle.setText(getResources().getString(R.string.edit_friend_dialog_title));
 			spinnerCurrency.setSelection(((ArrayAdapter<String>) spinnerCurrency.getAdapter()).getPosition(Utils.getArrayItemFromCurrency(friendToUpdate.getCurrency())));
 		}
-		
 		
 		buttonSave.setOnClickListener(new View.OnClickListener() {
 			

@@ -21,6 +21,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -52,7 +53,7 @@ public class DueFragment extends ListFragment {
 	private static Friend friend;
 	private RootActivity rAct;
 	private static TextView textViewOweSummary;
-	private static TextView emptyTextView;
+	private static TextView emptyTextView, dialogTitle;
 	private static EditText editTextDate;
 	private ListView listViewTransactions;
 	private static ArrayList<Due> duesList = new ArrayList<Due>();
@@ -314,10 +315,11 @@ public class DueFragment extends ListFragment {
 	private void showDueDialog(String opMode, final String dueId) {
 		final String mode = opMode;
 		d = new Dialog(getActivity());
+		d.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		d.setContentView(R.layout.dialog_add_due);
-		d.setTitle(getResources().getString(R.string.add_due_dialog_title));
 		editTextDate = (EditText) d.findViewById(R.id.editTextDate);
 		spinnerGaveTook = (Spinner) d.findViewById(R.id.spinnerGiveTake);
+		dialogTitle = (TextView) d.findViewById(R.id.textViewTitleAddDue);
 		ArrayAdapter<String> currencyAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.string_array_give_take));
 		currencyAdapter.setDropDownViewResource(R.layout.spinner_green_dropdown_style);
 		spinnerGaveTook.setAdapter(currencyAdapter);
@@ -341,6 +343,7 @@ public class DueFragment extends ListFragment {
 		buttonSave = (Button) d.findViewById(R.id.buttonSave);
 		cld = Calendar.getInstance();
 		if(mode.equals(Constants.MODE_EDIT)) {
+			dialogTitle.setText(getResources().getString(R.string.edit_due));
 			editTextDate.setText(getResources().getString(R.string.label_date)+" "+due.getFormattedDate());
 			cld.setTimeInMillis(due.getDate());
 			editTextAmount.setText(Math.abs(due.getAmount())+"");		

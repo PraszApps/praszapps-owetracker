@@ -25,6 +25,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -318,8 +319,21 @@ public class DueFragment extends ListFragment {
 		editTextDate = (EditText) d.findViewById(R.id.editTextDate);
 		spinnerGaveTook = (Spinner) d.findViewById(R.id.spinnerGiveTake);
 		ArrayAdapter<String> currencyAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.string_array_give_take));
-		currencyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		currencyAdapter.setDropDownViewResource(R.layout.spinner_green_dropdown_style);
 		spinnerGaveTook.setAdapter(currencyAdapter);
+		spinnerGaveTook.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View view,
+					int position, long id) {
+				((TextView) parent.getChildAt(0)).setTextColor(getResources().getColor(R.color.actionbar_bg));
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+				// Do nothing
+			}
+		});
 		editTextAmount = (EditText) d.findViewById(R.id.editTextAmount);
 		editTextAmount.setHint(getResources().getString(R.string.label_hint_enter_amount)+" ("+friend.getCurrency()+")");
 		editTextReason = (EditText) d.findViewById(R.id.editTextReason);

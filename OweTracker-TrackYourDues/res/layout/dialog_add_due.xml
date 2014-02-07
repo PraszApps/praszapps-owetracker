@@ -17,7 +17,8 @@
             android:layout_marginTop="20dp"
             android:hint="@string/label_add_date"
             android:inputType="date|none"
-            android:textAppearance="?android:attr/textAppearanceMedium" >
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/actionbar_bg" >
         </EditText>
 
         <Spinner
@@ -39,7 +40,8 @@
             android:digits="1234567890"
             android:ems="10"
             android:inputType="phone"
-            android:maxLength="9" />
+            android:maxLength="9"
+            android:textColor="@color/actionbar_bg" />
 
         <EditText
             android:id="@+id/editTextReason"
@@ -49,7 +51,8 @@
             android:layout_below="@+id/editTextAmount"
             android:layout_marginTop="20dp"
             android:ems="10"
-            android:inputType="textMultiLine|textCapSentences" >
+            android:inputType="textMultiLine|textCapSentences"
+            android:textColor="@color/actionbar_bg" >
         </EditText>
 
         <Button

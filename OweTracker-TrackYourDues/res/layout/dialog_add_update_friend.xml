@@ -10,12 +10,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
+        android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:layout_marginTop="15dp"
         android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwzyz ."
         android:ems="10"
         android:hint="@string/label_enter_friend_name"
-        android:inputType="textPersonName|textCapWords" >
+        android:inputType="textPersonName|textCapWords"
+        android:textColor="@color/actionbar_bg" >
     </EditText>
 
     <Spinner
@@ -24,6 +26,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/editTextFriendName"
         android:layout_centerHorizontal="true"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:layout_marginTop="30dp"
         android:entries="@array/string_array_currency"
         android:prompt="@string/array_currency_item_select"
@@ -38,6 +42,7 @@
         android:layout_below="@+id/spinnerCurrency"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
-        android:text="@string/label_save" />
+        android:text="@string/label_save"
+        android:textColor="@android:color/white" />
 
 </RelativeLayout>

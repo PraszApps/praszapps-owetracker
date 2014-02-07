@@ -22,6 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -244,8 +245,21 @@ public class OweboardFragment extends ListFragment {
 		d.setContentView(R.layout.dialog_add_update_friend);
 		spinnerCurrency = (Spinner) d.findViewById(R.id.spinnerCurrency);
 		ArrayAdapter<String> currencyAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.string_array_currency));
-		currencyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		currencyAdapter.setDropDownViewResource(R.layout.spinner_green_dropdown_style);
 		spinnerCurrency.setAdapter(currencyAdapter);
+		spinnerCurrency.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View view,
+					int position, long id) {
+				((TextView) parent.getChildAt(0)).setTextColor(getResources().getColor(R.color.actionbar_bg));
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> parent) {
+				// On nothing selected
+			}
+		});
 		
 		editTextfriendName = (EditText) d.findViewById(R.id.editTextFriendName);
 		buttonSave = (Button) d.findViewById(R.id.buttonSave);

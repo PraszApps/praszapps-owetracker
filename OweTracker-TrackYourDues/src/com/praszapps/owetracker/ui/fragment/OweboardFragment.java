@@ -443,6 +443,7 @@ public class OweboardFragment extends ListFragment {
 			// Inflate a menu resource providing context menu items
 	        MenuInflater inflater = mode.getMenuInflater();
 	        mode.setTitle(friendData.getName());
+	        mode.setSubtitle("");
 	        inflater.inflate(R.menu.friend_context_menu, menu);
 	        return true;
 		}

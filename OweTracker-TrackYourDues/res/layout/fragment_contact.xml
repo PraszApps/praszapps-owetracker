@@ -68,7 +68,8 @@
             android:hint="@string/feedback_hint"
             android:inputType="textMultiLine|textCapSentences"
             android:minLines="5"
-            android:paddingLeft="5dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
             android:paddingTop="5dp"
             android:textColor="@color/stroke_green" />
     </RelativeLayout>

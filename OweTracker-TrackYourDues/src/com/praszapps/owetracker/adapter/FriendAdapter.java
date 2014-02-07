@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.praszapps.owetracker.R;
@@ -59,8 +59,8 @@ public class FriendAdapter extends ArrayAdapter<Friend> {
 				.findViewById(R.id.textViewTotalTransactions);
 		TextView textViewOweSummary = (TextView) listItem
 				.findViewById(R.id.textViewOweSummary);
-		ImageView status = (ImageView) listItem
-				.findViewById(R.id.imageViewStatus);
+		RelativeLayout listParentLayout = (RelativeLayout) listItem
+				.findViewById(R.id.layout_list_item);
 
 		// Set data for each row
 		Friend friend = friendData.get(position);
@@ -68,11 +68,14 @@ public class FriendAdapter extends ArrayAdapter<Friend> {
 		
 		// Show the appropriate indicator depending on the type of transaction done
 		if (friend.getOweAmount() < 0) {
-			status.setImageResource(R.drawable.bluesquare);
+			// set list item as blue border
+			listParentLayout.setBackgroundResource(R.drawable.card_bg_selector_blue);
 		} else if(friend.getOweAmount() > 0) {
-			status.setImageResource(R.drawable.redsquare);
+			// set list item as red border
+			listParentLayout.setBackgroundResource(R.drawable.card_bg_selector_red);
 		} else if(friend.getOweAmount() == 0) {
-			status.setImageResource(R.drawable.greensquare);
+			// set list item as green border
+			listParentLayout.setBackgroundResource(R.drawable.card_bg_selector_green);
 		}
 		
 		if(friend.getLastUpdated() == null || friend.getLastUpdated().equals("")) {

@@ -5,19 +5,13 @@
 
 package com.praszapps.owetracker.util;
 
-import java.util.ArrayList;
 import java.util.UUID;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.util.Log;
@@ -28,9 +22,6 @@ import android.widget.Toast;
 
 import com.praszapps.owetracker.R;
 import com.praszapps.owetracker.application.OweTrackerApplication;
-import com.praszapps.owetracker.bo.Due;
-import com.praszapps.owetracker.bo.Friend;
-import com.praszapps.owetracker.database.DatabaseHelper;
 
 public class Utils {
 
@@ -232,7 +223,7 @@ public class Utils {
 		}
 	}
 	
-	public static void doExportData(SQLiteDatabase db) throws JSONException {
+	/*public static void doExportData(SQLiteDatabase db) throws JSONException {
 		 ArrayList<Friend> friendData = DatabaseHelper.getAllFriendRecords(db);
 		 ArrayList<Due> dueData = DatabaseHelper.getAllDueRecords(db);
 		 
@@ -277,6 +268,6 @@ public class Utils {
 		 Log.e("Pani", "The JSON is --- "+tablesJson.toString());
 		 
 		 
-	}
+	}*/
 	
 }

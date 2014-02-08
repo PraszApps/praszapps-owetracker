@@ -93,7 +93,9 @@ public class OweboardFragment extends ListFragment {
 		aBar.setDisplayHomeAsUpEnabled(false);
 		aBar.setHomeButtonEnabled(false);
 		aBar.setTitle("");
-		setNavigationModeToSpinner(aBar);
+		if(MainActivity.isSinglePane) {
+			setNavigationModeToSpinner(aBar);
+		}
 		// Utils.showLog(getClass().getSimpleName(), "onCreateView() ends",
 		// Log.VERBOSE);
 		return v;
@@ -129,7 +131,9 @@ public class OweboardFragment extends ListFragment {
 			friendListAdapter = new FriendAdapter(getActivity(),
 					R.layout.oweboard_list_item, friendList);
 
-			// setListAdapter(friendListAdapter);
+			if(!MainActivity.isSinglePane) {
+				setListAdapter(friendListAdapter);
+			}
 			// updateFriendCount();
 		}/*
 		 * else { updateFriendCount(); }
@@ -470,7 +474,7 @@ public class OweboardFragment extends ListFragment {
 		for (int i = 0; i < friendList.size(); i++) {
 			friendListAdapter.add(friendList.get(i));
 		}
-		friendListAdapter.notifyDataSetChanged();
+		setListAdapter(friendListAdapter);
 
 	}
 

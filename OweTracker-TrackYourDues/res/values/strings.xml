@@ -98,6 +98,9 @@
     <string name="rate_dialog_later">Remind me later</string>
     <string name="total_records">Total records</string>
     <string name="last_update">Pending since</string>
+    <string name="all_dues">All dues</string>
+    <string name="you_owe">You owe</string>
+    <string name="you_are_owed">You are owed</string>
     
     
     <string name="intro">OweTracker app is made for Android 

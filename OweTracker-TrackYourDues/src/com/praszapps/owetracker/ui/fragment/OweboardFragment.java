@@ -5,15 +5,12 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.app.Dialog;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBar.OnNavigationListener;
 import android.support.v7.view.ActionMode;
 import android.support.v7.view.ActionMode.Callback;
-import android.support.v7.widget.SearchView;
-import android.support.v7.widget.SearchView.OnQueryTextListener;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -44,32 +41,32 @@ import com.praszapps.owetracker.util.Utils;
 public class OweboardFragment extends ListFragment {
 
 	private View v;
-	private static TextView totalFriends;
+	//private static TextView totalFriends;
 	private TextView emptyView, dialogTitle;
 	private ListView listViewOwelist;
-	private static FriendAdapter friendListAdapter, searchListAdapter;
+	private static FriendAdapter friendListAdapter;
 	private EditText editTextfriendName;
 	private Spinner spinnerCurrency;
 	private Button buttonSave;
 	private Dialog d;
 	private RootActivity rAct;
-	private SearchView searchView = null; 
-	private static ArrayList<Friend> friendList = null, searchList = null;
+//	private SearchView searchView = null; 
+	private static ArrayList<Friend> friendList = null;//, searchList = null;
 	private static SQLiteDatabase db;
 	private OnFriendNameClickListener mFriendName;
-	private Boolean isInSearchMode = false;
+	//private Boolean isInSearchMode = false;
 	private Friend friendData = null;
 	private ActionMode mActionMode = null;
 	private View listItemView = null;
 	private static LayoutInflater layoutInflater;
 	
-	public static TextView getTotalFriends() {
+	/*public static TextView getTotalFriends() {
 		return totalFriends;
 	}
 
 	public static void setTotalFriends(TextView totalFriends) {
 		OweboardFragment.totalFriends = totalFriends;
-	}
+	}*/
 
 	public static FriendAdapter getFriendListAdapter() {
 		return friendListAdapter;
@@ -89,13 +86,14 @@ public class OweboardFragment extends ListFragment {
 		rAct = (RootActivity) getActivity();
 		db = rAct.database;
 		setTotalFriendListView();
-		totalFriends = (TextView) v.findViewById(R.id.listFriends);
+		//totalFriends = (TextView) v.findViewById(R.id.listFriends);
 		
 		ActionBar aBar = ((MainActivity)getActivity()).getSupportActionBar();
 		setHasOptionsMenu(true);
 		aBar.setDisplayHomeAsUpEnabled(false);
 		aBar.setHomeButtonEnabled(false);
-		aBar.setTitle(R.string.oweboard_title);
+		aBar.setTitle("");
+		setNavigationModeToSpinner(aBar);
 		//Utils.showLog(getClass().getSimpleName(), "onCreateView() ends", Log.VERBOSE);
 		return v;
 	}
@@ -117,7 +115,7 @@ public class OweboardFragment extends ListFragment {
 				return true;
 			}
 		});
-		isInSearchMode = false;
+		//isInSearchMode = false;
 	}
 	
 	@Override
@@ -127,22 +125,25 @@ public class OweboardFragment extends ListFragment {
 		if(friendList != null) {
 			friendListAdapter = new FriendAdapter(getActivity(), R.layout.oweboard_list_item,
 					friendList);
-			setListAdapter(friendListAdapter);
+		
+			//setListAdapter(friendListAdapter);
+			//updateFriendCount();
+		}/* else {
 			updateFriendCount();
-		} else {
-			updateFriendCount();
-		}
+		}*/
 	}
 	
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		
-		if(isInSearchMode) {
+		/*if(isInSearchMode) {
 			mFriendName.OnFriendNameClick(searchList.get(position).getId(), searchList.get(position).getCurrency());
 			searchView.clearFocus();
-		} else {
-			mFriendName.OnFriendNameClick(friendList.get(position).getId(), friendList.get(position).getCurrency());
-		}
+		} else {*/
+		
+			Friend friendClicked = ((Friend)getListAdapter().getItem(position));
+			mFriendName.OnFriendNameClick(friendClicked.getId(), friendClicked.getCurrency());
+		//}
 		
 		if(!MainActivity.isSinglePane) {
 			v.setSelected(true);
@@ -153,13 +154,11 @@ public class OweboardFragment extends ListFragment {
 		}
 	}
 	
-	
-
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		inflater.inflate(R.menu.oweboard_menu, menu);
 	
-		searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.item_search));
+		/*searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.item_search));
 	    searchView.setOnQueryTextListener(new OnQueryTextListener() {
 			
 			@Override
@@ -190,7 +189,7 @@ public class OweboardFragment extends ListFragment {
 	                emptyView.setText(getResources().getString(R.string.strNoRecordsFound));
 	            }
 	        }
-	    });
+	    });*/
 	}
 
 	@Override
@@ -204,7 +203,7 @@ public class OweboardFragment extends ListFragment {
 		return super.onOptionsItemSelected(item);
 	}
 	
-	public void updateFriendCount() {
+	/*public void updateFriendCount() {
 		int dueCount = DatabaseHelper.getFriendsWithDuesCount(db);
 		if(dueCount == 0 && friendListAdapter.getCount() == 0) {
 			totalFriends.setVisibility(TextView.GONE);
@@ -214,7 +213,7 @@ public class OweboardFragment extends ListFragment {
 					R.string.label_owesactions_listview));
 		}
 		 
-	}
+	}*/
 
 	@Override
 	public void onResume() {
@@ -222,7 +221,7 @@ public class OweboardFragment extends ListFragment {
 		if(MainActivity.isSinglePane) {
 			updateListView();
 		}
-		updateFriendCount();
+		//updateFriendCount();
 	}
 	
 
@@ -311,7 +310,7 @@ public class OweboardFragment extends ListFragment {
 										Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_add_friend_success), Toast.LENGTH_SHORT, layoutInflater);
 										d.dismiss();
 										updateListView();
-										updateFriendCount();
+										//updateFriendCount();
 									} else {
 										Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_add_friend_failure), Toast.LENGTH_SHORT, layoutInflater);
 									}
@@ -334,7 +333,7 @@ public class OweboardFragment extends ListFragment {
 								Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_add_friend_success), Toast.LENGTH_SHORT, layoutInflater);
 								d.dismiss();
 								updateListView();
-								updateFriendCount();
+								//updateFriendCount();
 							} else {
 								Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_add_friend_failure), Toast.LENGTH_SHORT, layoutInflater);
 							}
@@ -399,7 +398,7 @@ public class OweboardFragment extends ListFragment {
 	 * @author Prasannajeet Pani
 	 *
 	 */
-	private class SearchAsyncTask extends AsyncTask<String, Void, String> {
+	/*private class SearchAsyncTask extends AsyncTask<String, Void, String> {
 		
 		@Override
 		protected void onPreExecute() {
@@ -436,7 +435,7 @@ public class OweboardFragment extends ListFragment {
 			isInSearchMode = true;
 		}
 		
-	}
+	}*/
 	
 	private android.support.v7.view.ActionMode.Callback mCallback = new Callback() {
 		
@@ -491,7 +490,7 @@ public class OweboardFragment extends ListFragment {
 							((MainActivity)getActivity()).getSupportActionBar().setTitle(getResources().getString(R.string.oweboard_title));
 							((MainActivity)getActivity()).getDueFrag().setHasOptionsMenu(false);
 						}
-						
+/*						
 						int dueCount = DatabaseHelper.getFriendsWithDuesCount(db);
 						if(dueCount == 0 && OweboardFragment.friendListAdapter.getCount() == 0) {
 							totalFriends.setVisibility(TextView.GONE);
@@ -499,7 +498,7 @@ public class OweboardFragment extends ListFragment {
 							totalFriends.setVisibility(TextView.VISIBLE);
 							totalFriends.setText(dueCount+"/"+OweboardFragment.friendListAdapter.getCount()+" "+getResources().getString(
 									R.string.label_owesactions_listview));
-						}
+						}*/
 						Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_delete), Toast.LENGTH_SHORT, layoutInflater);
 						
 					}
@@ -521,4 +520,65 @@ public class OweboardFragment extends ListFragment {
 		}
 	};
 	
+	/**
+	 * Sets a spinner style navigation menu for Owe-Board
+	 * 
+	 * @param actionBar - Instance of the Actionbar
+	 */
+	private void setNavigationModeToSpinner(ActionBar actionBar) {
+		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+
+		// Specify a SpinnerAdapter to populate the dropdown list.
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+				actionBar.getThemedContext(),
+				android.R.layout.simple_spinner_item, android.R.id.text1,
+				getResources().getStringArray(R.array.array_actionbar_oweboard_options));
+
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+		// Set up the dropdown list navigation in the action bar.
+		actionBar.setListNavigationCallbacks(adapter,
+				new OnNavigationListener() {
+
+					@Override
+					public boolean onNavigationItemSelected(int position,
+							long id) {
+						switch (position) {
+						case 0:
+							setListAdapter(friendListAdapter);
+							return true;
+						case 1:
+							setListAdapter( new FriendAdapter(getActivity(), R.layout.oweboard_list_item,
+									getDuesOwedByMe()));
+							return true;
+						case 2:
+							setListAdapter( new FriendAdapter(getActivity(), R.layout.oweboard_list_item,
+									getDuesOwedToMe()));
+							return true;
+						default:
+							return false;
+						}
+					}
+				});
+	}
+	
+	public ArrayList<Friend> getDuesOwedByMe() {
+		ArrayList<Friend> owedByMeList = new ArrayList<Friend>();
+		for(int i = 0; i<friendList.size(); i++) {
+			if(friendList.get(i).getOweAmount() > 0) {
+				owedByMeList.add(friendList.get(i));
+			}
+		}
+		return owedByMeList;
+	}
+	
+	public ArrayList<Friend> getDuesOwedToMe() {
+		ArrayList<Friend> owedByMeList = new ArrayList<Friend>();
+		for(int i = 0; i<friendList.size(); i++) {
+			if(friendList.get(i).getOweAmount() < 0) {
+				owedByMeList.add(friendList.get(i));
+			}
+		}
+		return owedByMeList;
+	}
 }

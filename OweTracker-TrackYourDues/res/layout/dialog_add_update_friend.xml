@@ -2,8 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
-    android:focusableInTouchMode="true"
     android:background="@drawable/dialog_bg"
+    android:focusableInTouchMode="true"
     android:paddingBottom="20dp" >
 
     <TextView
@@ -51,13 +51,13 @@
 
     <Button
         android:id="@+id/buttonSave"
-        style="@style/btn_style"
-        android:layout_width="wrap_content"
+        style="@style/save_btn_style"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/spinnerCurrency"
         android:layout_below="@+id/spinnerCurrency"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
-        android:text="@string/label_save" />
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="30dp" />
 
 </RelativeLayout>

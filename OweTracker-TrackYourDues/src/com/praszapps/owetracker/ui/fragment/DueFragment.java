@@ -14,6 +14,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.ListFragment;
+import android.support.v7.app.ActionBar;
 import android.support.v7.view.ActionMode;
 import android.support.v7.view.ActionMode.Callback;
 import android.view.LayoutInflater;
@@ -86,6 +87,9 @@ public class DueFragment extends ListFragment {
 		if(MainActivity.isSinglePane) {
 			((MainActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		}
+		
+		((MainActivity)getActivity()).getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+		
 		//Initializing views and other variables
 		emptyTextView = (TextView) v.findViewById(R.id.empty_duelist);
 		textViewOweSummary = (TextView) v.findViewById(R.id.textViewOweSummary);
@@ -239,14 +243,14 @@ public class DueFragment extends ListFragment {
 						updateDueList(friend.getId());
 						updateFriendSummary();
 						if(!MainActivity.isSinglePane) {
-							int dueCount = DatabaseHelper.getFriendsWithDuesCount(db);
+							/*int dueCount = DatabaseHelper.getFriendsWithDuesCount(db);
 							if(dueCount == 0 && OweboardFragment.getFriendListAdapter().getCount() == 0) {
 								OweboardFragment.getTotalFriends().setVisibility(TextView.GONE);
 							} else {
 								OweboardFragment.getTotalFriends().setVisibility(TextView.VISIBLE);
 								OweboardFragment.getTotalFriends().setText(dueCount+"/"+OweboardFragment.getFriendListAdapter().getCount()+" "+getResources().getString(
 										R.string.label_owesactions_listview));
-							}
+							}*/
 							new OweboardFragment().updateListView();
 						}
 						Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_reset), Toast.LENGTH_SHORT, layoutInflater);
@@ -419,7 +423,7 @@ public class DueFragment extends ListFragment {
 						DatabaseHelper.updateFriendDue(friend.getId(), db);
 						updateDueList(friend.getId());
 						updateFriendSummary();
-						if(!MainActivity.isSinglePane) {
+						/*if(!MainActivity.isSinglePane) {
 							int dueCount = DatabaseHelper.getFriendsWithDuesCount(db);
 							if(dueCount == 0 && OweboardFragment.getFriendListAdapter().getCount() == 0) {
 								OweboardFragment.getTotalFriends().setVisibility(TextView.GONE);
@@ -428,7 +432,7 @@ public class DueFragment extends ListFragment {
 								OweboardFragment.getTotalFriends().setText(dueCount+"/"+OweboardFragment.getFriendListAdapter().getCount()+" "+getResources().getString(
 										R.string.label_owesactions_listview));
 							}
-						}
+						}*/
 						if(mode.equals(Constants.MODE_ADD)) {
 							Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_due_add_success), Toast.LENGTH_SHORT, layoutInflater);
 							
@@ -571,7 +575,7 @@ public class DueFragment extends ListFragment {
 								if (!MainActivity.isSinglePane) {
 									new OweboardFragment().updateListView();
 									
-									int dueCount = DatabaseHelper.getFriendsWithDuesCount(db);
+									/*int dueCount = DatabaseHelper.getFriendsWithDuesCount(db);
 									if (dueCount == 0 && OweboardFragment.getFriendListAdapter().getCount() == 0) {
 										OweboardFragment.getTotalFriends().setVisibility(TextView.GONE);
 									} else {
@@ -584,7 +588,7 @@ public class DueFragment extends ListFragment {
 												+ getResources()
 														.getString(
 																R.string.label_owesactions_listview));
-									}
+									}*/
 								}
 							}
 

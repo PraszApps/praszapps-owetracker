@@ -21,4 +21,10 @@
 	    <item>@string/label_del</item>
 	</string-array>
 	
+    <string-array name="array_actionbar_oweboard_options">
+        <item>@string/all_dues</item>
+        <item>@string/you_owe</item>
+        <item>@string/you_are_owed</item>
+    </string-array>
+	
 </resources>

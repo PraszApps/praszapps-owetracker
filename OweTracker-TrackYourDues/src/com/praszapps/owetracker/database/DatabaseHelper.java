@@ -276,7 +276,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	 *            - Database instance
 	 * @return Total number of friends with dues
 	 */
-	public static int getFriendsWithDuesCount(SQLiteDatabase db) {
+	/*public static int getFriendsWithDuesCount(SQLiteDatabase db) {
 		String sql = "SELECT * FROM " + TABLE_FRIEND + " WHERE "
 				+ FRIEND_COLUMN_DUE + " != 0;";
 		Cursor c = db.rawQuery(sql, null);
@@ -285,7 +285,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			c.close();
 		}
 		return count;
-	}
+	}*/
 
 	/**
 	 * 

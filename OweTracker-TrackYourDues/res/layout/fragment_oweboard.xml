@@ -5,19 +5,6 @@
     android:background="@color/listview_bg"
     android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/listFriends"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:background="@drawable/green_rounded_bg"
-        android:gravity="center_horizontal"
-        android:padding="10dp"
-        android:text="@string/label_owesactions_listview"
-        android:textAppearance="@android:style/TextAppearance.Medium"
-        android:textColor="@android:color/white"
-        android:textStyle="bold" />
-
     <ListView
         android:id="@android:id/list"
         android:layout_width="match_parent"

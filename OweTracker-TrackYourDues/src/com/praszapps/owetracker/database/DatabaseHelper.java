@@ -637,4 +637,37 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		}
 	}
 
+	
+	/**
+	 * This method when called updates all the available friend records with the given currency value
+	 * @param currency - Currency to be updated to 
+	 * @param db - Instance of the database
+	 * @return - True if success, false otherwise
+	 */
+	public static boolean updateCurrency(String currency, SQLiteDatabase db) {
+		String sql = "SELECT * FROM "+TABLE_FRIEND;
+		Cursor c = db.rawQuery(sql, null);
+
+		// Checking if the uuid exists
+		if (c.getCount() > 0) {
+			c.moveToFirst();
+			ContentValues values = new ContentValues();
+			values.put(FRIEND_COLUMN_CURRENCY, currency);
+			if (!c.isClosed()) {
+				c.close();
+			}
+			if (db.update(TABLE_FRIEND, values, null, null) >= 0) {
+				return true;
+			} else {
+				return false;
+			}
+
+		} else {
+			return true;
+		}
+
+		
+		
+	}
+
 }

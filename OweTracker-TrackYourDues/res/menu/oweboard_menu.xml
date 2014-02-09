@@ -2,13 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:owetracker="http://schemas.android.com/apk/res-auto" >
 
-    <!-- <item
-        android:id="@+id/item_search"
-        android:icon="@drawable/search"
-        android:orderInCategory="1"
-        android:title="@string/label_search"
-        owetracker:actionViewClass="android.support.v7.widget.SearchView"
-        owetracker:showAsAction="always|withText|collapseActionView"/> -->
+    <item
+        android:id="@+id/item_settings"
+        android:icon="@drawable/settings"
+        android:orderInCategory="98"
+        android:title="@string/menu_item_settings"
+        owetracker:showAsAction="ifRoom"/>
     <item
         android:id="@+id/item_add_friend"
         android:icon="@drawable/addfriend"

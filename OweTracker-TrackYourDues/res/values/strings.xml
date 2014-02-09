@@ -17,6 +17,8 @@
     <string name="edit_due">Edit Due</string>
     <string name="toast_msg_add_friend_name">Please enter name</string>
     <string name="toast_msg_add_friend_currency">Please select a currency</string>
+    <string name="toast_msg_some_error">Some error occurred</string>
+    <string name="toast_msg_currency_changed">Display currency changed to</string>
     <string name="label_add_date">Date: Tap to select date</string>
     <string name="toast_msg_add_friend_success">Friend added auccesfully</string>
     <string name="toast_msg_add_friend_failure">Failed to add friend</string>
@@ -31,7 +33,7 @@
 	    Do you want to save a new record?</string>
     <string name="label_yes">Yes</string>
     <string name="label_no">No</string>
-    <string name="array_currency_item_select">Select display currency</string>
+    <string name="array_currency_item_select">No display currency selected</string>
     <string name="array_currency_item_dollar">$ (Dollar)</string>
     <string name="array_currency_item_rupee">\u20B9 (Indian Rupee)</string>
     <string name="array_currency_item_pound">£ (British Pound)</string>
@@ -62,6 +64,7 @@
     <string name="edit_friend_dialog_title">Edit friend</string>
     <string name="label_date">Date:</string>
     <string name="menu_item_about">About</string>
+    <string name="menu_item_settings">Settings</string>
     <string name="label_save">Save</string>
     <string name="toast_msg_reset">Dues reset</string>
     <string name="toast_msg_delete">Friend deleted</string>
@@ -101,6 +104,7 @@
     <string name="all_dues">All dues</string>
     <string name="you_owe">You owe</string>
     <string name="you_are_owed">You are owed</string>
+    <string name="no_change_currency">No change in currency</string>
     
     
     <string name="intro">OweTracker app is made for Android 

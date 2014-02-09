@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
@@ -46,10 +47,8 @@ public class OweboardFragment extends ListFragment {
 	private ListView listViewOwelist;
 	private static FriendAdapter friendListAdapter;
 	private EditText editTextfriendName;
-	private Spinner spinnerCurrency;
-	private Button buttonSave;
+	private Button buttonSave, buttonSettingsSave;
 	private Dialog d;
-	private RootActivity rAct;
 	// private SearchView searchView = null;
 	private static ArrayList<Friend> friendList = null;// , searchList = null;
 	private static SQLiteDatabase db;
@@ -59,6 +58,8 @@ public class OweboardFragment extends ListFragment {
 	private ActionMode mActionMode = null;
 	private View listItemView = null;
 	private static LayoutInflater layoutInflater;
+
+	private static Spinner spinnerCurrency;
 
 	/*
 	 * public static TextView getTotalFriends() { return totalFriends; }
@@ -83,8 +84,7 @@ public class OweboardFragment extends ListFragment {
 		layoutInflater = getLayoutInflater(savedInstanceState);
 		v = inflater.inflate(R.layout.fragment_oweboard, container, false);
 		emptyView = (TextView) v.findViewById(R.id.empty_friendlist);
-		rAct = (RootActivity) getActivity();
-		db = rAct.database;
+		db = RootActivity.database;
 		setTotalFriendListView();
 		// totalFriends = (TextView) v.findViewById(R.id.listFriends);
 
@@ -135,7 +135,12 @@ public class OweboardFragment extends ListFragment {
 				setListAdapter(friendListAdapter);
 			}
 			// updateFriendCount();
-		}/*
+		}
+		if(RootActivity.owetrackerPrefs.getString(Constants.CURRENCY, null) == null) {
+			showSettingsDialog();
+		}
+		
+		/*
 		 * else { updateFriendCount(); }
 		 */
 	}
@@ -202,10 +207,100 @@ public class OweboardFragment extends ListFragment {
 			// Log.VERBOSE);
 			// Show UI to add a friend
 			showFriendDialog(Constants.MODE_ADD, null);
+		}  else if(item.getItemId() == R.id.item_settings) {
+			showSettingsDialog();
 		}
 
 		return super.onOptionsItemSelected(item);
 	}
+	
+	
+	
+	@SuppressWarnings("unchecked")
+	private void showSettingsDialog() {
+		//final Context mContext = OweTrackerApplication.getContext();
+		d = new Dialog(getActivity());
+		d.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		d.setContentView(R.layout.dialog_settings);
+		spinnerCurrency = (Spinner) d.findViewById(R.id.spinnerCurrency);
+		buttonSettingsSave = (Button) d.findViewById(R.id.buttonSave);
+
+		ArrayAdapter<String> currencyAdapter = new ArrayAdapter<String>(
+				getActivity(), android.R.layout.simple_spinner_item, getResources().getStringArray(
+								R.array.string_array_currency));
+		
+		currencyAdapter
+				.setDropDownViewResource(R.layout.spinner_green_dropdown_style);
+		spinnerCurrency.setAdapter(currencyAdapter);
+		spinnerCurrency.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View view,
+					int position, long id) {
+				((TextView) parent.getChildAt(0)).setTextColor(getResources().getColor(R.color.actionbar_bg));
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> parent) {
+				// On nothing selected
+			}
+		});
+
+		final String currencyValueInPrefs = RootActivity.owetrackerPrefs.getString(
+				Constants.CURRENCY, null);
+		if (currencyValueInPrefs != null) {
+			d.setCancelable(true);
+			int position = ((ArrayAdapter<String>) spinnerCurrency
+					.getAdapter()).getPosition(Utils.getArrayItemFromCurrency(currencyValueInPrefs));
+			spinnerCurrency.setSelection(position);
+		} else {
+			d.setCancelable(false);
+		}
+
+		buttonSettingsSave.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				String currencySelected = Utils.getCurrencyFromArrayItem(spinnerCurrency.getSelectedItem().toString());
+				
+				if (spinnerCurrency
+						.getSelectedItem()
+						.toString()
+						.equals(getResources().getString(
+								R.string.array_currency_item_select))) {
+					Utils.showToast(getActivity(), getResources()
+							.getString(R.string.toast_msg_add_friend_currency),
+							Toast.LENGTH_SHORT, layoutInflater);
+					return;
+				} else if (currencySelected.equals(currencyValueInPrefs)) {
+					Utils.showToast(getActivity(), getResources().getString(R.string.no_change_currency), Toast.LENGTH_SHORT, layoutInflater);
+					d.cancel();
+					return;
+				} else {
+					
+					if(!RootActivity.database.isOpen()) {
+						RootActivity.database = RootActivity.dbHelper.getWritableDatabase();
+					}
+					
+					if (DatabaseHelper.updateCurrency(currencySelected, RootActivity.database)) {
+						
+						RootActivity.owetrackerPrefs.edit().putString(Constants.CURRENCY, currencySelected).commit();
+						updateListView();
+						Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_currency_changed)+" "+currencySelected, Toast.LENGTH_SHORT, layoutInflater);
+						
+					} else {
+						
+						Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_some_error), Toast.LENGTH_SHORT, layoutInflater);
+						
+					}
+					
+					d.dismiss();
+				}
+			}
+		});
+		d.show();
+	}
+	
 
 	/*
 	 * public void updateFriendCount() { int dueCount =
@@ -242,7 +337,6 @@ public class OweboardFragment extends ListFragment {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
 	private void showFriendDialog(final String modeOfOp,
 			final Friend friendToUpdate) {
 
@@ -250,28 +344,7 @@ public class OweboardFragment extends ListFragment {
 		d.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		d.setContentView(R.layout.dialog_add_update_friend);
 		dialogTitle = (TextView) d.findViewById(R.id.textViewTitleAddFriend);
-		spinnerCurrency = (Spinner) d.findViewById(R.id.spinnerCurrency);
-		ArrayAdapter<String> currencyAdapter = new ArrayAdapter<String>(
-				getActivity(), android.R.layout.simple_spinner_item,
-				getResources().getStringArray(R.array.string_array_currency));
-		currencyAdapter
-				.setDropDownViewResource(R.layout.spinner_green_dropdown_style);
-		spinnerCurrency.setAdapter(currencyAdapter);
-		spinnerCurrency.setOnItemSelectedListener(new OnItemSelectedListener() {
-
-			@Override
-			public void onItemSelected(AdapterView<?> parent, View view,
-					int position, long id) {
-				((TextView) parent.getChildAt(0)).setTextColor(getResources()
-						.getColor(R.color.actionbar_bg));
-			}
-
-			@Override
-			public void onNothingSelected(AdapterView<?> parent) {
-				// On nothing selected
-			}
-		});
-
+		
 		editTextfriendName = (EditText) d.findViewById(R.id.editTextFriendName);
 		buttonSave = (Button) d.findViewById(R.id.buttonSave);
 
@@ -281,12 +354,7 @@ public class OweboardFragment extends ListFragment {
 		} else if (modeOfOp.equals(Constants.MODE_EDIT)) {
 			editTextfriendName.setText(friendToUpdate.getName());
 			dialogTitle.setText(getResources().getString(
-					R.string.edit_friend_dialog_title));
-			spinnerCurrency
-					.setSelection(((ArrayAdapter<String>) spinnerCurrency
-							.getAdapter()).getPosition(Utils
-							.getArrayItemFromCurrency(friendToUpdate
-									.getCurrency())));
+					R.string.edit_friend_dialog_title));			
 		}
 
 		buttonSave.setOnClickListener(new View.OnClickListener() {
@@ -304,17 +372,6 @@ public class OweboardFragment extends ListFragment {
 									R.string.toast_msg_add_friend_name),
 							Toast.LENGTH_SHORT, layoutInflater);
 					return;
-				} else if (spinnerCurrency
-						.getSelectedItem()
-						.toString()
-						.equals(getResources().getString(
-								R.string.array_currency_item_select))) {
-					Utils.showToast(
-							getActivity(),
-							getResources().getString(
-									R.string.toast_msg_add_friend_currency),
-							Toast.LENGTH_SHORT, layoutInflater);
-					return;
 				} else {
 					// Add data to database
 					addFriend = new Friend();
@@ -326,9 +383,7 @@ public class OweboardFragment extends ListFragment {
 
 					addFriend.setName(editTextfriendName.getText().toString()
 							.trim());
-					addFriend.setCurrency(Utils
-							.getCurrencyFromArrayItem(spinnerCurrency
-									.getSelectedItem().toString()));
+					addFriend.setCurrency(RootActivity.owetrackerPrefs.getString(Constants.CURRENCY, null));
 					if (modeOfOp.equals(Constants.MODE_ADD)) {
 						// Check if name is same as one's already in the list
 						// and prompt to add another one
@@ -448,6 +503,12 @@ public class OweboardFragment extends ListFragment {
 						}
 
 					}
+					
+					if(((MainActivity) getActivity()).getSupportActionBar().getNavigationMode() == ActionBar.NAVIGATION_MODE_LIST) {
+						((MainActivity) getActivity()).getSupportActionBar().setSelectedNavigationItem(0);
+						
+					}
+					
 				}
 			}
 		});
@@ -637,7 +698,6 @@ public class OweboardFragment extends ListFragment {
 						R.array.array_actionbar_oweboard_options));
 
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
 		// Set up the dropdown list navigation in the action bar.
 		actionBar.setListNavigationCallbacks(adapter,
 				new OnNavigationListener() {
@@ -650,14 +710,10 @@ public class OweboardFragment extends ListFragment {
 							setListAdapter(friendListAdapter);
 							return true;
 						case 1:
-							setListAdapter(new FriendAdapter(getActivity(),
-									R.layout.oweboard_list_item,
-									getDuesOwedByMe()));
+							setListAdapter(new FriendAdapter(getActivity(), R.layout.oweboard_list_item, getDuesOwedByMe()));
 							return true;
 						case 2:
-							setListAdapter(new FriendAdapter(getActivity(),
-									R.layout.oweboard_list_item,
-									getDuesOwedToMe()));
+							setListAdapter(new FriendAdapter(getActivity(), R.layout.oweboard_list_item, getDuesOwedToMe()));
 							return true;
 						default:
 							return false;

@@ -29,4 +29,5 @@ public class Constants {
     public static final String DONT_SHOW_AGAIN = "dontshowagain_1";
     public static final String DATE_FIRST_LAUNCH = "date_firstlaunch_1";
     public static final String NO_FRIENDS = OweTrackerApplication.getContext().getResources().getString(R.string.strNoFriendSelected);
+	public static final String CURRENCY = "currency";
 }

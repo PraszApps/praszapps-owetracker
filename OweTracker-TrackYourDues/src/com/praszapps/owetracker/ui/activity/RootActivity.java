@@ -24,8 +24,8 @@ import com.praszapps.owetracker.util.Utils.DialogResponse;
  */
 public class RootActivity extends ActionBarActivity {
 
-	public  DatabaseHelper dbHelper;
-	public SQLiteDatabase database;
+	public static  DatabaseHelper dbHelper;
+	public static SQLiteDatabase database;
 	public static SharedPreferences owetrackerPrefs;
 	public static boolean showDialog = false;
 	
@@ -36,7 +36,6 @@ public class RootActivity extends ActionBarActivity {
 		// Create a new database instance
 		dbHelper = new DatabaseHelper(this);
 		database = dbHelper.getWritableDatabase();
-		
 		// Creating a SharedPreferences instance
 		owetrackerPrefs = getSharedPreferences(Constants.SHARED_PREFERENCES_NAME, MODE_PRIVATE);
 		
@@ -56,14 +55,6 @@ public class RootActivity extends ActionBarActivity {
 		super.onResume();
 		if(!database.isOpen()) {
 			database = dbHelper.getWritableDatabase();
-		}
-	}
-
-	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-		if(database.isOpen()) {
-			database.close();
 		}
 	}
 
@@ -124,11 +115,7 @@ public class RootActivity extends ActionBarActivity {
 			  super.onBackPressed();
 		  }
 		}				
-	
-		
 		
 	}
-	
-	
 
 }

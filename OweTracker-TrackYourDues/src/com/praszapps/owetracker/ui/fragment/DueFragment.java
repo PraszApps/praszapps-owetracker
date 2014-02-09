@@ -10,7 +10,6 @@ import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.SharedPreferences;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.ListFragment;
@@ -22,9 +21,9 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -52,13 +51,11 @@ public class DueFragment extends ListFragment {
 
 	private View v;
 	private static Friend friend;
-	private RootActivity rAct;
 	private static TextView textViewOweSummary;
 	private static TextView emptyTextView, dialogTitle;
 	private static EditText editTextDate;
 	private ListView listViewTransactions;
 	private static ArrayList<Due> duesList = new ArrayList<Due>();
-	private static SQLiteDatabase db;
 	private static DueAdapter dueListAdapter;
 	private Dialog d;
 	private EditText editTextAmount, editTextReason;
@@ -107,10 +104,6 @@ public class DueFragment extends ListFragment {
 				return true;
 			}
 		});
-		
-		
-		rAct = (RootActivity) getActivity();
-		db = rAct.database;
 		
 		//Getting the data and populating the listview
 		Bundle b = getArguments();
@@ -239,7 +232,7 @@ public class DueFragment extends ListFragment {
 					@Override
 					public void onPositive() {
 						// Delete dues and reset due value to zero
-						DatabaseHelper.deleteAllFriendDues(friend.getId(), db);
+						DatabaseHelper.deleteAllFriendDues(friend.getId(), RootActivity.database);
 						updateDueList(friend.getId());
 						updateFriendSummary();
 						if(!MainActivity.isSinglePane) {
@@ -277,7 +270,7 @@ public class DueFragment extends ListFragment {
 	}
 
 	private void updateFriendSummary() {
-		friend = DatabaseHelper.getFriendData(friend.getId(), db);
+		friend = DatabaseHelper.getFriendData(friend.getId(), RootActivity.database);
 		if(friend != null) {
 			textViewOweSummary.setText(friend.toString().split(":")[1].trim());
 		}
@@ -294,11 +287,11 @@ public class DueFragment extends ListFragment {
 		setHasOptionsMenu(true);
 		textViewOweSummary.setVisibility(TextView.VISIBLE);
 		emptyTextView.setText(getResources().getString(R.string.strNoDueRecordsFound));
-		friend = DatabaseHelper.getFriendData(friendId, db);
+		friend = DatabaseHelper.getFriendData(friendId, RootActivity.database);
 		if(friend != null) {
 			textViewOweSummary.setText(friend.toString().split(":")[1].trim());
 			duesList.clear();
-			duesList = DatabaseHelper.getFriendDueList(friendId, db);
+			duesList = DatabaseHelper.getFriendDueList(friendId, RootActivity.database);
 			if(duesList != null) {
 				// Setting the adapter
 				dueListAdapter = new DueAdapter(getActivity(), R.layout.owe_details_list_item, duesList, friend.getCurrency(), friend.getName());
@@ -406,7 +399,7 @@ public class DueFragment extends ListFragment {
 					Boolean success = false;
 					if(mode.equals(Constants.MODE_ADD)) {
 						addDue.setDueId(Utils.generateUniqueID());
-						success = DatabaseHelper.addDue(addDue, db);
+						success = DatabaseHelper.addDue(addDue, RootActivity.database);
 					} else if(mode.equals(Constants.MODE_EDIT)) {
 						if(dueId!=null) {
 							addDue.setDueId(dueId);
@@ -415,12 +408,12 @@ public class DueFragment extends ListFragment {
 							d.dismiss();
 							return;
 						}
-						success = DatabaseHelper.updateDue(addDue, db);
+						success = DatabaseHelper.updateDue(addDue, RootActivity.database);
 					}
 					
 					
 					if(success) {
-						DatabaseHelper.updateFriendDue(friend.getId(), db);
+						DatabaseHelper.updateFriendDue(friend.getId(), RootActivity.database);
 						updateDueList(friend.getId());
 						updateFriendSummary();
 						/*if(!MainActivity.isSinglePane) {
@@ -511,7 +504,7 @@ public class DueFragment extends ListFragment {
 	}
 	
 	public static void updateDueList(String friendId) {
-		duesList = DatabaseHelper.getFriendDueList(friendId, db);
+		duesList = DatabaseHelper.getFriendDueList(friendId, RootActivity.database);
 		
 		if(dueListAdapter != null) {
 			dueListAdapter.clear();
@@ -569,7 +562,7 @@ public class DueFragment extends ListFragment {
 
 							@Override
 							public void onPositive() {
-								DatabaseHelper.deleteDueData(due.getDueId(), db);
+								DatabaseHelper.deleteDueData(due.getDueId(), RootActivity.database);
 								updateDueList(friend.getId());
 								updateFriendSummary();
 								if (!MainActivity.isSinglePane) {

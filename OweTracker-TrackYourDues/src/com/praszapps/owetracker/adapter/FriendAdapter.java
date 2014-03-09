@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import com.praszapps.owetracker.R;
 import com.praszapps.owetracker.bo.Friend;
-import com.praszapps.owetracker.util.Constants;
 
 /**
  * The Adapter class of the Friend type object list view
@@ -55,8 +54,10 @@ public class FriendAdapter extends ArrayAdapter<Friend> {
 		// get elements in the layout
 		TextView textViewDateLastUpdated = (TextView) listItem
 				.findViewById(R.id.textViewDateLastUpdated);
-		TextView textViewDateTotalTrans = (TextView) listItem
-				.findViewById(R.id.textViewTotalTransactions);
+		/*TextView textViewDateTotalTrans = (TextView) listItem
+				.findViewById(R.id.textViewTotalTransactions);*/
+		TextView textViewName = (TextView) listItem
+				.findViewById(R.id.textViewName);
 		TextView textViewOweSummary = (TextView) listItem
 				.findViewById(R.id.textViewOweSummary);
 		RelativeLayout listParentLayout = (RelativeLayout) listItem
@@ -78,14 +79,17 @@ public class FriendAdapter extends ArrayAdapter<Friend> {
 			listParentLayout.setBackgroundResource(R.drawable.card_bg_selector_green);
 		}
 		
-		if(friend.getLastUpdated() == null || friend.getLastUpdated().equals("")) {
+		if(friend.getOweAmount() == 0) {
+			textViewDateLastUpdated.setText("Pending since 01-Jan-2014");
 			textViewDateLastUpdated.setVisibility(TextView.INVISIBLE);
 		} else {
 			textViewDateLastUpdated.setVisibility(TextView.VISIBLE);
 			textViewDateLastUpdated.setText(friend.getLastUpdated());
 		}
-		textViewOweSummary.setText(friend.toString());
-		textViewDateTotalTrans.setText(Constants.TOTAL_RECORDS+" - "+friend.getTotalRecords());
+		
+		textViewName.setText(friend.getName());
+		textViewOweSummary.setText(friend.getSummary());
+		//textViewDateTotalTrans.setText(OweTrackerApplication.getContext().getResources().getString(R.string.total_records)+" - "+friend.getTotalRecords());
 		return listItem;
 	}
 

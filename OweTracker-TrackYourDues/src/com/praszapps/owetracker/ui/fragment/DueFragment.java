@@ -38,6 +38,7 @@ import android.widget.Toast;
 
 import com.praszapps.owetracker.R;
 import com.praszapps.owetracker.adapter.DueAdapter;
+import com.praszapps.owetracker.application.OweTrackerApplication;
 import com.praszapps.owetracker.bo.Due;
 import com.praszapps.owetracker.bo.Friend;
 import com.praszapps.owetracker.database.DatabaseHelper;
@@ -212,6 +213,7 @@ public class DueFragment extends ListFragment {
 			showDueDialog(Constants.MODE_ADD, null);
 			if(!MainActivity.isSinglePane) {
 				new OweboardFragment().updateListView();
+				OweboardFragment.setSummaryText();
 			}
 			return true;
 			
@@ -245,6 +247,7 @@ public class DueFragment extends ListFragment {
 										R.string.label_owesactions_listview));
 							}*/
 							new OweboardFragment().updateListView();
+							OweboardFragment.setSummaryText();
 						}
 						Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_reset), Toast.LENGTH_SHORT, layoutInflater);
 					}
@@ -269,10 +272,23 @@ public class DueFragment extends ListFragment {
 		return super.onOptionsItemSelected(item);
 	}
 
-	private void updateFriendSummary() {
-		friend = DatabaseHelper.getFriendData(friend.getId(), RootActivity.database);
+	static void updateFriendSummary() {
 		if(friend != null) {
-			textViewOweSummary.setText(friend.toString().split(":")[1].trim());
+			friend = DatabaseHelper.getFriendData(friend.getId(), RootActivity.database);
+			
+			if(friend != null) {
+				if (friend.getOweAmount() < 0) {
+					textViewOweSummary.setText(OweTrackerApplication.getContext().getString(R.string.owes_me)+" "+RootActivity.owetrackerPrefs.getString(Constants.CURRENCY, "")+Math.abs(friend.getOweAmount()));
+				} else if(friend.getOweAmount() > 0) {
+					textViewOweSummary.setText(OweTrackerApplication.getContext().getString(R.string.you_owe)+" "+RootActivity.owetrackerPrefs.getString(Constants.CURRENCY, "")+Math.abs(friend.getOweAmount()));
+				} else if(friend.getOweAmount() == 0) {
+					textViewOweSummary.setText(OweTrackerApplication.getContext().getString(R.string.no_dues));
+				}
+			}
+			
+			if(!MainActivity.isSinglePane) {
+				updateDueList(friend.getId());
+			}
 		}
 		
 	}
@@ -289,7 +305,7 @@ public class DueFragment extends ListFragment {
 		emptyTextView.setText(getResources().getString(R.string.strNoDueRecordsFound));
 		friend = DatabaseHelper.getFriendData(friendId, RootActivity.database);
 		if(friend != null) {
-			textViewOweSummary.setText(friend.toString().split(":")[1].trim());
+			updateFriendSummary();
 			duesList.clear();
 			duesList = DatabaseHelper.getFriendDueList(friendId, RootActivity.database);
 			if(duesList != null) {
@@ -440,6 +456,7 @@ public class DueFragment extends ListFragment {
 						}
 						if(!MainActivity.isSinglePane) {
 							new OweboardFragment().updateListView();
+							OweboardFragment.setSummaryText();
 						}
 						listViewTransactions.setSelected(false);
 						d.dismiss();
@@ -494,13 +511,13 @@ public class DueFragment extends ListFragment {
 	}
 	
 	
-	public static void updateSummary(Friend updateFriend) {
+	/*public static void updateSummary(Friend updateFriend) {
 		textViewOweSummary.setText(updateFriend.toString());
 	}
-	
+	*/
 	public void handleFriendDelete() {
 		textViewOweSummary.setVisibility(TextView.GONE);
-		emptyTextView.setText(Constants.NO_FRIENDS);
+		emptyTextView.setText(OweTrackerApplication.getContext().getResources().getString(R.string.strNoFriendSelected));
 	}
 	
 	public static void updateDueList(String friendId) {
@@ -567,6 +584,7 @@ public class DueFragment extends ListFragment {
 								updateFriendSummary();
 								if (!MainActivity.isSinglePane) {
 									new OweboardFragment().updateListView();
+									OweboardFragment.setSummaryText();
 									
 									/*int dueCount = DatabaseHelper.getFriendsWithDuesCount(db);
 									if (dueCount == 0 && OweboardFragment.getFriendListAdapter().getCount() == 0) {

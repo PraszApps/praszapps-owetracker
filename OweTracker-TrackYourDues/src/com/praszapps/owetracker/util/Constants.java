@@ -1,15 +1,8 @@
 package com.praszapps.owetracker.util;
 
-import com.praszapps.owetracker.R;
-import com.praszapps.owetracker.application.OweTrackerApplication;
 
 public class Constants {
 
-	public static final String OWES_YOU = OweTrackerApplication.getContext().getResources().getString(R.string.owes_me);
-	public static final String YOU_OWE = OweTrackerApplication.getContext().getResources().getString(R.string.i_owe);
-	public static final String NO_DUES = OweTrackerApplication.getContext().getResources().getString(R.string.no_dues);
-	public static final String TOTAL_RECORDS = OweTrackerApplication.getContext().getResources().getString(R.string.total_records);
-	public static final String LAST_UPDATE = OweTrackerApplication.getContext().getResources().getString(R.string.last_update);
 	public static final String BUNDLE_EXTRA_CURRENCY = "currency";
 	public static final String BUNDLE_EXTRA_FRIENDID = "friendId";
 	public static final long SPLASH_SCREEN_TIMEOUT = 1000;
@@ -28,6 +21,5 @@ public class Constants {
     public final static int LAUNCHES_UNTIL_PROMPT = 15;
     public static final String DONT_SHOW_AGAIN = "dontshowagain_1";
     public static final String DATE_FIRST_LAUNCH = "date_firstlaunch_1";
-    public static final String NO_FRIENDS = OweTrackerApplication.getContext().getResources().getString(R.string.strNoFriendSelected);
 	public static final String CURRENCY = "currency";
 }

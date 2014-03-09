@@ -207,7 +207,6 @@ public class Utils {
 	 * @return - Dropdown list item to be selected
 	 */
 	public static String getArrayItemFromCurrency(String currency) {
-		
 		if(currency.equals(OweTrackerApplication.getContext().getResources().getString(R.string.currency_rupee)) || currency.equals("INR ")) {
 			return OweTrackerApplication.getContext().getResources().getString(R.string.array_currency_item_rupee);
 		} else if(currency.equals(OweTrackerApplication.getContext().getResources().getString(R.string.currency_dollar))) {

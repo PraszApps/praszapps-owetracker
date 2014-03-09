@@ -32,6 +32,7 @@ import android.widget.Toast;
 
 import com.praszapps.owetracker.R;
 import com.praszapps.owetracker.adapter.FriendAdapter;
+import com.praszapps.owetracker.application.OweTrackerApplication;
 import com.praszapps.owetracker.bo.Friend;
 import com.praszapps.owetracker.database.DatabaseHelper;
 import com.praszapps.owetracker.ui.activity.MainActivity;
@@ -44,6 +45,8 @@ public class OweboardFragment extends ListFragment {
 	private View v;
 	// private static TextView totalFriends;
 	private TextView emptyView, dialogTitle;
+	private static TextView totalYouOwe;
+	private static TextView totalYouAreOwed;
 	private ListView listViewOwelist;
 	private static FriendAdapter friendListAdapter;
 	private EditText editTextfriendName;
@@ -84,8 +87,11 @@ public class OweboardFragment extends ListFragment {
 		layoutInflater = getLayoutInflater(savedInstanceState);
 		v = inflater.inflate(R.layout.fragment_oweboard, container, false);
 		emptyView = (TextView) v.findViewById(R.id.empty_friendlist);
+		totalYouOwe = (TextView) v.findViewById(R.id.amount_you_owe);
+		totalYouAreOwed = (TextView) v.findViewById(R.id.amount_you_are_owed);
 		db = RootActivity.database;
 		setTotalFriendListView();
+		
 		// totalFriends = (TextView) v.findViewById(R.id.listFriends);
 
 		ActionBar aBar = ((MainActivity) getActivity()).getSupportActionBar();
@@ -209,6 +215,7 @@ public class OweboardFragment extends ListFragment {
 			showFriendDialog(Constants.MODE_ADD, null);
 		}  else if(item.getItemId() == R.id.item_settings) {
 			showSettingsDialog();
+			setSummaryText();
 		}
 
 		return super.onOptionsItemSelected(item);
@@ -286,6 +293,10 @@ public class OweboardFragment extends ListFragment {
 						
 						RootActivity.owetrackerPrefs.edit().putString(Constants.CURRENCY, currencySelected).commit();
 						updateListView();
+						setSummaryText();
+						if(!MainActivity.isSinglePane) {
+							DueFragment.updateFriendSummary();	
+						}
 						Utils.showToast(getActivity(), getResources().getString(R.string.toast_msg_currency_changed)+" "+currencySelected, Toast.LENGTH_SHORT, layoutInflater);
 						
 					} else {
@@ -320,8 +331,21 @@ public class OweboardFragment extends ListFragment {
 		super.onResume();
 		if (MainActivity.isSinglePane) {
 			updateListView();
-		}
+		}		
+		setSummaryText();
 		// updateFriendCount();
+	}
+
+	static void setSummaryText() {
+		
+		String currency = RootActivity.owetrackerPrefs.getString(Constants.CURRENCY, null);
+		if(currency == null) {
+			currency = "";
+		}
+		
+		
+		totalYouOwe.setText(OweTrackerApplication.getContext().getString(R.string.total_you_owe)+" - "+currency+DatabaseHelper.getTotalAmountOwedByMe(db));
+		totalYouAreOwed.setText(OweTrackerApplication.getContext().getString(R.string.total_you_are_owed)+" - "+currency+DatabaseHelper.getTotalAmountOwedToMe(db));
 	}
 
 	@Override
@@ -481,8 +505,7 @@ public class OweboardFragment extends ListFragment {
 									Toast.LENGTH_SHORT, layoutInflater);
 
 							if (!(MainActivity.isSinglePane)) {
-								DueFragment.updateSummary(DatabaseHelper
-										.getFriendData(addFriend.getId(), db));
+								DueFragment.updateFriendSummary();
 								DueFragment.updateDueList(friendToUpdate
 										.getId());
 								((MainActivity) getActivity())
@@ -658,9 +681,12 @@ public class OweboardFragment extends ListFragment {
 								 * .getCount()+" "+getResources().getString(
 								 * R.string.label_owesactions_listview)); }
 								 */
+								
+								
 								Utils.showToast(getActivity(), getResources()
 										.getString(R.string.toast_msg_delete),
 										Toast.LENGTH_SHORT, layoutInflater);
+								setSummaryText();
 
 							}
 
@@ -708,12 +734,18 @@ public class OweboardFragment extends ListFragment {
 						switch (position) {
 						case 0:
 							setListAdapter(friendListAdapter);
+							totalYouOwe.setVisibility(TextView.VISIBLE);
+							totalYouAreOwed.setVisibility(TextView.VISIBLE);
 							return true;
 						case 1:
 							setListAdapter(new FriendAdapter(getActivity(), R.layout.oweboard_list_item, getDuesOwedByMe()));
+							totalYouOwe.setVisibility(TextView.VISIBLE);
+							totalYouAreOwed.setVisibility(TextView.GONE);
 							return true;
 						case 2:
 							setListAdapter(new FriendAdapter(getActivity(), R.layout.oweboard_list_item, getDuesOwedToMe()));
+							totalYouOwe.setVisibility(TextView.GONE);
+							totalYouAreOwed.setVisibility(TextView.VISIBLE);
 							return true;
 						default:
 							return false;
@@ -727,7 +759,7 @@ public class OweboardFragment extends ListFragment {
 	 * 
 	 * @return List of dues that use owes
 	 */
-	public ArrayList<Friend> getDuesOwedByMe() {
+	private ArrayList<Friend> getDuesOwedByMe() {
 		ArrayList<Friend> owedByMeList = new ArrayList<Friend>();
 		for (int i = 0; i < friendList.size(); i++) {
 			if (friendList.get(i).getOweAmount() > 0) {
@@ -742,7 +774,7 @@ public class OweboardFragment extends ListFragment {
 	 * 
 	 * @return List of dues that use owes
 	 */
-	public ArrayList<Friend> getDuesOwedToMe() {
+	private ArrayList<Friend> getDuesOwedToMe() {
 		ArrayList<Friend> owedByMeList = new ArrayList<Friend>();
 		for (int i = 0; i < friendList.size(); i++) {
 			if (friendList.get(i).getOweAmount() < 0) {

@@ -5,4 +5,7 @@
          screen margins) for sw600dp devices (e.g. 7" tablets) here.
     -->
 
+	<dimen name="oweboard_list_margin_left">2.5dp</dimen>
+	<dimen name="oweboard_list_margin_right">2.5dp</dimen>
+
 </resources>

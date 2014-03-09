@@ -5,18 +5,52 @@
     android:background="@color/listview_bg"
     android:orientation="vertical" >
 
+    <LinearLayout
+        android:id="@+id/owe_details_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:background="@android:color/white"
+        android:orientation="vertical"
+        android:padding="2dp" >
+
+        <TextView
+            android:id="@+id/amount_you_owe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/list_item_border_red"
+            android:gravity="center_horizontal"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:text="@string/total_you_owe"
+            android:textColor="@android:color/white"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/amount_you_are_owed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:background="@color/list_item_border_blue"
+            android:gravity="center_horizontal"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:text="@string/total_you_are_owed"
+            android:textColor="@android:color/white"
+            android:textStyle="bold" />
+    </LinearLayout>
+
     <ListView
         android:id="@android:id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="10dp"
+        android:layout_marginLeft="@dimen/oweboard_list_margin_left"
+        android:layout_marginRight="@dimen/oweboard_list_margin_right"
+        android:layout_marginTop="15dp"
         android:background="@color/listview_bg"
         android:divider="@null"
         android:fadingEdge="vertical|horizontal"
         android:fadingEdgeLength="10dp"
-        android:fastScrollEnabled="true"
-        android:drawSelectorOnTop="true"
-        android:overScrollMode="always"
         android:saveEnabled="true"
         android:scrollingCache="true"
         android:textAlignment="center" />

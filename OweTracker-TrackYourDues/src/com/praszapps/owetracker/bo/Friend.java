@@ -1,6 +1,8 @@
 package com.praszapps.owetracker.bo;
 
-import com.praszapps.owetracker.util.Constants;
+import com.praszapps.owetracker.R;
+import com.praszapps.owetracker.application.OweTrackerApplication;
+
 
 /**
  * Class for the friend type of object
@@ -15,17 +17,17 @@ public class Friend {
 	int oweAmount;
 	String summary;
 	String currency;
-	String totalRecords;
+	//String totalRecords;
 	String lastUpdated;
 
 	public Friend(String id, String name, int oweAmount, 
-			String currency, String totalRecords, String lastUpdated) {
+			String currency, String lastUpdated) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.oweAmount = oweAmount;
 		this.currency = currency;
-		this.totalRecords = totalRecords;
+		//this.totalRecords = totalRecords;
 		this.lastUpdated = lastUpdated;
 	}
 	
@@ -80,16 +82,23 @@ public class Friend {
 	}
 
 	public void setSummary(int oweAmount) {
-		this.summary = currency+Math.abs(oweAmount);
+		if(oweAmount < 0) {
+			this.summary = OweTrackerApplication.getContext().getResources().getString(R.string.owes_me)+" "+currency+Math.abs(oweAmount);
+		} else if (oweAmount > 0) {
+			this.summary = OweTrackerApplication.getContext().getResources().getString(R.string.i_owe)+" "+currency+Math.abs(oweAmount);
+		} else {
+			this.summary = OweTrackerApplication.getContext().getResources().getString(R.string.no_dues);
+		}
+		
 	}
 	
-	public String getTotalRecords() {
+	/*public String getTotalRecords() {
 		return totalRecords;
 	}
 
 	public void setTotalRecords(String totalRecords) {
 		this.totalRecords = totalRecords;
-	}
+	}*/
 
 	public String getLastUpdated() {
 		return lastUpdated;
@@ -101,17 +110,7 @@ public class Friend {
 
 	@Override
 	public String toString() {
-		
-		String friendObjToString = null;
-		if(oweAmount < 0) {
-			friendObjToString = name+" : "+Constants.OWES_YOU+" "+currency+Math.abs(oweAmount);
-		} else if(oweAmount > 0) {
-			friendObjToString = name+" : "+Constants.YOU_OWE+" "+currency+Math.abs(oweAmount);
-		} else if(oweAmount == 0) {
-			friendObjToString = name+" : "+Constants.NO_DUES;
-		}
-		
-		return friendObjToString;
+		return getName()+": "+getSummary();
 	}
 	
 }

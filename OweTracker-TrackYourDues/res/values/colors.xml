@@ -4,13 +4,19 @@
     <color name="actionbar_bg">#0d8c7f</color>
     <color name="list_view_divider">#4f4f4f</color>
     <color name="holo_blue_light">#ff33b5e5</color>
-    <color name="due_list_item_date_color">#242424</color>
-    <color name="due_list_item_amt_color">#7d1010</color>
-    <color name="due_list_item_desc_color">#242424</color>
+    <color name="due_list_item_color">#242424</color>
     <color name="blue_header">#cfeeff</color>
     <color name="pressed_actionbar_tab_indicator">#CC33B5E5</color>
     <color name="listview_bg">#DCDCDC</color>
     <color name="due_details_bg">#f3fbff</color>
     <color name="translucent_toast_bg">#cc0d8c7f</color>
     <color name="stroke_green">#086156</color>
+    <color name="stroke_green_pressed">#034f45</color>
+    <color name="list_item_bg_red">#ffcfcd</color>
+    <color name="list_item_bg_blue">#c5e8ff</color>
+    <color name="list_item_bg_green">#c7ffd8</color>
+    
+    <color name="list_item_border_red">#b01f1a</color>
+    <color name="list_item_border_blue">#256c9c</color>
+    <color name="list_item_border_green">#1c9540</color>
 </resources>

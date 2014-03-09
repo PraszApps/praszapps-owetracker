@@ -74,9 +74,9 @@
     <string name="menu_item_add_new_due">Add new due</string>
     <string name="toast_msg_long_press">Long press dues to edit or delete</string>
     <string name="toast_msg_swipe">Swipe left/right to switch between tabs</string>
-    <string name="owes_me">Owes me</string>
-    <string name="i_owe">I owe</string>
-    <string name="no_dues">No Dues</string>
+    <string name="owes_me">Owes you</string>
+    <string name="i_owe">You owe</string>
+    <string name="no_dues">Settled up</string>
     <string name="label_contact">Contact</string>
     <string name="no_dues_to_reset">No dues to reset</string>
     <string name="currency_dollar">$</string>
@@ -105,6 +105,8 @@
     <string name="you_owe">You owe</string>
     <string name="you_are_owed">You are owed</string>
     <string name="no_change_currency">No change in currency</string>
+    <string name="total_you_owe">Total amount you owe</string>
+    <string name="total_you_are_owed">Total amount you\'re owed</string>
     
     
     <string name="intro">OweTracker app is made for Android 

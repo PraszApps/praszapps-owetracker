@@ -12,8 +12,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.praszapps.owetracker.R;
+import com.praszapps.owetracker.application.OweTrackerApplication;
 import com.praszapps.owetracker.bo.Due;
-import com.praszapps.owetracker.util.Constants;
 
 /**
  * This is the Adapter of the listview of the dues screen of the friend
@@ -81,10 +81,10 @@ public class DueAdapter extends ArrayAdapter<Due> {
 		
 		// Setting the type of transaction that has been done
 		if(dueData.get(position).getAmount() >=0 ) {
-			summary = Constants.YOU_OWE+" "+currency+Math.abs(dueData.get(position).getAmount());
+			summary = OweTrackerApplication.getContext().getResources().getString(R.string.i_owe)+" "+currency+Math.abs(dueData.get(position).getAmount());
 		} else {
 			
-			summary = Constants.OWES_YOU+" "+currency+Math.abs(dueData.get(position).getAmount());
+			summary = OweTrackerApplication.getContext().getResources().getString(R.string.owes_me)+" "+currency+Math.abs(dueData.get(position).getAmount());
 		}
 		
 		textViewAmtDetails.setText(summary);

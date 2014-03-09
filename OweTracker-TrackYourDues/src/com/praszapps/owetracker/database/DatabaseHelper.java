@@ -11,6 +11,8 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.praszapps.owetracker.R;
+import com.praszapps.owetracker.application.OweTrackerApplication;
 import com.praszapps.owetracker.bo.Due;
 import com.praszapps.owetracker.bo.Friend;
 import com.praszapps.owetracker.util.Constants;
@@ -117,8 +119,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				friend.setName(cursor.getString(1));
 				friend.setCurrency(cursor.getString(2));
 				friend.setOweAmount(Integer.parseInt(cursor.getString(3)));
-				friend.setTotalRecords(getDueCountForFriend(
-						cursor.getString(0), db));
+				/*friend.setTotalRecords(getDueCountForFriend(
+						cursor.getString(0), db));*/
 				friend.setLastUpdated(lastDueAdded(cursor.getString(0), db));
 				// Adding friend to list
 				friendList.add(friend);
@@ -561,7 +563,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	 *            - Instance of database
 	 * @return - Total number of dues
 	 */
-	private static String getDueCountForFriend(String friendID,
+	/*private static String getDueCountForFriend(String friendID,
 			SQLiteDatabase db) {
 		String sql = "SELECT " + DUE_COLUMN_ID + " FROM " + TABLE_DUE
 				+ " WHERE " + DUE_COLUMN_FRIEND_ID + " = '" + friendID + "';";
@@ -573,7 +575,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		}
 		return count;
 	}
-
+*/
 	/**
 	 * Method will return the last due of the friend
 	 * 
@@ -596,7 +598,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		if (dateinMilis == 0) {
 			response = "";
 		} else {
-			response = Constants.LAST_UPDATE + " "
+			response = OweTrackerApplication.getContext().getResources().getString(R.string.last_update) + " "
 					+ dateFormat.format(dateinMilis);
 		}
 
@@ -668,6 +670,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 		
 		
+	}
+	
+	public static int getTotalAmountOwedByMe(SQLiteDatabase db)throws NullPointerException {
+		String sql = "SELECT SUM("+FRIEND_COLUMN_DUE+")AS total FROM "+TABLE_FRIEND+" WHERE "+FRIEND_COLUMN_DUE+" > 0";
+		Cursor cursor = db.rawQuery(sql, null);
+		if(cursor.moveToFirst()) {
+			return cursor.getInt(cursor.getColumnIndex("total"));
+		} else {
+			throw new NullPointerException("Unable to get Total");
+		}
+	}
+	
+	public static int getTotalAmountOwedToMe(SQLiteDatabase db) {
+		String sql = "SELECT SUM("+FRIEND_COLUMN_DUE+")AS total FROM "+TABLE_FRIEND+" WHERE "+FRIEND_COLUMN_DUE+" < 0";
+		Cursor cursor = db.rawQuery(sql, null);
+		if(cursor.moveToFirst()) {
+			return Math.abs(cursor.getInt(cursor.getColumnIndex("total")));
+		} else {
+			throw new NullPointerException("Unable to get Total");
+		}
 	}
 
 }
